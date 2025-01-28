@@ -5,27 +5,27 @@ import com.example.navigationmodule.Route
 
 
 sealed class AppRoute(
-    @StringRes val  titleRes: Int = 0
-): Route {
+    @StringRes val titleRes: Int
+) : Route {
+
     sealed class Manager(
-        @StringRes titleRes: Int = 0
-    ):AppRoute(){
-        object Personal:Manager(R.string.personal)
-        object Clients:Manager(R.string.clients)
+        @StringRes titleRes: Int
+    ) : AppRoute(titleRes) {
+        object Personal : Manager(R.string.personal)
+        object Clients : Manager(R.string.clients)
     }
 
     sealed class Administrator(
-        @StringRes titleRes: Int = 0
-    ):AppRoute(){
-        object Storage:Administrator(R.string.storage)
-        object Purchase:Administrator(R.string.purchase)
+        @StringRes titleRes: Int
+    ) : AppRoute(titleRes) {
+        object Storage : Administrator(R.string.storage)
+        object Purchase : Administrator(R.string.purchase)
     }
 
     sealed class StartUI(
-        @StringRes titleRes: Int = 0
-    ):AppRoute(){
-        object Login:Administrator(R.string.login)
-        object Menu:Administrator(R.string.coffee_shop)
+        @StringRes titleRes: Int
+    ) : AppRoute(titleRes) {
+        object Login : StartUI(R.string.login)
+        object Menu : StartUI(R.string.coffee_shop)
     }
-
 }

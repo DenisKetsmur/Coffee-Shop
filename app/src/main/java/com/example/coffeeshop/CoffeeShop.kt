@@ -19,16 +19,18 @@ fun CoffeeShop(){
                 router
             )
         },
-        floatingActionButton = {
+        /*floatingActionButton = {
             if(navigationState.currentRoute == AppRoute.StartUI.Menu){
                 AppFloatingActionButton(
-                    onLaunchAction = {}
+                    onLaunchAction = {
+                        TODO()
+                    }
                 )
             }
         },
         bottomBar = {
-
-        },
+            // дизайнери дебіли на зафігачили дизайн
+        },*/
     ) { paddingValues ->
         AppNavigationHost(
             navigation = navigation,

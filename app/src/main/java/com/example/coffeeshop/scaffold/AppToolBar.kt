@@ -26,7 +26,7 @@ fun AppToolBar(
     router: Router,
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(text = stringResource((navigationState.currentRoute as? AppRoute)?.titleRes?:R.string.app_name))  },
+        title = { Text(text = stringResource((navigationState.currentRoute as? AppRoute)?.titleRes?:R.string.logo))  },
         navigationIcon = {
             Icon(
                 painter = painterResource(id = R.drawable.logo),

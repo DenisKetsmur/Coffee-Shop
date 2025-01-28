@@ -22,13 +22,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.scaffold.AppNavigationBar
+import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(){
+    val router = LocalRouter.current
+    LoginContent(
+        onLogin = { email, password ->
+            if(email == "admin" && password == "admin") {
+                router.pop()
+            }else if(email == "manager" && password == "manager") {
+                router.pop()
+            }
+        }
+    )
+}
+
+@Composable
+fun LoginContent(
+    onLogin: (String, String) ->Unit,
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
@@ -62,7 +82,6 @@ fun LoginScreen() {
                 .onFocusChanged { focusState ->
                     if (focusState.hasFocus) {
                         emailError = false
-
                     }else{
                         emailError = !email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) and email.isNotEmpty()
                     }
@@ -115,9 +134,7 @@ fun LoginScreen() {
 
         Button(
             onClick = {
-                if (!emailError && !passwordError) {
-                    //onLogin(email, password)
-                }
+                onLogin(email, password)
             },
             modifier = Modifier.fillMaxWidth(),
             enabled = (password.length > 6) and
