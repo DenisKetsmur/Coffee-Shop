@@ -36,9 +36,9 @@ fun LoginScreen(){
     val router = LocalRouter.current
     LoginContent(
         onLogin = { email, password ->
-            if(email == "admin" && password == "admin") {
+            if(email == "admin@gmail.com" && password == "admin") {
                 router.pop()
-            }else if(email == "manager" && password == "manager") {
+            }else if(email == "manager@gmail.com" && password == "manager") {
                 router.pop()
             }
         }
