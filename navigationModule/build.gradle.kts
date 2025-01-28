@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.navigationModule"
+    namespace = "com.example.navigationmodule"
     compileSdk = 35
 
     defaultConfig {

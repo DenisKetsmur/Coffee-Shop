@@ -2,7 +2,6 @@ package com.example.coffeeshop.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,17 +18,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,106 +45,85 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
 
+
+@Composable
+fun MenuScreen() {
+    MenuContent()
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun MenuScreen(){
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {Text(text = "Menu")},
-                navigationIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.logo),
-                        contentDescription = "logo",
-                        tint = Color.Unspecified,
-                        modifier = Modifier.padding(start = 10.dp)
-                    )
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            //todo
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AccountCircle,
-                            contentDescription = null,
+fun MenuContent() {
+    var searchText by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
+    val focusRequester = FocusRequester()
+    Column(
+        modifier = Modifier.wrapContentHeight()
+    ) {
+        LazyColumn {
+            stickyHeader {
+                TextField(
+                    value = searchText,
+                    onValueChange = { newText ->
+                        searchText = newText
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
+                    shape = RoundedCornerShape(28),
+                    label = {
+                        Text(
+                            text = "Search",
+                            color = Color.Gray
                         )
-                    }
-                },
-            )
-        },
-    ){ paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            var searchText by remember { mutableStateOf("") }
-            val focusManager = LocalFocusManager.current
-            val focusRequester = FocusRequester()
-
-            LazyColumn() {
-                stickyHeader {
-                    TextField(
-                        value = searchText,
-                        onValueChange = { newText ->
-                            searchText = newText
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                            .focusRequester(focusRequester),
-                        shape = RoundedCornerShape(28),
-                        label = {
-                            Text(
-                                text = "Search",
-                                color = Color.Gray
-                            )
-                        },
-                        singleLine = true,
-                        trailingIcon = {
-                            IconButton(
-                                onClick = {
-                                    searchText = ""
-                                    focusManager.clearFocus()
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Clear,
-                                    contentDescription = "Description",
-                                    tint = Color.Unspecified
-                                )
-                            }
-                        },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = {
+                    },
+                    singleLine = true,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                searchText = ""
                                 focusManager.clearFocus()
                             }
-                        )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Clear,
+                                contentDescription = "Description",
+                                tint = Color.Unspecified
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }
+                    )
+                )
+            }
+            item {
+                val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
+                var selectedCategory by remember { mutableStateOf<String?>(null) }
+                Row {
+                    ThreeStateButton()
+                    CategoryFilter(
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { category ->
+                            selectedCategory = category
+                        }
                     )
                 }
-                item {
-                    val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
-                    var selectedCategory by remember { mutableStateOf<String?>(null) }
-                    Row {
-                        ThreeStateButton()
-                        CategoryFilter(
-                            categories = categories,
-                            selectedCategory = selectedCategory,
-                            onCategorySelected = { category ->
-                                selectedCategory = category
-                            }
-                        )
-                    }
-                }
-                item {
-                    CustomCardProduct()
-                    CustomCardProduct()
-                    CustomCardProduct()
-                    CustomCardProduct()
-                    CustomCardProduct()
-                    CustomCardProduct()
-                }
+            }
+            item {
+                CustomCardProduct()
+                CustomCardProduct()
+                CustomCardProduct()
+                CustomCardProduct()
+                CustomCardProduct()
+                CustomCardProduct()
             }
         }
     }
@@ -174,7 +150,7 @@ fun ThreeStateButton() {
                 ButtonState.BYNAME -> painterResource(R.drawable.byname)
             },
             contentDescription = "filter",
-            tint =  Color.Unspecified
+            tint = Color.Unspecified
         )
     }
 }
@@ -225,25 +201,27 @@ fun FilterChip(
         modifier = Modifier.height(40.dp),
         border = BorderStroke(1.dp, Color.Gray),
         shape = RoundedCornerShape(8.dp)
-        ) {
+    ) {
         Text(label)
     }
 }
 
 @Composable
 fun CustomCardProduct(
-    nameProduct:String = "name product",
-    description:String = "description product",
-    price:String = "100",
-    image:Int = R.drawable.logo,
-){
+    nameProduct: String = "name product",
+    description: String = "description product",
+    price: String = "100",
+    image: Int = R.drawable.logo,
+) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(8.dp),
         shape = RoundedCornerShape(20)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(10.dp)
         ) {
             Icon(
@@ -252,7 +230,8 @@ fun CustomCardProduct(
                 modifier = Modifier.size(100.dp)
             )
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .weight(2f)
             ) {
                 Text(
@@ -265,7 +244,8 @@ fun CustomCardProduct(
             }
             Text(
                 text = "$price грн",
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
                     .padding(end = 7.dp)
             )
         }
@@ -273,9 +253,8 @@ fun CustomCardProduct(
 }
 
 
-
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewMenuScreen(){
+fun PreviewMenuScreen() {
     MenuScreen()
 }

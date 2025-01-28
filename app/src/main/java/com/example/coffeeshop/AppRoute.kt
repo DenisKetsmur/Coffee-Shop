@@ -1,23 +1,17 @@
 package com.example.coffeeshop
 
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.navigation.navigation.Route
-import com.example.coffeeshop.R
+import com.example.navigationmodule.Route
 
 
 sealed class AppRoute(
     @StringRes val  titleRes: Int = 0
-):Route{
-    sealed class Meneger(
+): Route {
+    sealed class Manager(
         @StringRes titleRes: Int = 0
     ):AppRoute(){
-        object Personal:Meneger(R.string.personal)
-        object Clients:Meneger(R.string.clients)
+        object Personal:Manager(R.string.personal)
+        object Clients:Manager(R.string.clients)
     }
 
     sealed class Administrator(

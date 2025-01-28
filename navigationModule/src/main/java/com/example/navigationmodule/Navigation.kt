@@ -1,9 +1,9 @@
-package com.example.navigation.navigation
+package com.example.navigationmodule
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import com.example.navigation.navigation.internal.ScreenStack
+import com.example.navigationmodule.internal.ScreenStack
 
 data class Navigation(
     val router: Router,

@@ -1,14 +1,14 @@
-package com.example.navigation.navigation.internal
+package com.example.navigationmodule.internal
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.example.navigation.navigation.NavigationState
-import com.example.navigation.navigation.Route
-import com.example.navigation.navigation.Router
+import com.example.navigationmodule.Route
+import com.example.navigationmodule.NavigationState
+import com.example.navigationmodule.Router
 
 internal class ScreenStack (
     private val routes:SnapshotStateList<Route>,
 
-    ):NavigationState, Router {
+    ): NavigationState, Router {
     override val isRoot: Boolean
         get() = routes.size == 1
     override val currentRoute: Route

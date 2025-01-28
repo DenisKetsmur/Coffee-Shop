@@ -21,5 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Coffee Shop"
 include(":app")
-include(":navigation")
 include(":navigationModule")
