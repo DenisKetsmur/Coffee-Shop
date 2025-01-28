@@ -1,7 +1,7 @@
-package com.example.navigation.internal
+package com.example.navigation.navigation.internal
 
-import com.example.navigation.Route
-import com.example.navigation.Router
+import com.example.navigation.navigation.Route
+import com.example.navigation.navigation.Router
 
 internal object EmptyRouter: Router {
     override fun launch(route: Route) = Unit

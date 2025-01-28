@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Coffee Shop</string>
+    <string name="personal">Персонал</string>
+    <string name="clients">Клієнти</string>
+    <string name="purchase">Закупівля</string>
+    <string name="storage">Склад</string>
+    <string name="coffee_shop">Coffee Shop</string>
+    <string name="login">Авторизація</string>
 </resources>

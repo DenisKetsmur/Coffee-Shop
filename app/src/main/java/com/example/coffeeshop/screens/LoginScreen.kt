@@ -37,8 +37,8 @@ fun LoginScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center
+            .padding(top = 180.dp, start = 20.dp, end = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Авторизація",
@@ -74,7 +74,8 @@ fun LoginScreen() {
             Text(
                 text = "Неправильний формат пошти",
                 color = Color.Red,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.align(Alignment.Start)
             )
         }
 
@@ -105,7 +106,8 @@ fun LoginScreen() {
             Text(
                 text = "Пароль повинен бути не менше 6 символів",
                 color = Color.Red,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.align(Alignment.Start)
             )
         }
 

@@ -1,10 +1,11 @@
 plugins {
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "com.example.navigationUltra"
+    namespace = "com.example.navigationModule"
     compileSdk = 35
 
     defaultConfig {
@@ -23,7 +24,6 @@ android {
             )
         }
     }
-
     buildFeatures{
         compose = true
     }
@@ -31,7 +31,6 @@ android {
     composeOptions{
         kotlinCompilerExtensionVersion = "1.5.14"
     }
-
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

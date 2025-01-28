@@ -1,4 +1,4 @@
-package com.example.navigation
+package com.example.navigation.navigation
 
 import androidx.compose.runtime.Stable
 

@@ -1,4 +1,4 @@
-package com.example.navigation
+package com.example.navigation.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
@@ -6,8 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import com.example.navigation.internal.EmptyRouter
+import com.example.navigation.navigation.internal.EmptyRouter
 
 
 val LocalRouter = staticCompositionLocalOf<Router>{
