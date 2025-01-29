@@ -27,5 +27,6 @@ sealed class AppRoute(
     ) : AppRoute(titleRes) {
         object Login : StartUI(R.string.login)
         object Menu : StartUI(R.string.coffee_shop)
+        object GeneralPageScreen : StartUI(R.string.app_name)
     }
 }

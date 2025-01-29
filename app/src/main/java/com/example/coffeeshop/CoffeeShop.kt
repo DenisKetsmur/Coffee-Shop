@@ -10,7 +10,7 @@ import com.example.navigationmodule.rememberNavigation
 
 @Composable
 fun CoffeeShop(){
-    val navigation = rememberNavigation(AppRoute.StartUI.Menu)
+    val navigation = rememberNavigation(AppRoute.StartUI.GeneralPageScreen)
     val (router, navigationState) = navigation
     Scaffold(
         topBar = {
