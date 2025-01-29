@@ -14,20 +14,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CategoryFilter(
+fun ChipGroup(
     categories: List<String>,
     selectedCategory: String?,
-    onCategorySelected: (String) -> Unit
+    onCategorySelected: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+        modifier = modifier.then(
+            Modifier.fillMaxWidth()
+            .padding(8.dp)),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories) { category ->
