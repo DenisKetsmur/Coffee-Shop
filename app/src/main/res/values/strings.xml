@@ -8,4 +8,5 @@
     <string name="login">Авторизація</string>
     <string name="turns_back_to_the_top">turns back to the top</string>
     <string name="logo">logo</string>
+    <string name="background_icon">background icon</string>
 </resources>
