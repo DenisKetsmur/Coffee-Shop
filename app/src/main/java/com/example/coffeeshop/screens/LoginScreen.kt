@@ -1,6 +1,7 @@
 package com.example.coffeeshop.screens
 
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,18 +29,28 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.ManagerUser
 import com.example.coffeeshop.scaffold.AppNavigationBar
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun LoginScreen(){
     val router = LocalRouter.current
+    val context = LocalContext.current
     LoginContent(
         onLogin = { email, password ->
-            if(email == "admin@gmail.com" && password == "admin") {
-                router.pop()
-            }else if(email == "manager@gmail.com" && password == "manager") {
-                router.restart(AppRoute.StartUI.Menu)
+            if (ManagerUser.login(email, password)) {
+                if (ManagerUser.isAdmin()) {
+                    router.launch(AppRoute.StartUI.Menu)
+                } else if (ManagerUser.isManager()) {
+                    router.launch(AppRoute.StartUI.Menu)
+                }else {
+                    Toast.makeText(
+                        context,
+                        "Неправильний пароль",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     )

@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -19,6 +21,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Coffee Shop"
+rootProject.name = "Coffee-Shop"
 include(":app")
 include(":navigationModule")
