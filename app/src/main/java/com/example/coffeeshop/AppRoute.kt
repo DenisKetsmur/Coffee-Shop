@@ -11,7 +11,12 @@ sealed class AppRoute(
     sealed class Manager(
         @StringRes titleRes: Int
     ) : AppRoute(titleRes) {
-        object Personal : Manager(R.string.personal)
+        sealed class Personal(
+            @StringRes titleRes: Int
+        ): Manager(titleRes){
+            object RevisionPersonal: Personal(R.string.personal)
+            object EditPersonal: Personal(R.string.personal)
+        }
         object Clients : Manager(R.string.clients)
     }
 

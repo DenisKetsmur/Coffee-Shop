@@ -39,7 +39,7 @@ fun LoginScreen(){
             if(email == "admin@gmail.com" && password == "admin") {
                 router.pop()
             }else if(email == "manager@gmail.com" && password == "manager") {
-                router.pop()
+                router.restart(AppRoute.StartUI.Menu)
             }
         }
     )

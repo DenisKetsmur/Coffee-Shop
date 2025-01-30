@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.R
 import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
 import com.example.coffeeshop.ui.theme.primaryLightHighContrast
+import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun PersonnelScreen() {
@@ -121,10 +122,17 @@ fun PersonnelScreen() {
 }
 
 
+
+
+
+
+
 @Composable
 fun CardPersonnel(
-    personnel: Personnel
+    personnel: Personnel,
+    onPressButton: ()->Unit ={}
 ){
+    val router = LocalRouter.current
     Card(
         modifier = Modifier.fillMaxWidth()
             .padding(10.dp),
@@ -167,7 +175,7 @@ fun CardPersonnel(
             ){
                 FloatingActionButton(
                     onClick = {
-
+                        router.launch()
                     },
                     modifier = Modifier.padding(10.dp)
                 ) {

@@ -2,6 +2,7 @@ package com.example.coffeeshop
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.coffeeshop.screens.EditPersonnel
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
 import com.example.coffeeshop.screens.MenuScreen
@@ -22,7 +23,8 @@ fun AppNavigationHost(
             AppRoute.StartUI.Menu -> MenuScreen()
             AppRoute.StartUI.Login -> LoginScreen()
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
-            AppRoute.Manager.Personal -> PersonnelScreen()
+            AppRoute.Manager.Personal.RevisionPersonal -> PersonnelScreen()
+            AppRoute.Manager.Personal.RevisionPersonal -> EditPersonnelScreen()
         }
     }
 }

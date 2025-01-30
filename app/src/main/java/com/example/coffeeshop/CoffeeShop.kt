@@ -1,6 +1,11 @@
 package com.example.coffeeshop
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,12 +19,14 @@ fun CoffeeShop(){
     val (router, navigationState) = navigation
     Scaffold(
         topBar = {
-            AppToolBar(
-                navigationState,
-                router
-            )
+            if(navigationState.currentRoute != AppRoute.StartUI.GeneralPageScreen){
+                AppToolBar(
+                    navigationState,
+                    router
+                )
+            }
         },
-        /*floatingActionButton = {
+        floatingActionButton = {
             if(navigationState.currentRoute == AppRoute.StartUI.Menu){
                 AppFloatingActionButton(
                     onLaunchAction = {
@@ -28,7 +35,7 @@ fun CoffeeShop(){
                 )
             }
         },
-        bottomBar = {
+        /*bottomBar = {
             // дизайнери дебіли на зафігачили дизайн
         },*/
     ) { paddingValues ->

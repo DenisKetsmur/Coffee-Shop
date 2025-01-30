@@ -17,6 +17,7 @@ fun rememberNavigation(initialRoute: Route): Navigation {
         Navigation(
             router = screenStack,
             navigationState = screenStack
+
         )
     }
 
