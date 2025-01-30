@@ -2,6 +2,8 @@ package com.example.coffeeshop
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.coffeeshop.screens.Administrator.PurchaseScreen
+import com.example.coffeeshop.screens.Administrator.StorageScreen
 import com.example.coffeeshop.screens.Manager.EditPersonnelScreen
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
@@ -25,6 +27,8 @@ fun AppNavigationHost(
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
             AppRoute.Manager.Personal.RevisionPersonal -> PersonnelScreen()
             AppRoute.Manager.Personal.RevisionPersonal -> EditPersonnelScreen()
+            AppRoute.Administrator.Purchase.RevisionPurchase -> PurchaseScreen()
+            AppRoute.Administrator.Storage.RevisionStorage -> StorageScreen()
         }
     }
 }

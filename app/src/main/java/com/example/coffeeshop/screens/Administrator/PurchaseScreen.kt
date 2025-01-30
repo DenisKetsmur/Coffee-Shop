@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -119,14 +121,16 @@ fun CardSupplier(
     val router = LocalRouter.current
     Card(
         modifier = Modifier.fillMaxWidth()
-            .padding(10.dp),
+            .padding(10.dp)
+            .size(100.dp)
+            .clip(CircleShape),
         shape = RoundedCornerShape(10)
     ) {
         Row{
             Image(
                 painter = supplier.photo,
                 contentDescription = null,
-                modifier = Modifier.size(200.dp)
+                modifier = Modifier.size(100.dp)
                     .weight(1f)
             )
             Column(
