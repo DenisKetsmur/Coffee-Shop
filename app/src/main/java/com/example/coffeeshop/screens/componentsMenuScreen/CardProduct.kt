@@ -18,6 +18,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
 
+data class Product(
+    val nameProduct: String,
+    val description: String,
+    val price: String,
+    val image: Int,
+)
+
+
 @Composable
 fun CustomCardProduct(
     nameProduct: String = "name product",

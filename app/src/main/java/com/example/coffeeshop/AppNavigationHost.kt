@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
 import com.example.coffeeshop.screens.MenuScreen
+import com.example.coffeeshop.screens.PersonnelScreen
 import com.example.navigationmodule.Navigation
 import com.example.navigationmodule.NavigationHost
 
@@ -21,6 +22,7 @@ fun AppNavigationHost(
             AppRoute.StartUI.Menu -> MenuScreen()
             AppRoute.StartUI.Login -> LoginScreen()
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
+            AppRoute.Manager.Personal -> PersonnelScreen()
         }
     }
 }
