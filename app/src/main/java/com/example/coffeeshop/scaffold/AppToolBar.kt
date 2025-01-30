@@ -59,9 +59,7 @@ fun AppToolBar(
                 }
             },
             actions = {
-                if(navigationState.currentRoute != AppRoute.StartUI.Login &&
-                    ManagerUser.currentUser == null
-                    ){
+                if(navigationState.currentRoute != AppRoute.StartUI.Login){
                     IconButton(onClick = { router.launch(AppRoute.StartUI.Login) }
                     ) {
                         Icon(

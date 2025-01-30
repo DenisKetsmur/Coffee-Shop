@@ -1,6 +1,9 @@
 package com.example.coffeeshop.scaffold
 
 import android.os.UserManager
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -12,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.R
 import com.example.coffeeshop.data.ManagerUser
 import com.example.coffeeshop.data.Position
 import com.example.navigationmodule.NavigationState
@@ -48,7 +52,7 @@ fun AppNavigationBar(
                 onClick = { router.restart(tab) },
                 icon = {
                     Icon(
-                        imageVector =  ImageVector.vectorResource(tab.icon!!),
+                        imageVector = ImageVector.vectorResource(R.drawable.logo),
                         contentDescription = stringResource(tab.titleRes)
                     )
                 }

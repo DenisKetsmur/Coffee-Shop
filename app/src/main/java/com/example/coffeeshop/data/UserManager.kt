@@ -2,7 +2,7 @@ package com.example.coffeeshop.data
 
 object ManagerUser {
     private val users = listOf(
-        User("admin@gmail.com", "admin1", Position.ADMINISTRATOR),
+        User("admin@gmail.com", "admin11", Position.ADMINISTRATOR),
         User("manager@gmail.com", "manager", Position.MANAGER)
     )
 
