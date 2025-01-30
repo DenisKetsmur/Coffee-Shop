@@ -2,7 +2,7 @@ package com.example.coffeeshop
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.coffeeshop.screens.EditPersonnel
+import com.example.coffeeshop.screens.EditPersonnelScreen
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
 import com.example.coffeeshop.screens.MenuScreen

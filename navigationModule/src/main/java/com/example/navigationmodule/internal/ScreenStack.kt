@@ -4,20 +4,16 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.navigationmodule.Route
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
-import com.example.navigationmodule.User
 
 internal class ScreenStack (
     private val routes:SnapshotStateList<Route>,
 
     ): NavigationState, Router {
+
     override val isRoot: Boolean
         get() = routes.size == 1
     override val currentRoute: Route
         get() = routes.last()
-    override val currentUser: User
-        get() = User(
-            login =
-        )
 
     override fun launch(route: Route) {
         routes.add(route)
@@ -33,4 +29,5 @@ internal class ScreenStack (
             add(route)
         }
     }
+
 }

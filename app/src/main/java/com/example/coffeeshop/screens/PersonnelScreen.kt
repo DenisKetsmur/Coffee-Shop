@@ -175,7 +175,7 @@ fun CardPersonnel(
             ){
                 FloatingActionButton(
                     onClick = {
-                        router.launch()
+                        //
                     },
                     modifier = Modifier.padding(10.dp)
                 ) {
