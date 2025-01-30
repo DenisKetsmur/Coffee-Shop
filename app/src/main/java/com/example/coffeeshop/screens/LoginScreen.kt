@@ -41,16 +41,16 @@ fun LoginScreen(){
         onLogin = { email, password ->
             if (ManagerUser.login(email, password)) {
                 if (ManagerUser.isAdmin()) {
-                    router.launch(AppRoute.StartUI.Menu)
+                    router.restart(AppRoute.Administrator.Purchase.RevisionPurchase)
                 } else if (ManagerUser.isManager()) {
-                    router.launch(AppRoute.StartUI.Menu)
-                }else {
-                    Toast.makeText(
-                        context,
-                        "Неправильний пароль",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    router.restart(AppRoute.Manager.Clients.RevisionClients)
                 }
+            }else {
+                Toast.makeText(
+                    context,
+                    "Неправильний пароль",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     )

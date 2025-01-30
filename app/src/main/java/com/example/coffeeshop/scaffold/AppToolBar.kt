@@ -1,11 +1,13 @@
 package com.example.coffeeshop.scaffold
 
+import android.os.UserManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.ManagerUser
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
 
@@ -57,11 +60,23 @@ fun AppToolBar(
                 }
             },
             actions = {
-                if(navigationState.currentRoute != AppRoute.StartUI.Login){
+                if(navigationState.currentRoute != AppRoute.StartUI.Login &&
+                    ManagerUser.currentUser == null){
                     IconButton(onClick = { router.launch(AppRoute.StartUI.Login) }
                     ) {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
+                            contentDescription = null,
+                        )
+                    }
+                } else if(ManagerUser.currentUser != null &&
+                    navigationState.currentRoute != AppRoute.StartUI.Login){
+                    IconButton(onClick = {
+                        ManagerUser.logout()
+                        router.restart(AppRoute.StartUI.Menu) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
                             contentDescription = null,
                         )
                     }

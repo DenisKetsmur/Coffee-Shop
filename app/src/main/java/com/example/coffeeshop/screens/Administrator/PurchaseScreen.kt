@@ -1,12 +1,16 @@
 package com.example.coffeeshop.screens.Administrator
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,11 +26,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -119,16 +126,27 @@ fun CardSupplier(
     val router = LocalRouter.current
     Card(
         modifier = Modifier.fillMaxWidth()
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable {
+                //
+            },
         shape = RoundedCornerShape(10)
     ) {
         Row{
-            Image(
-                painter = supplier.photo,
-                contentDescription = null,
-                modifier = Modifier.size(200.dp)
-                    .weight(1f)
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, Color.Gray, CircleShape) // Додаємо круглу рамку
+            ){
+                Image(
+                    painter = supplier.photo,
+                    modifier = Modifier.size(100.dp),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                )
+            }
             Column(
                 modifier = Modifier.weight(2f)
                     .padding(start = 10.dp, top = 5.dp)
@@ -136,10 +154,11 @@ fun CardSupplier(
                 Text(
                     text = supplier.nameCompany,
                     fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
                 Text(
-                    text = "Категорії для замовлень: ${supplier.category}",
-                    style = TextStyle(lineHeight = 23.sp)
+                    text = "Категорії для замовлень: ${supplier.category.keys.joinToString(", ")}}",
+                            style = TextStyle(lineHeight = 23.sp)
                 )
             }
         }
@@ -149,10 +168,17 @@ fun CardSupplier(
 
 data class Supplier(
     val id:Int = 1,
-    val nameCompany: String = "bober",
+    val nameCompany: String = "Bober",
     val email:String = "kurva@gnal.com",
     val phoneNumber: String = "234234234234",
-    val category:List<String> = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки"),
+    val category:Map<String, Double> = mapOf(
+        "ghjler" to 124.0,
+        "Кава" to 234.0,
+        "Чай" to 234.0,
+        "Солодощі" to 234.0,
+        "Холодні напої" to 123.0,
+        "Снеки" to 123.0,
+    ),
     val photo: Painter
 )
 

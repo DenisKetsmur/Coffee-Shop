@@ -15,7 +15,7 @@ val LocalRouter = staticCompositionLocalOf<Router>{
 @Composable
 fun NavigationHost(
     navigation: Navigation,
-    modifier: Modifier =Modifier,
+    modifier: Modifier = Modifier,
     routeMapper: @Composable (Route)->Unit
 ){
     val (router, navigationState) = navigation
