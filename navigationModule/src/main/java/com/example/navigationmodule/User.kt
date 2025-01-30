@@ -11,19 +11,7 @@ enum class Position {
 }
 
 interface UserProvider {
-    fun getCurrentUser(): User?
-}
-
-class AdministratorUserProvider(private val user: User) : UserProvider {
-    override fun getCurrentUser(): User {
-        return user
-    }
-}
-
-class ManagerUserProvider(private val user: User) : UserProvider {
-    override fun getCurrentUser(): User {
-        return user
-    }
+    fun getCurrentUser(): User
 }
 
 
