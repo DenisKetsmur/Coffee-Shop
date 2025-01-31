@@ -6,11 +6,11 @@ import androidx.compose.runtime.setValue
 
 object ManagerUser {
     private val users = listOf(
-        User("admin@gmail.com", "admin1", Position.ADMINISTRATOR),
-        User("manager@gmail.com", "manager", Position.MANAGER)
+        User("admin@gmail.com", "123456789", Position.ADMINISTRATOR),
+        User("manager@gmail.com", "123456789", Position.MANAGER)
     )
 
-    var currentUser by mutableStateOf<User?>(User("admin@gmail.com", "admin1", Position.ADMINISTRATOR))
+    var currentUser by mutableStateOf<User?>(null)
 
     fun login(email: String, password: String): Boolean {
         val user = users.find { it.login == email && it.password == password }

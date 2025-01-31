@@ -38,7 +38,12 @@ fun AppToolBar(
                     Text(text = stringResource((navigationState.currentRoute as? AppRoute)?.titleRes?:R.string.logo))  }
             },
             navigationIcon = {
-                if(navigationState.currentRoute == AppRoute.StartUI.Login) {
+                if(navigationState.currentRoute == AppRoute.StartUI.Login ||
+                    navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase ||
+                    navigationState.currentRoute == AppRoute.Administrator.Storage.EditStorage ||
+                    navigationState.currentRoute == AppRoute.Manager.Personal.EditPersonal ||
+                    navigationState.currentRoute == AppRoute.Manager.Clients.RevisionHistoryClient
+                    ) {
                     IconButton(
                         onClick = {
                             router.pop()

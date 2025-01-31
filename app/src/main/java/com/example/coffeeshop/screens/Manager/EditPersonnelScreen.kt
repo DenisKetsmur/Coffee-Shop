@@ -27,29 +27,33 @@ import com.example.coffeeshop.AppRoute
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun EditPersonnelScreen(){
+fun EditPersonnelScreen() {
+
 }
 
 
 @Composable
 fun CardPersonnel(
     personnel: Personnel,
-){
+    onClick: ()->Unit = {},
+) {
     val router = LocalRouter.current
     Card(
-        modifier = Modifier.fillMaxWidth()
-            .padding(10.dp),
-        shape = RoundedCornerShape(10)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp), shape = RoundedCornerShape(10)
     ) {
-        Row{
+        Row {
             Image(
                 painter = personnel.photo,
                 contentDescription = null,
-                modifier = Modifier.size(200.dp)
+                modifier = Modifier
+                    .size(200.dp)
                     .weight(1f)
             )
             Column(
-                modifier = Modifier.weight(2f)
+                modifier = Modifier
+                    .weight(2f)
                     .padding(start = 10.dp, top = 5.dp)
             ) {
                 Text(
@@ -64,8 +68,7 @@ fun CardPersonnel(
                         |Зарплата: ${personnel.salary}
                         |Стаж: ${personnel.experience}
                         |Найм: ${personnel.startJob}
-                    """.trimMargin(),
-                    style = TextStyle(lineHeight = 23.sp)
+                    """.trimMargin(), style = TextStyle(lineHeight = 23.sp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
@@ -75,12 +78,11 @@ fun CardPersonnel(
             }
             Box(
                 contentAlignment = Alignment.BottomEnd
-            ){
+            ) {
                 FloatingActionButton(
                     onClick = {
-                        router.launch(AppRoute.Manager.Personal.EditPersonal)
-                    },
-                    modifier = Modifier.padding(10.dp)
+                        //router.launch(AppRoute.Manager.Personal.EditPersonal)
+                    }, modifier = Modifier.padding(10.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Create,
@@ -88,7 +90,6 @@ fun CardPersonnel(
                     )
                 }
             }
-
         }
     }
 }

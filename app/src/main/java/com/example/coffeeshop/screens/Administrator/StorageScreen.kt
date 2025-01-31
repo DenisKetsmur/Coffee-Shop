@@ -3,7 +3,9 @@ package com.example.coffeeshop.screens.Administrator
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -30,7 +33,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.breens.beetablescompose.BeeTablesCompose
 import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
+import androidx.compose.foundation.layout.Box
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -43,7 +49,7 @@ fun StorageScreen() {
 
 
     LazyColumn {
-        item {
+        stickyHeader {
             TextField(
                 value = searchText,
                 onValueChange = { newText ->
@@ -83,6 +89,9 @@ fun StorageScreen() {
                     }
                 )
             )
+        }
+        
+        item {
             ChipGroup(
                 categories,
                 selectedCategory,
@@ -90,23 +99,171 @@ fun StorageScreen() {
                     selectedCategory = category
                 }
             )
-        }
-        stickyHeader {
-            Card(){
-                Row(){
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(2.dp),
-                        color = Color.Gray
-                    )
-                }
+            val headerTitles = listOf("№", "Назва", "Категорія", "Од. вим.", "Кількість")
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .padding(16.dp)
+            ){
+                BeeTablesCompose(
+                    productList,
+                    headerTableTitles = headerTitles,
+                )
             }
-
         }
     }
 }
 
+
+data class Product(
+    val id:Int? = null,
+    val name:String,
+    val category: String,
+    val unit:String? = null,
+    val count:Double? = null,
+)
+
+val productList = listOf(
+    Product(
+        id = 1,
+        name = "Кава арабіка",
+        category = "Сировина",
+        unit = "кг",
+        count = 10.0
+    ),
+    Product(
+        id = 2,
+        name = "Кава робуста",
+        category = "Сировина",
+        unit = "кг",
+        count = 8.0
+    ),
+    Product(
+        id = 3,
+        name = "Молоко коров’яче",
+        category = "Сировина",
+        unit = "л",
+        count = 25.0
+    ),
+    Product(
+        id = 4,
+        name = "Шоколад чорний",
+        category = "Сировина",
+        unit = "кг",
+        count = 5.0
+    ),
+    Product(
+        id = 5,
+        name = "Цукор тростниковий",
+        category = "Сировина",
+        unit = "кг",
+        count = 7.0
+    ),
+    Product(
+        id = 6,
+        name = "Мука пшенична",
+        category = "Сировина",
+        unit = "кг",
+        count = 15.0
+    ),
+    Product(
+        id = 7,
+        name = "Яйця курячі",
+        category = "Сировина",
+        unit = "десятки",
+        count = 3.0
+    ),
+    Product(
+        id = 8,
+        name = "Маргарин",
+        category = "Сировина",
+        unit = "кг",
+        count = 4.0
+    ),
+    Product(
+        id = 9,
+        name = "Фрукти (яблука)",
+        category = "Сировина",
+        unit = "кг",
+        count = 20.0
+    ),
+    Product(
+        id = 10,
+        name = "Дріжджі сухі",
+        category = "Сировина",
+        unit = "кг",
+        count = 1.0
+    ),
+    Product(
+        id = 1,
+        name = "Кава арабіка",
+        category = "Сировина",
+        unit = "кг",
+        count = 10.0
+    ),
+    Product(
+        id = 2,
+        name = "Кава робуста",
+        category = "Сировина",
+        unit = "кг",
+        count = 8.0
+    ),
+    Product(
+        id = 3,
+        name = "Молоко коров’яче",
+        category = "Сировина",
+        unit = "л",
+        count = 25.0
+    ),
+    Product(
+        id = 4,
+        name = "Шоколад чорний",
+        category = "Сировина",
+        unit = "кг",
+        count = 5.0
+    ),
+    Product(
+        id = 5,
+        name = "Цукор тростниковий",
+        category = "Сировина",
+        unit = "кг",
+        count = 7.0
+    ),
+    Product(
+        id = 6,
+        name = "Мука пшенична",
+        category = "Сировина",
+        unit = "кг",
+        count = 15.0
+    ),
+    Product(
+        id = 7,
+        name = "Яйця курячі",
+        category = "Сировина",
+        unit = "десятки",
+        count = 3.0
+    ),
+    Product(
+        id = 8,
+        name = "Маргарин",
+        category = "Сировина",
+        unit = "кг",
+        count = 4.0
+    ),
+    Product(
+        id = 9,
+        name = "Фрукти (яблука)",
+        category = "Сировина",
+        unit = "кг",
+        count = 20.0
+    ),
+    Product(
+        id = 10,
+        name = "Дріжджі сухі",
+        category = "Сировина",
+        unit = "кг",
+        count = 1.0
+    )
+)
 
 
 @Preview(showSystemUi = true)

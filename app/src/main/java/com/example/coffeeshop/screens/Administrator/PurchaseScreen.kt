@@ -107,7 +107,7 @@ fun PurchaseScreen() {
             )
         }
         item{
-            CardSupplier(supplierDataList[0]){router?.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
             CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
             CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
             CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
@@ -169,20 +169,20 @@ fun CardSupplier(
 val supplierDataList = listOf(
     Supplier(
         id = 1,
-        nameCompany = "bober",
-        email = "kurva@gnal.com",
-        phoneNumber = "234234234234",
+        nameCompany = "Company",
+        email = "Company@gnal.com",
+        phoneNumber = "+380345345234",
         products = listOf(
-            Product("Еспресо", "Кава", ),
-            Product("Капучино", "Кава", ),
-            Product("Лате", "Кава", ),
-            Product("Американо", "Кава", ),
-            Product("Торт Чизкейк", "Десерт",),
-            Product("Круасан", "Випічка", ),
-            Product("Маффін з ягодами", "Випічка",),
-            Product("Тістечко Шоколадне", "Десерт", ),
-            Product("Фреш з апельсина", "Напої", ),
-            Product("Чай зелений", "Напої",)
+            Product(name ="Еспресо", category = "Кава"),
+            Product(name ="Капучино",category = "Кава"),
+            Product(name ="Лате", category = "Кава"),
+            Product(name ="Американо", category = "Кава"),
+            Product(name ="Торт Чизкейк", category = "Десерт"),
+            Product(name ="Круасан", category = "Випічка"),
+            Product(name ="Маффін з ягодами", category = "Випічка"),
+            Product(name ="Тістечко Шоколадне", category = "Десерт"),
+            Product(name ="Фреш з апельсина",category =  "Напої"),
+            Product(name ="Чай зелений", category = "Напої")
         ),
         photo = null
     )
@@ -203,11 +203,7 @@ data class Supplier(
     }
 }
 
-data class Product(
-    val name:String,
-    val category: String,
-    //val price:Double?,
-)
+
 
 
 @Preview(showSystemUi = true)

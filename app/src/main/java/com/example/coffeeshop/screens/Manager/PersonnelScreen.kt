@@ -41,7 +41,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.Position
 import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
 import com.example.navigationmodule.LocalRouter
 
@@ -155,7 +157,6 @@ fun PersonnelScreen() {
 @Composable
 fun CardPersonnel(
     personnel: Personnel,
-    onPressButton: ()->Unit ={}
 ){
     val router = LocalRouter.current
     Card(
@@ -200,7 +201,7 @@ fun CardPersonnel(
             ){
                 FloatingActionButton(
                     onClick = {
-                        //
+                        router.launch(AppRoute.Manager.Personal.EditPersonal)
                     },
                     modifier = Modifier.padding(10.dp)
                 ) {
@@ -210,7 +211,6 @@ fun CardPersonnel(
                     )
                 }
             }
-
         }
     }
 }
@@ -219,13 +219,13 @@ fun CardPersonnel(
 
 data class Personnel(
     val id:Int = 1,
-    val name: String = "bober",
-    val surname:String = "kurva",
-    val phoneNumber: String = "234234234234",
+    val name: String = "name",
+    val surname:String = "surname",
+    val phoneNumber: String = "+380345345",
     val email:String = "2323423@23232.com",
-    val position:String = "sfdsdfsdf",
+    val position:Position = Position.MANAGER,
     val salary:String = "34234",
-    val experience:String = "dfsdfsdf",
+    val experience:String = "2 years",
     val startJob:String = "12/12/12",
     val photo:Painter,
     val status:String = "активний",

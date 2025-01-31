@@ -39,117 +39,113 @@ import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun ClientsScreen() {
-        var searchText by remember { mutableStateOf("") }
-        val focusManager = LocalFocusManager.current
-        val focusRequester = FocusRequester()
-        LazyColumn {
-            item {
-                TextField(
-                    value = searchText,
-                    onValueChange = { newText ->
-                        searchText = newText
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    shape = RoundedCornerShape(28),
-                    label = {
-                        Text(
-                            text = "Search",
-                            color = Color.Gray
-                        )
-                    },
-                    singleLine = true,
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                searchText = ""
-                                focusManager.clearFocus()
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Clear,
-                                contentDescription = "Description",
-                                tint = Color.Unspecified
-                            )
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
+    var searchText by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
+    val focusRequester = FocusRequester()
+    LazyColumn {
+        item {
+            TextField(
+                value = searchText,
+                onValueChange = { newText ->
+                    searchText = newText
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                shape = RoundedCornerShape(28),
+                label = {
+                    Text(
+                        text = "Search",
+                        color = Color.Gray
+                    )
+                },
+                singleLine = true,
+                trailingIcon = {
+                    IconButton(
+                        onClick = {
+                            searchText = ""
                             focusManager.clearFocus()
                         }
-                    )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = "Description",
+                            tint = Color.Unspecified
+                        )
+                    }
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
                 )
-                CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-                CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-                CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-                CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-                CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-                CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-            }
+            )
+            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
         }
     }
+}
 
 
-
-
-
-
-
-    @Composable
-    fun CardClients(
-        client: Personnel
-    ){
-        val router = LocalRouter.current
-        Card(
-            modifier = Modifier.fillMaxWidth()
-                .padding(10.dp),
-            shape = RoundedCornerShape(10)
-        ) {
-            Row{
-                Image(
-                    painter = client.photo,
-                    contentDescription = null,
-                    modifier = Modifier.size(200.dp)
-                        .weight(1f)
+@Composable
+fun CardClients(
+    client: Personnel
+) {
+    val router = LocalRouter.current
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        shape = RoundedCornerShape(10)
+    ) {
+        Row {
+            Image(
+                painter = client.photo,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(200.dp)
+                    .weight(1f)
+            )
+            Column(
+                modifier = Modifier
+                    .weight(2f)
+                    .padding(start = 10.dp, top = 5.dp)
+            ) {
+                Text(
+                    text = "${client.name} ${client.surname}",
+                    fontWeight = FontWeight.Bold,
                 )
-                Column(
-                    modifier = Modifier.weight(2f)
-                        .padding(start = 10.dp, top = 5.dp)
-                ) {
-                    Text(
-                        text = "${client.name} ${client.surname}",
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Text(
-                        text = """
+                Text(
+                    text = """
                         |Контакти: ${client.phoneNumber}
                         |${client.email}
                     """.trimMargin(),
-                        style = TextStyle(lineHeight = 23.sp)
-                    )
-                }
+                    style = TextStyle(lineHeight = 23.sp)
+                )
             }
         }
     }
+}
 
 
-
-    data class Client(
-        val id:Int = 1,
-        val name: String = "bober",
-        val surname:String = "kurva",
-        val phoneNumber: String = "234234234234",
-        val email:String = "2323423@23232.com",
-    )
-
+data class Client(
+    val id: Int = 1,
+    val name: String = "bober",
+    val surname: String = "kurva",
+    val phoneNumber: String = "234234234234",
+    val email: String = "2323423@23232.com",
+)
 
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewClientsScreen(){
+fun PreviewClientsScreen() {
     ClientsScreen()
 }

@@ -46,7 +46,7 @@ sealed class AppRoute(
             @StringRes titleRes: Int,
             icon: Int? = null,
         ) : Administrator(titleRes, icon) {
-            object RevisionStorage : Storage(R.string.storage, icon = R.drawable.shopping_cart)
+            object RevisionStorage : Storage(R.string.storage, icon = R.drawable.garage_home)
             object EditStorage : Storage(R.string.storage)
         }
 
@@ -54,7 +54,7 @@ sealed class AppRoute(
             @StringRes titleRes: Int,
             icon: Int? = null,
         ) : Administrator(titleRes, icon) {
-            object RevisionPurchase : Purchase(R.string.purchase, icon = R.drawable.garage_home)
+            object RevisionPurchase : Purchase(R.string.purchase, icon = R.drawable.shopping_cart)
             object InformationPurchase : Purchase(R.string.purchase)
         }
     }
