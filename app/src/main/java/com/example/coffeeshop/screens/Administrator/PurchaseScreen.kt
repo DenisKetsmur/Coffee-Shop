@@ -55,7 +55,7 @@ fun PurchaseScreen() {
     val focusRequester = FocusRequester()
     val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
     var selectedCategory by remember { mutableStateOf<String?>(null) }
-
+    val router = LocalRouter.current
 
     LazyColumn {
         item {
@@ -107,12 +107,16 @@ fun PurchaseScreen() {
             )
         }
         item{
-            CardSupplier(supplierDataList[0])
-            CardSupplier(supplierDataList[0])
-            CardSupplier(supplierDataList[0])
-            CardSupplier(supplierDataList[0])
-            CardSupplier(supplierDataList[0])
-            CardSupplier(supplierDataList[0])
+            CardSupplier(supplierDataList[0]){router?.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
         }
     }
 }
@@ -121,13 +125,13 @@ fun PurchaseScreen() {
 @Composable
 fun CardSupplier(
     supplier: Supplier,
+    onClick:()->Unit
 ){
-    val router = LocalRouter.current
     Card(
         modifier = Modifier.fillMaxWidth()
             .padding(5.dp)
             .clickable {
-                router.launch(AppRoute.Administrator.Purchase.InformationPurchase)
+                onClick.invoke()
             },
         shape = RoundedCornerShape(50)
     ) {
@@ -169,16 +173,16 @@ val supplierDataList = listOf(
         email = "kurva@gnal.com",
         phoneNumber = "234234234234",
         products = listOf(
-            Product("Еспресо", "Кава", 50.0),
-            Product("Капучино", "Кава", 70.0),
-            Product("Лате", "Кава", 75.0),
-            Product("Американо", "Кава", 60.0),
-            Product("Торт Чизкейк", "Десерт", 90.0),
-            Product("Круасан", "Випічка", 40.0),
-            Product("Маффін з ягодами", "Випічка", 50.0),
-            Product("Тістечко Шоколадне", "Десерт", 60.0),
-            Product("Фреш з апельсина", "Напої", 45.0),
-            Product("Чай зелений", "Напої", 35.0)
+            Product("Еспресо", "Кава", ),
+            Product("Капучино", "Кава", ),
+            Product("Лате", "Кава", ),
+            Product("Американо", "Кава", ),
+            Product("Торт Чизкейк", "Десерт",),
+            Product("Круасан", "Випічка", ),
+            Product("Маффін з ягодами", "Випічка",),
+            Product("Тістечко Шоколадне", "Десерт", ),
+            Product("Фреш з апельсина", "Напої", ),
+            Product("Чай зелений", "Напої",)
         ),
         photo = null
     )
@@ -202,7 +206,7 @@ data class Supplier(
 data class Product(
     val name:String,
     val category: String,
-    val price:Double,
+    //val price:Double?,
 )
 
 

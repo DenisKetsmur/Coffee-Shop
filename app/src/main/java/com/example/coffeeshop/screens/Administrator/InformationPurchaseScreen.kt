@@ -1,9 +1,11 @@
 package com.example.coffeeshop.screens.Administrator
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -81,12 +83,19 @@ fun InformationPurchase(
                     }
                 }
             }
-
             val headerTitles = listOf("Назва", "Ціна", "Кількість")
-                    BeeTablesCompose(
-                        data = supplierDataList,
-                        headerTableTitles = headerTitles,
-                    )
-                }
+
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .padding(16.dp)
+            ){
+                BeeTablesCompose(
+                    data = supplier.products,
+                    headerTableTitles = headerTitles,
+
+                )
             }
         }
+    }
+}
+
