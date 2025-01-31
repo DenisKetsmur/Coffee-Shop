@@ -101,14 +101,12 @@ fun PurchaseScreen() {
             )
         }
         item{
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
-            CardSupplier(supplier = Supplier(photo = painterResource(id = R.mipmap.face_photo)))
+            CardSupplier(supplierDataList[0])
+            CardSupplier(supplierDataList[0])
+            CardSupplier(supplierDataList[0])
+            CardSupplier(supplierDataList[0])
+            CardSupplier(supplierDataList[0])
+            CardSupplier(supplierDataList[0])
         }
     }
 }
@@ -128,7 +126,7 @@ fun CardSupplier(
     ) {
         Row{
             Image(
-                painter = supplier.photo,
+                painter =supplier.photo ?: painterResource(R.mipmap.face_photo),
                 contentDescription = null,
                 modifier = Modifier.size(100.dp)
                     .weight(1f)
@@ -142,22 +140,48 @@ fun CardSupplier(
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    text = "Категорії для замовлень: ${supplier.category}",
+                    text = "Категорії для замовлень: ${supplier.getCategoryList(supplierDataList[0])}",
                     style = TextStyle(lineHeight = 23.sp)
                 )
             }
         }
     }
 }
-
-
+val supplierDataList = listOf(
+    Supplier(
+        id = 1,
+        nameCompany = "bober",
+        email = "kurva@gnal.com",
+        phoneNumber = "234234234234",
+        products = listOf(
+            Product("картоїа", "eerteg", 1231.0),
+            Product("dfgdf", "sdfsfss", 131.0),
+            Product("картоdfgdїа", "sfdsfs", 121.0),
+            Product("dgfdgd", "fsdfs", 111.0)
+        ),
+        photo = null /* Ваше зображення тут */
+    )
+)
 data class Supplier(
-    val id:Int = 1,
-    val nameCompany: String = "bober",
-    val email:String = "kurva@gnal.com",
-    val phoneNumber: String = "234234234234",
-    val category:List<String> = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки"),
-    val photo: Painter
+    val id:Int,
+    val nameCompany: String,
+    val email:String,
+    val phoneNumber: String,
+    val products: List<Product>,
+    val photo: Painter?,
+){
+    fun getCategoryList(supplier: Supplier): String {
+        return supplier.products
+            .map { it.category }
+            .distinct()
+            .joinToString(", ")
+    }
+}
+
+data class Product(
+    val name:String,
+    val category: String,
+    val price:Double,
 )
 
 
