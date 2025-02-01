@@ -1,7 +1,11 @@
 package com.example.coffeeshop.screens
 
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.withInfiniteAnimationFrameNanos
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +28,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,12 +40,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.breens.beetablescompose.components.TableHeaderComponentPreview
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
 import com.example.navigationmodule.LocalRouter
@@ -52,7 +60,7 @@ fun GeneralPageScreen() {
         item {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopCenter
             ) {
                 Image(
                     painter = painterResource(R.mipmap.background),
@@ -62,21 +70,33 @@ fun GeneralPageScreen() {
                         .alpha(0.9f),
                     contentScale = ContentScale.Crop
                 )
-                    /*IconButton(
-                        onClick = {
-                            router.launch(AppRoute.StartUI.Login)
-                        }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    contentAlignment = Alignment.CenterEnd,
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.clickable { router.launch(AppRoute.StartUI.Login) },
                     ) {
+                        Text(
+                            text = "Вхід",
+                            fontSize = 20.sp,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier.size(50.dp),
+                            tint = MaterialTheme.colorScheme.secondary
                         )
-                    }*/
+                    }
+                }
                 Column(
-                    modifier = Modifier.align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
+                    Spacer(modifier = Modifier.height(200.dp))
                     Icon(
                         painter = painterResource(R.drawable.logo),
                         contentDescription = stringResource(R.string.logo),
@@ -85,36 +105,37 @@ fun GeneralPageScreen() {
                     )
                     Text(
                         text = stringResource(R.string.app_name),
-                        color = Color.Black,
-                        fontSize = 43.sp,
-                        fontWeight = FontWeight.Bold
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 96.sp,
+                        fontFamily = FontFamily(Font(R.font.comicoon_regular)),
+                        maxLines = 2,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.width(300.dp),
+                        lineHeight = 80.sp
                     )
                 }
             }
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "ПРО НАС",
-                    color = Color.Black,
-                    fontSize = 38.sp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,
                 )
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = "Високотехнологічна обробка відбірних кавових зерен, висока якість " +
                             "кави, оригінальні рецепти напоїв, індивідуальне обслуговування, " +
                             "неповторна атмосфера радості, щастя та тепла кав’ярні зроблять " +
                             "ваш відпочинок у Coffee Shop дійсно затишним.",
                     color = Color.Black,
-                    fontSize = 15.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start,
                     letterSpacing = 1.sp,
@@ -123,39 +144,38 @@ fun GeneralPageScreen() {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Рекомендовані Напої",
-                    color = Color.Black,
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Light,
                 )
-                Spacer(modifier = Modifier.height(10.dp))
-                Row{
+                Spacer(modifier = Modifier.height(12.dp))
+                Row {
                     Column {
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
                     }
-                    Spacer(modifier = Modifier.width(50.dp))
+                    Spacer(modifier = Modifier.width(52.dp))
                     Column {
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
-                        PointBeforeText ("Американо" )
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
+                        PointBeforeText("Американо")
                     }
                 }
             }
             Box(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(end = 23.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 24.dp),
                 contentAlignment = Alignment.CenterEnd,
-            ){
+            ) {
                 Button(
                     shape = RoundedCornerShape(1.dp),
-                    onClick = {
-                        router.launch(AppRoute.StartUI.Menu)
-                    },
+                    onClick = { router.launch(AppRoute.StartUI.Menu) },
                     border = BorderStroke(1.dp, Color.Gray),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,
@@ -171,10 +191,11 @@ fun GeneralPageScreen() {
     }
 }
 
+
 @Composable
 fun PointBeforeText(
     text: String,
-    fontSize: TextUnit = 20.sp,
+    fontSize: TextUnit = 18.sp,
 ){
     Row(
         verticalAlignment = Alignment.Top,

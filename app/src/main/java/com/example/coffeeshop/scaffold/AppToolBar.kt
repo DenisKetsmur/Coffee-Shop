@@ -78,7 +78,7 @@ fun AppToolBar(
                     ManagerUser.currentUser != null ){
                     IconButton(onClick = {
                         ManagerUser.logout()
-                        router.launch(AppRoute.StartUI.Menu) }
+                        router.launch(AppRoute.StartUI.GeneralPageScreen) }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Person,

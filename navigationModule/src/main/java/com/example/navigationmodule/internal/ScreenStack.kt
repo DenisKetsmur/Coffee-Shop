@@ -7,8 +7,7 @@ import com.example.navigationmodule.Router
 
 internal class ScreenStack (
     private val routes:SnapshotStateList<Route>,
-
-    ): NavigationState, Router {
+): NavigationState, Router {
 
     override val isRoot: Boolean
         get() = routes.size == 1

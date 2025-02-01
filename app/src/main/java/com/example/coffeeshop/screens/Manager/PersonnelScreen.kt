@@ -29,10 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -82,7 +84,7 @@ fun PersonnelScreen() {
                         Icon(
                             imageVector = Icons.Default.Clear,
                             contentDescription = "Description",
-                            tint = Color.Unspecified
+                            tint = Color.Unspecified,
                         )
                     }
                 },
@@ -169,7 +171,8 @@ fun CardPersonnel(
                 painter = personnel.photo,
                 contentDescription = null,
                 modifier = Modifier.size(200.dp)
-                    .weight(1f)
+                    .weight(1f),
+                contentScale = ContentScale.Crop
             )
             Column(
                 modifier = Modifier.weight(2f)
