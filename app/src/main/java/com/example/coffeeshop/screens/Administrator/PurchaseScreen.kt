@@ -173,7 +173,7 @@ val supplierDataList = listOf(
         email = "Company@gnal.com",
         phoneNumber = "+380345345234",
         products = listOf(
-            Product(name ="Еспресо", category = "Кава"),
+            Product(name ="Еспрfdfgfgdfgdfgdfgdfgесо", category = "Кава"),
             Product(name ="Капучино",category = "Кава"),
             Product(name ="Лате", category = "Кава"),
             Product(name ="Американо", category = "Кава"),

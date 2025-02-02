@@ -20,5 +20,4 @@ fun rememberNavigation(initialRoute: Route): Navigation {
 
         )
     }
-
 }

@@ -58,4 +58,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.beetablescompose)
     implementation(projects.navigationModule)
+    implementation (libs.androidx.constraintlayout.compose)
 }

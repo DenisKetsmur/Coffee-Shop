@@ -1,30 +1,48 @@
 package com.example.coffeeshop.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeightIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
+import androidx.compose.ui.unit.min
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import com.breens.beetablescompose.utils.extractMembers
 import com.example.coffeeshop.screens.Administrator.Product
 
 @Composable
-fun <T> MyTable(
+fun <T> MyTable2(
     title: List<String>,
     content: List<T>,
-    columnWeights: List<Float>,
+    columnWeights: Array<Float> = arrayOf(1f, 1f, 1f, 1f, 1f, 1f),
     renderRow: @Composable (T) -> List<String>
 ) {
     Box(
@@ -93,22 +111,139 @@ fun <T> MyTable(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+inline fun <reified T : Any> MyTable(
+    title: List<String>,
+    titleFontWeight: TextUnit = 16.sp,
+    data: List<T>,
+    dataFontWeight: TextUnit = 12.sp,
+    columnWeights: Array<Float>,
+    lazyColumnOff:Boolean = false
+){
+    if(lazyColumnOff){
+        Column {
+            Row(
+                modifier = Modifier
+                    .border(width = 1.dp, color = Color.Gray),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                title.forEachIndexed { index, title ->
+                    Text(
+                        text = title,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        fontSize = titleFontWeight,
+                        modifier = Modifier.weight(columnWeights[index]),
+                    )
+
+                    VerticalDivider(
+                        thickness = 2.dp,
+                        color = Color.Gray,
+                    )
+                }
+            }
+            data.forEachIndexed { rowIndex, data ->
+                val rowData = extractMembers(data).map {
+                    it.second
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .border(width = 1.dp, color = Color.Gray),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    rowData.forEachIndexed { index, title ->
+                        Text(
+                            text = title,
+                            modifier = Modifier.weight(columnWeights[index]),
+                            textAlign = TextAlign.Center,
+                            fontSize = dataFontWeight
+                        )
+                        VerticalDivider(
+                            thickness = 2.dp,
+                            color = Color.Gray,
+                        )
+                    }
+                }
+            }
+        }
+    } else{
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            stickyHeader{
+                Row(
+                    modifier = Modifier
+                        .border(width = 1.dp, color = Color.Gray),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    title.forEachIndexed { index, title ->
+                        Text(
+                            text = title,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            fontSize = titleFontWeight,
+                            modifier = Modifier.weight(columnWeights[index]),
+                        )
+
+                        VerticalDivider(
+                            thickness = 2.dp,
+                            color = Color.Gray,
+                        )
+                    }
+                }
+            }
+            item{
+                data.forEachIndexed { rowIndex, data ->
+                    val rowData = extractMembers(data).map {
+                        it.second
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .border(width = 1.dp, color = Color.Gray),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        rowData.forEachIndexed { index, title ->
+                            Text(
+                                text = title,
+                                modifier = Modifier.weight(columnWeights[index]),
+                                textAlign = TextAlign.Center,
+                                fontSize = dataFontWeight
+                            )
+                            VerticalDivider(
+                                thickness = 2.dp,
+                                color = Color.Gray,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true, heightDp = 1500)
 @Composable
 private fun PreviewMyTable() {
     MyTable(
         title = headerTitles,
-        content = productList1,
-        columnWeights = listOf(1f, 3f, 2f, 1f, 2f, 2f),
-        renderRow = { product ->
-            listOf(
-                product.id.toString(),
-                product.name,
-                product.category,
-                product.unit,
-                product.count.toString()
-            )
-        }
+        data = productList1,
+        columnWeights = arrayOf(1f, 3f, 2f, 1f, 2f, 2f),
+//        renderRow = { product ->
+//            listOf(
+//                product.id.toString(),
+//                product.name,
+//                product.category,
+//                product.unit,
+//                product.count.toString()
+//            )
+//        }
     )
 }
 
