@@ -106,7 +106,7 @@ private fun PreviewMyTable() {
                 product.name,
                 product.category,
                 product.unit,
-                product.count.toString() t
+                product.count.toString()
             )
         }
     )
