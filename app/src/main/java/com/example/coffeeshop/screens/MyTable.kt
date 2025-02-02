@@ -1,128 +1,119 @@
-package com.example.coffeeshop.screens.Administrator
+package com.example.coffeeshop.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.breens.beetablescompose.BeeTablesCompose
-import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
-import androidx.compose.foundation.layout.Box
+import com.example.coffeeshop.screens.Administrator.Product
 
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StorageScreen() {
-    var searchText by remember { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = FocusRequester()
-    val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
-
-
-    LazyColumn {
-        stickyHeader {
-            TextField(
-                value = searchText,
-                onValueChange = { newText ->
-                    searchText = newText
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                shape = RoundedCornerShape(28),
-                label = {
+fun <T> MyTable(
+    title: List<String>,
+    content: List<T>,
+    columnWeights: List<Float>,
+    renderRow: @Composable (T) -> List<String>
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        HorizontalDivider()
+        Column {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                title.forEachIndexed { index, titleText ->
                     Text(
-                        text = "Search",
+                        text = titleText,
+                        modifier = Modifier.weight(columnWeights[index]),
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            HorizontalDivider()
+            Column(modifier = Modifier.fillMaxWidth()) {
+                content.forEach { item ->
+                    val rowData = renderRow(item)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        rowData.forEachIndexed { index, cellText ->
+                            Text(
+                                text = cellText,
+                                modifier = Modifier.weight(columnWeights[index]),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                    HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = Color.LightGray)
+                }
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(0.dp)
+        ) {
+            columnWeights.forEachIndexed { index, weight ->
+                if (index < columnWeights.size - 1) {
+                    VerticalDivider(
+                        modifier = Modifier
+                            .weight(weight)
+                            .fillMaxHeight(),
                         color = Color.Gray
                     )
-                },
-                singleLine = true,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            searchText = ""
-                            focusManager.clearFocus()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = "Description",
-                            tint = Color.Unspecified
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
-                )
-            )
-        }
-        
-        item {
-            ChipGroup(
-                categories,
-                selectedCategory,
-                onCategorySelected = { category ->
-                    selectedCategory = category
                 }
-            )
-            val headerTitles = listOf("№", "Назва", "Категорія", "Од. вим.", "Кількість")
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .padding(16.dp)
-            ){
-                BeeTablesCompose(
-                    productList,
-                    headerTableTitles = headerTitles,
-                )
             }
+            VerticalDivider(
+                modifier = Modifier
+                    .fillMaxHeight(),
+                color = Color.Gray
+            )
         }
     }
 }
 
 
-data class Product(
-    val id:Int = 1,
-    val name:String = "name",
-    val category: String = "category",
-    val unit:String = "unit",
-    val count:Double = 1.0,
-)
+@Preview(showBackground = true, heightDp = 1500)
+@Composable
+private fun PreviewMyTable() {
+    MyTable(
+        title = headerTitles,
+        content = productList1,
+        columnWeights = listOf(1f, 3f, 2f, 1f, 2f, 2f),
+        renderRow = { product ->
+            listOf(
+                product.id.toString(),
+                product.name,
+                product.category,
+                product.unit,
+                product.count.toString() // Використовуємо quantity, а не count
+            )
+        }
+    )
+}
 
-val productList = listOf(
+val headerTitles = listOf("№", "Назва", "Категорія", "Од. вим.", "Кількість")
+val productList1 = listOf(
     Product(
         id = 1,
         name = "Кава арабіка",
@@ -264,10 +255,3 @@ val productList = listOf(
         count = 1.0
     )
 )
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewStorageScreen(){
-    StorageScreen()
-}

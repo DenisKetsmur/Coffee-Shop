@@ -34,8 +34,7 @@ fun AppToolBar(
 ) {
     CenterAlignedTopAppBar(
             title = {
-                if(navigationState.currentRoute != AppRoute.StartUI.Login){
-                    Text(text = stringResource((navigationState.currentRoute as? AppRoute)?.titleRes?:R.string.logo))  }
+                Text(text = stringResource((navigationState.currentRoute as? AppRoute)?.titleRes?:R.string.logo))
             },
             navigationIcon = {
                 if(navigationState.currentRoute == AppRoute.StartUI.Login ||

@@ -8,6 +8,7 @@ import com.example.coffeeshop.screens.Administrator.StorageScreen
 import com.example.coffeeshop.screens.Manager.EditPersonnelScreen
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
+import com.example.coffeeshop.screens.Manager.ClientsScreen
 import com.example.coffeeshop.screens.MenuScreen
 import com.example.coffeeshop.screens.Manager.PersonnelScreen
 import com.example.navigationmodule.Navigation
@@ -27,8 +28,9 @@ fun AppNavigationHost(
             AppRoute.StartUI.Login -> LoginScreen()
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
             AppRoute.Manager.Personal.RevisionPersonal -> PersonnelScreen()
-            AppRoute.Manager.Personal.RevisionPersonal -> EditPersonnelScreen()
             AppRoute.Manager.Personal.EditPersonal -> EditPersonnelScreen()
+            AppRoute.Manager.Clients.RevisionClients -> ClientsScreen()
+            AppRoute.Manager.Clients.RevisionHistoryClient -> TODO()
             AppRoute.Administrator.Purchase.RevisionPurchase -> PurchaseScreen()
             AppRoute.Administrator.Purchase.InformationPurchase -> InformationPurchaseScreen()
             AppRoute.Administrator.Storage.RevisionStorage -> StorageScreen()

@@ -3,17 +3,26 @@ package com.example.coffeeshop.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,10 +33,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.breens.beetablescompose.components.TableHeaderComponentPreview
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.ManagerUser
 import com.example.coffeeshop.scaffold.AppNavigationBar
@@ -44,13 +55,13 @@ fun LoginScreen(){
                     router.launch(AppRoute.StartUI.Menu)
                 } else if (ManagerUser.isManager()) {
                     router.launch(AppRoute.StartUI.Menu)
-                }else {
-                    Toast.makeText(
-                        context,
-                        "Неправильний пароль",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
+            }else {
+                Toast.makeText(
+                    context,
+                    "Неправильний пароль",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     )
@@ -58,27 +69,22 @@ fun LoginScreen(){
 
 @Composable
 fun LoginContent(
-    onLogin: (String, String) ->Unit,
+    onLogin: (String, String) -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 180.dp, start = 20.dp, end = 20.dp),
+            .padding(start = 20.dp, end = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Авторизація",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
+        Spacer(modifier = Modifier.height(52.dp))
         OutlinedTextField(
             value = email,
             onValueChange = {
@@ -103,8 +109,8 @@ fun LoginContent(
         if (emailError and email.isNotEmpty()) {
             Text(
                 text = "Неправильний формат пошти",
-                color = Color.Red,
                 style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.align(Alignment.Start)
             )
         }
@@ -127,7 +133,7 @@ fun LoginContent(
                     if (focusState.hasFocus) {
                         passwordError = false
                     }else{
-                        passwordError = password.length < 6 && password.isNotEmpty()
+                        passwordError = password.length <= 6 && password.isNotEmpty()
                     }
                 },
         )
@@ -135,8 +141,8 @@ fun LoginContent(
         if (passwordError and password.isNotEmpty()) {
             Text(
                 text = "Пароль повинен бути не менше 6 символів",
-                color = Color.Red,
                 style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.align(Alignment.Start)
             )
         }
@@ -148,10 +154,13 @@ fun LoginContent(
                 onLogin(email, password)
             },
             modifier = Modifier.fillMaxWidth(),
-            enabled = (password.length > 6) and
-                    email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) and
+            enabled = (password.length >= 6) and
+                    email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")) and
                     password.isNotEmpty() and
-                    email.isNotEmpty()
+                    email.isNotEmpty(),
+            colors = ButtonDefaults.buttonColors(
+                disabledContainerColor = MaterialTheme.colorScheme.secondary
+            )
         ) {
             Text("Увійти")
         }

@@ -137,8 +137,8 @@ fun CardClients(
 
 data class Client(
     val id: Int = 1,
-    val name: String = "bober",
-    val surname: String = "kurva",
+    val name: String = "name",
+    val surname: String = "surname",
     val phoneNumber: String = "234234234234",
     val email: String = "2323423@23232.com",
 )

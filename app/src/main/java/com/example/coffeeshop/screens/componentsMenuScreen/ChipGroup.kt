@@ -29,7 +29,7 @@ fun ChipGroup(
     LazyRow(
         modifier = modifier.then(
             Modifier.fillMaxWidth()
-            .padding(8.dp)),
+            .padding(end = 8.dp, top = 8.dp, bottom = 8.dp)),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories) { category ->

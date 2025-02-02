@@ -28,7 +28,7 @@ import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun EditPersonnelScreen() {
-
+    //CardPersonnel()
 }
 
 

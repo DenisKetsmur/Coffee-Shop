@@ -83,7 +83,7 @@ fun GeneralPageScreen() {
                         Text(
                             text = "Вхід",
                             fontSize = 20.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.secondary
                         )
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
@@ -105,7 +105,7 @@ fun GeneralPageScreen() {
                     )
                     Text(
                         text = stringResource(R.string.app_name),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontSize = 96.sp,
                         fontFamily = FontFamily(Font(R.font.comicoon_regular)),
                         maxLines = 2,

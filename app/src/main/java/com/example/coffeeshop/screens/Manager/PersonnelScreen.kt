@@ -171,7 +171,7 @@ fun CardPersonnel(
                 painter = personnel.photo,
                 contentDescription = null,
                 modifier = Modifier.size(200.dp)
-                    .weight(1f),
+                    .weight(1.5f),
                 contentScale = ContentScale.Crop
             )
             Column(
