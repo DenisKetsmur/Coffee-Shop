@@ -17,7 +17,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,9 +31,9 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
-import com.example.coffeeshop.screens.componentsMenuScreen.CustomCardProduct
-import com.example.coffeeshop.screens.componentsMenuScreen.ThreeStateButton
+import com.example.coffeeshop.screens.CardForScreens.ChipGroup
+import com.example.coffeeshop.screens.CardForScreens.CustomCardProduct
+import com.example.coffeeshop.screens.CardForScreens.ThreeStateButton
 
 
 @Composable

@@ -44,7 +44,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
-import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
+import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.product.Type
+import com.example.coffeeshop.data.supplier.Supplier
+import com.example.coffeeshop.screens.CardForScreens.CardSupplier
+import com.example.coffeeshop.screens.CardForScreens.ChipGroup
 import com.example.navigationmodule.LocalRouter
 
 
@@ -122,50 +126,7 @@ fun PurchaseScreen() {
 }
 
 
-@Composable
-fun CardSupplier(
-    supplier: Supplier,
-    onClick:()->Unit
-){
-    Card(
-        modifier = Modifier.fillMaxWidth()
-            .padding(5.dp)
-            .clickable {
-                onClick.invoke()
-            },
-        shape = RoundedCornerShape(50)
-    ) {
-        Row{
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .border(2.dp, Color.Gray, CircleShape)
-            ){
-                Image(
-                    painter =supplier.photo ?: painterResource(R.mipmap.face_photo),
-                    contentDescription = null,
-                    modifier = Modifier.size(100.dp),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Column(
-                modifier = Modifier.weight(2f)
-                    .padding(start = 10.dp, top = 5.dp)
-            ) {
-                Text(
-                    text = supplier.nameCompany,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Категорії для замовлень: ${supplier.getCategoryList(supplierDataList[0])}",
-                    style = TextStyle(lineHeight = 23.sp)
-                )
-            }
-        }
-    }
-}
+
 val supplierDataList = listOf(
     Supplier(
         id = 1,
@@ -173,7 +134,7 @@ val supplierDataList = listOf(
         email = "Company@gnal.com",
         phoneNumber = "+380345345234",
         products = listOf(
-            Product(name ="Еспрfdfgfgdfgdfgdfgdfgесо", category = "Кава"),
+            Product(name ="Еспрfdfgfgdfgdfgdfgdfgесо", category = "Кава",),
             Product(name ="Капучино",category = "Кава"),
             Product(name ="Лате", category = "Кава"),
             Product(name ="Американо", category = "Кава"),
@@ -187,21 +148,7 @@ val supplierDataList = listOf(
         photo = null
     )
 )
-data class Supplier(
-    val id:Int,
-    val nameCompany: String,
-    val email:String,
-    val phoneNumber: String,
-    val products: List<Product>,
-    val photo: Painter?,
-){
-    fun getCategoryList(supplier: Supplier): String {
-        return supplier.products
-            .map { it.category }
-            .distinct()
-            .joinToString(", ")
-    }
-}
+
 
 
 

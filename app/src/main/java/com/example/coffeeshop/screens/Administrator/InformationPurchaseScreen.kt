@@ -23,25 +23,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.breens.beetablescompose.BeeTablesCompose
+import com.example.coffeeshop.data.supplier.Supplier
 
 
 @Composable
 fun InformationPurchaseScreen() {
-    InformationPurchase(supplierDataList[0])
+    InformationPurchaseContent(supplierDataList[0])
 }
 
 
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewInformationPurchaseScreen(){
-    InformationPurchaseScreen()
-}
 
 @Composable
-fun InformationPurchase(
+fun InformationPurchaseContent(
     supplier: Supplier
 ){
-
     LazyColumn {
         item {
             Card(
@@ -90,13 +85,15 @@ fun InformationPurchase(
                 modifier = Modifier.fillMaxSize()
                     .padding(16.dp)
             ){
-                BeeTablesCompose(
-                    data = supplier.products,
-                    headerTableTitles = headerTitles,
-
-                )
             }
         }
     }
 }
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewInformationPurchaseScreen(){
+    InformationPurchaseScreen()
+}
+
 

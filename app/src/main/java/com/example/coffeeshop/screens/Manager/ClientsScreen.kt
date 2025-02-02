@@ -1,18 +1,12 @@
 package com.example.coffeeshop.screens.Manager
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -28,14 +22,11 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.R
-import com.example.navigationmodule.LocalRouter
+import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.screens.CardForScreens.CardClients
 
 @Composable
 fun ClientsScreen() {
@@ -83,66 +74,15 @@ fun ClientsScreen() {
                     }
                 )
             )
-            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
-            CardClients(client = Personnel(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
+            CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
         }
     }
 }
-
-
-@Composable
-fun CardClients(
-    client: Personnel
-) {
-    val router = LocalRouter.current
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        shape = RoundedCornerShape(10)
-    ) {
-        Row {
-            Image(
-                painter = client.photo,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(200.dp)
-                    .weight(1f)
-            )
-            Column(
-                modifier = Modifier
-                    .weight(2f)
-                    .padding(start = 10.dp, top = 5.dp)
-            ) {
-                Text(
-                    text = "${client.name} ${client.surname}",
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = """
-                        |Контакти: ${client.phoneNumber}
-                        |${client.email}
-                    """.trimMargin(),
-                    style = TextStyle(lineHeight = 23.sp)
-                )
-            }
-        }
-    }
-}
-
-
-data class Client(
-    val id: Int = 1,
-    val name: String = "name",
-    val surname: String = "surname",
-    val phoneNumber: String = "234234234234",
-    val email: String = "2323423@23232.com",
-)
-
 
 @Preview(showSystemUi = true)
 @Composable

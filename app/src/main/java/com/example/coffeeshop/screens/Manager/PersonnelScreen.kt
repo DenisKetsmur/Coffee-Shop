@@ -29,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -45,8 +44,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.Position
-import com.example.coffeeshop.screens.componentsMenuScreen.ChipGroup
+import com.example.coffeeshop.data.supplier.Employee
+import com.example.coffeeshop.data.user.Position
+import com.example.coffeeshop.screens.CardForScreens.ChipGroup
 import com.example.navigationmodule.LocalRouter
 
 @Composable
@@ -105,42 +105,42 @@ fun PersonnelScreen() {
                 }
             )
             CardPersonnel(
-                personnel = Personnel(
+                personnel = Employee(
                     photo = painterResource(
                         id = R.mipmap.face_photo
                     )
                 )
             )
             CardPersonnel(
-                personnel = Personnel(
+                personnel = Employee(
                     photo = painterResource(
                         id = R.mipmap.face_photo
                     )
                 )
             )
             CardPersonnel(
-                personnel = Personnel(
+                personnel = Employee(
                     photo = painterResource(
                         id = R.mipmap.face_photo
                     )
                 )
             )
             CardPersonnel(
-                personnel = Personnel(
+                personnel = Employee(
                     photo = painterResource(
                         id = R.mipmap.face_photo
                     )
                 )
             )
             CardPersonnel(
-                personnel = Personnel(
+                personnel = Employee(
                     photo = painterResource(
                         id = R.mipmap.face_photo
                     )
                 )
             )
             CardPersonnel(
-                personnel = Personnel(
+                personnel = Employee(
                     photo = painterResource(
                         id = R.mipmap.face_photo
                     )
@@ -150,15 +150,9 @@ fun PersonnelScreen() {
     }
 }
 
-
-
-
-
-
-
 @Composable
 fun CardPersonnel(
-    personnel: Personnel,
+    employee: Employee,
 ){
     val router = LocalRouter.current
     Card(
@@ -168,7 +162,7 @@ fun CardPersonnel(
     ) {
         Row{
             Image(
-                painter = personnel.photo,
+                painter = employee.photo,
                 contentDescription = null,
                 modifier = Modifier.size(200.dp)
                     .weight(1.5f),
@@ -179,23 +173,23 @@ fun CardPersonnel(
                     .padding(start = 10.dp, top = 5.dp)
             ) {
                 Text(
-                    text = "${personnel.name} ${personnel.surname}",
+                    text = "${employee.name} ${employee.surname}",
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
                     text = """
-                        |Контакти: ${personnel.phoneNumber}
-                        |${personnel.email}
-                        |Посада: ${personnel.position}
-                        |Зарплата: ${personnel.salary}
-                        |Стаж: ${personnel.experience}
-                        |Найм: ${personnel.startJob}
+                        |Контакти: ${employee.phoneNumber}
+                        |${employee.email}
+                        |Посада: ${employee.position}
+                        |Зарплата: ${employee.salary}
+                        |Стаж: ${employee.experience}
+                        |Найм: ${employee.startJob}
                     """.trimMargin(),
                     style = TextStyle(lineHeight = 23.sp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = personnel.status,
+                    text = employee.status,
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -220,19 +214,7 @@ fun CardPersonnel(
 
 
 
-data class Personnel(
-    val id:Int = 1,
-    val name: String = "name",
-    val surname:String = "surname",
-    val phoneNumber: String = "+380345345",
-    val email:String = "2323423@23232.com",
-    val position:Position = Position.MANAGER,
-    val salary:String = "34234",
-    val experience:String = "2 years",
-    val startJob:String = "12/12/12",
-    val photo:Painter,
-    val status:String = "активний",
-)
+
 
 
 

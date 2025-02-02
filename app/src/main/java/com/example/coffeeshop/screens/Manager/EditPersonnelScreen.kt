@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.supplier.Employee
 import com.example.navigationmodule.LocalRouter
 
 @Composable
@@ -31,10 +32,9 @@ fun EditPersonnelScreen() {
     //CardPersonnel()
 }
 
-
 @Composable
 fun CardPersonnel(
-    personnel: Personnel,
+    personnel: Employee,
     onClick: ()->Unit = {},
 ) {
     val router = LocalRouter.current

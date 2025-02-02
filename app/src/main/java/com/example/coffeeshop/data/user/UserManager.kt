@@ -1,4 +1,4 @@
-package com.example.coffeeshop.data
+package com.example.coffeeshop.data.user
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,14 +6,14 @@ import androidx.compose.runtime.setValue
 
 object ManagerUser {
     private val users = listOf(
-        User("admin@gmail.com", "123456789", Position.ADMINISTRATOR),
-        User("manager@gmail.com", "123456789", Position.MANAGER)
+        User(email = "admin@gmail.com", password = "123456789", position = Position.ADMINISTRATOR),
+        User(email ="manager@gmail.com", password = "123456789", position = Position.MANAGER),
     )
 
-    var currentUser by mutableStateOf<User?>(User("admin@gmail.com", "123456789", Position.ADMINISTRATOR))
+    var currentUser by mutableStateOf<User?>(null)
 
     fun login(email: String, password: String): Boolean {
-        val user = users.find { it.login == email && it.password == password }
+        val user = users.find { it.email == email && it.password == password }
         return if (user != null) {
             currentUser = user
             true

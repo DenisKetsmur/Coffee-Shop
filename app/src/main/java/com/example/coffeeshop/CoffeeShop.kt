@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.coffeeshop.data.ManagerUser
+import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.scaffold.AppFloatingActionButton
 import com.example.coffeeshop.scaffold.AppNavigationBar
 import com.example.coffeeshop.scaffold.AppToolBar
