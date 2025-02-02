@@ -106,7 +106,7 @@ private fun PreviewMyTable() {
                 product.name,
                 product.category,
                 product.unit,
-                product.count.toString() // Використовуємо quantity, а не count
+                product.count.toString() t
             )
         }
     )
