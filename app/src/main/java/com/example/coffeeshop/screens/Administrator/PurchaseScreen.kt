@@ -1,6 +1,8 @@
 package com.example.coffeeshop.screens.Administrator
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,6 +21,8 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,10 +52,13 @@ import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.product.Type
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.screens.CardForScreens.CardSupplier
+import com.example.coffeeshop.screens.CardForScreens.CatPop
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
+import com.example.coffeeshop.screens.CardForScreens.ThreeStateButton
 import com.example.navigationmodule.LocalRouter
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PurchaseScreen() {
     var searchText by remember { mutableStateOf("") }
@@ -62,13 +69,15 @@ fun PurchaseScreen() {
     val router = LocalRouter.current
 
     LazyColumn {
-        item {
-            TextField(
+        stickyHeader {
+            OutlinedTextField(
                 value = searchText,
                 onValueChange = { newText ->
                     searchText = newText
                 },
                 modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
                 shape = RoundedCornerShape(28),
@@ -100,15 +109,29 @@ fun PurchaseScreen() {
                     onDone = {
                         focusManager.clearFocus()
                     }
-                )
+                ),
             )
-            ChipGroup(
-                categories,
-                selectedCategory,
-                onCategorySelected = { category ->
-                    selectedCategory = category
+        }
+        item{
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ){
+                CatPop(
+                    modifier = Modifier.padding(start = 4.dp)
+                ) { onIconStateChange ->
+                    ChipGroup(
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { category ->
+                            selectedCategory = category
+                        },
+                        onIconStateChange = { newState -> onIconStateChange(newState) },
+                        modifier = Modifier.padding(start = 24.dp),
+                        firstItemThreshold = 330f,
+                        endPadding = 350.dp
+                    )
                 }
-            )
+            }
         }
         item{
             CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}

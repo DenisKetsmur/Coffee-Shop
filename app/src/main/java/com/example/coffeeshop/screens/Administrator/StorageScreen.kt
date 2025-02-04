@@ -2,6 +2,7 @@ package com.example.coffeeshop.screens.Administrator
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -43,6 +45,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.screens.CardForScreens.CardStorageProduct
+import com.example.coffeeshop.screens.CardForScreens.CatPop
 import com.example.navigationmodule.LocalRouter
 
 
@@ -100,23 +103,25 @@ fun StorageScreen() {
                     ),
                 )
         }
-        item {
-                ChipGroup(
-                    categories,
-                    selectedCategory,
-                    onCategorySelected = { category ->
-                        selectedCategory = category
-                    }
-                )
-                CardStorageProduct(productList[0])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
-                CardStorageProduct(productList[1])
+        item{
+                CatPop(
+                    modifier = Modifier.padding(start = 4.dp)
+                ) { onIconStateChange ->
+                    ChipGroup(
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { category ->
+                            selectedCategory = category
+                        },
+                        onIconStateChange = { newState -> onIconStateChange(newState) },
+                        modifier = Modifier.padding(start = 24.dp),
+                        firstItemThreshold = 330f,
+                        endPadding = 350.dp
+                    )
+                }
+        }
+        items(productList) {
+                CardStorageProduct(it)
         }
     }
 }

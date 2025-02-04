@@ -38,10 +38,9 @@ fun ChipGroup(
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier.then(
-            Modifier
+        modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 8.dp)),
+                .padding(top = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories) { category ->
@@ -49,6 +48,7 @@ fun ChipGroup(
                 label = category,
                 isSelected = selectedCategory == category,
                 onSelected = { onCategorySelected.invoke(category) },
+                modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
             )
         }
     }
@@ -62,14 +62,14 @@ fun ChipGroup(
     onCategorySelected: (String) -> Unit,
     onIconStateChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    firstItemThreshold: Float = 440f,
-    lastItemMaxThreshold: Float = 180f,
+    firstItemThreshold: Float = 470f,
+    lastItemMaxThreshold: Float = firstItemThreshold - 290f,
     startPadding: Dp = 100.dp,
     endPadding: Dp = 300.dp
 ) {
-    var firstItemX by remember { mutableStateOf(0f) }
-    var lastItemX by remember { mutableStateOf(0f) }
-
+    var firstItemX:Float? by remember { mutableStateOf(null) }
+    var lastItemX:Float? by remember { mutableStateOf(null) }
+    println("AAAA: $firstItemX, $lastItemX")
     LazyRow(
         modifier = modifier
             .fillMaxWidth()
@@ -92,10 +92,9 @@ fun ChipGroup(
             if (index == categories.lastIndex) {
                 Spacer(modifier = Modifier.width(endPadding))
             }
-
             val iconRes = when {
-                firstItemX > firstItemThreshold && firstItemX != 0f-> R.drawable.cat_close_mouth
-                lastItemX < lastItemMaxThreshold && lastItemX != 0f -> R.drawable.cat_close_mouth
+                firstItemX != null && firstItemX!! > firstItemThreshold -> R.drawable.cat_close_mouth
+                lastItemX != null && lastItemX!! < lastItemMaxThreshold -> R.drawable.cat_close_mouth
                 else -> R.drawable.cat_front
             }
             onIconStateChange(iconRes)

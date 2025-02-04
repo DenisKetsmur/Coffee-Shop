@@ -1,36 +1,27 @@
-package com.example.coffeeshop.screens.CardForScreens
+package com.example.coffeeshop.screens.Administrator
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
-import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.R
-import com.example.coffeeshop.data.user.User
-import com.example.navigationmodule.LocalRouter
-import kotlin.math.max
 
-@Composable
-fun CardClients(
-    client: User
-) {
-    val router = LocalRouter.current
+/*@Composable
+fun EditStorageScreen() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,30 +34,41 @@ fun CardClients(
             defaultElevation = 6.dp
         )
     ) {
-        Row {
-            Image(
-                painter = painterResource(R.mipmap.face_photo),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        ) {
+            Icon(
+                painter = painterResource(image),
                 contentDescription = null,
-                modifier = Modifier.weight(1f).heightIn(min = 128.dp, max = 128.dp),
-                contentScale = ContentScale.Fit
+                modifier = Modifier.size(100.dp)
             )
             Column(
                 modifier = Modifier
-                    .weight(2.5f)
-                    .padding(start = 10.dp, top = 5.dp)
+                    .fillMaxWidth()
+                    .weight(2f)
             ) {
                 Text(
-                    text = "${client.name} ${client.surname}",
-                    fontWeight = FontWeight.Bold,
+                    text = nameProduct
                 )
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = """
-                        |Контакти: ${client.phoneNumber}
-                        |${client.email}
-                    """.trimMargin(),
-                    style = TextStyle(lineHeight = 23.sp)
+                    text = description
                 )
             }
+            Text(
+                text = "$price грн",
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(end = 7.dp)
+            )
         }
     }
 }
+
+@Preview(showSystemUi = true)
+@Composable
+private fun PreviewEditStorageScreen(){
+    EditStorageScreen()
+}*/

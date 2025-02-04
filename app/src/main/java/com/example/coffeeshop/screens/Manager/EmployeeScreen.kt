@@ -1,10 +1,7 @@
-package com.example.coffeeshop.screens
+package com.example.coffeeshop.screens.Manager
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,51 +15,38 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
-import com.example.coffeeshop.screens.CardForScreens.CatPop
+import com.example.coffeeshop.data.supplier.Employee
+import com.example.coffeeshop.screens.CardForScreens.CardEmployee
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
-import com.example.coffeeshop.screens.CardForScreens.CustomCardProduct
-import com.example.coffeeshop.screens.CardForScreens.ThreeStateButton
-
-
-@Composable
-fun MenuScreen() {
-    MenuContent()
-}
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MenuContent() {
+fun EmployeeScreen() {
     var searchText by remember { mutableStateOf("") }
 
     val focusManager = LocalFocusManager.current
     val focusRequester = FocusRequester()
 
-    val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
+    val categories = listOf("Активний", "Неактивний")
+
     var selectedCategory by remember { mutableStateOf<String?>(null) }
 
-    //var iconState: Int by remember { mutableStateOf(R.drawable.cat_close_mouth) }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-
-    ) {
+    LazyColumn {
         stickyHeader {
             OutlinedTextField(
                 value = searchText,
@@ -106,43 +90,30 @@ fun MenuContent() {
                 ),
             )
         }
-        item{
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ){
-                ThreeStateButton(
-                    modifier = Modifier.padding(start = 16.dp, top = 36.dp)
-                )
-                CatPop(
-                    modifier = Modifier.padding(start = 4.dp)
-                ) { onIconStateChange ->
-                    ChipGroup(
-                        categories = categories,
-                        selectedCategory = selectedCategory,
-                        onCategorySelected = { category ->
-                            selectedCategory = category
-                        },
-
-                        onIconStateChange = { newState -> onIconStateChange(newState) },
-                        modifier = Modifier.padding(start = 24.dp)
-                    )
-                }
-            }
-        }
         item {
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
+            ChipGroup(
+                categories,
+                selectedCategory,
+                onCategorySelected = { category ->
+                    selectedCategory = category
+                },
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
+        items(6){
+            CardEmployee(
+                employee = Employee(
+                    photo = painterResource(
+                        id = R.mipmap.face_photo
+                    )
+                )
+            )
         }
     }
 }
 
-
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewMenuScreen() {
-    MenuScreen()
+fun PreviewEmployeeScreen(){
+    EmployeeScreen()
 }
