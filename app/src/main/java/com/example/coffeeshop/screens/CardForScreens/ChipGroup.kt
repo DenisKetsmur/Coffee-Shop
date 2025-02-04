@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,10 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
 
@@ -62,19 +61,23 @@ fun ChipGroup(
     selectedCategory: String?,
     onCategorySelected: (String) -> Unit,
     onIconStateChange: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    firstItemThreshold: Float = 440f,
+    lastItemMaxThreshold: Float = 180f,
+    startPadding: Dp = 100.dp,
+    endPadding: Dp = 300.dp
 ) {
     var firstItemX by remember { mutableStateOf(0f) }
     var lastItemX by remember { mutableStateOf(0f) }
 
     LazyRow(
-        modifier = modifier.then(
-            Modifier.fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp)),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item{
-            Spacer(modifier = Modifier.width(100.dp))
+        item {
+            Spacer(modifier = Modifier.width(startPadding))
         }
         itemsIndexed(categories) { index, category ->
             FilterChip(
@@ -87,12 +90,12 @@ fun ChipGroup(
                 }
             )
             if (index == categories.lastIndex) {
-                Spacer(modifier = Modifier.width(300.dp))
+                Spacer(modifier = Modifier.width(endPadding))
             }
 
             val iconRes = when {
-                firstItemX > 440  -> R.drawable.cat_close_mouth
-                lastItemX < 180 && lastItemX > 0 -> R.drawable.cat_close_mouth
+                firstItemX > firstItemThreshold && firstItemX != 0f-> R.drawable.cat_close_mouth
+                lastItemX < lastItemMaxThreshold && lastItemX != 0f -> R.drawable.cat_close_mouth
                 else -> R.drawable.cat_front
             }
             onIconStateChange(iconRes)
