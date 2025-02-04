@@ -21,13 +21,12 @@ import com.example.navigationmodule.LocalRouter
 @Composable
 fun CardStorageProduct(
     product: Product,
-    modifier: Modifier = Modifier
 ) {
     val router = LocalRouter.current
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .clickable {
                 router.launch(AppRoute.Administrator.Storage.EditStorage)
             },

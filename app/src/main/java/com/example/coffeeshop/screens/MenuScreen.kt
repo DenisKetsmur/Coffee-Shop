@@ -2,10 +2,12 @@ package com.example.coffeeshop.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,9 +30,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.coffeeshop.R
+import com.example.coffeeshop.screens.CardForScreens.CatPop
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
 import com.example.coffeeshop.screens.CardForScreens.CustomCardProduct
 import com.example.coffeeshop.screens.CardForScreens.ThreeStateButton
@@ -52,6 +57,8 @@ fun MenuContent() {
 
     val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
     var selectedCategory by remember { mutableStateOf<String?>(null) }
+
+    var iconState by remember { mutableStateOf(R.drawable.cat_front) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -100,21 +107,62 @@ fun MenuContent() {
             )
         }
         item {
-            Row(
+            Box(){
+                if(iconState != R.drawable.cat_close_mouth){
+                    Icon(
+                        painter = painterResource(R.drawable.cat_background),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.padding(start = 60.dp).size(100.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier.padding(top = 38.dp)
+                ){
+                    ChipGroup(
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { category ->
+                            selectedCategory = category
+                        },
+                        onIconStateChange = { newState -> iconState = newState },
+                        modifier = Modifier.padding(start = 80.dp)
+                    )
+                }
+//                Box(
+//                    modifier = Modifier.padding(top = 40.dp).size(width = 80.dp, height = 60.dp)
+//                        .background(MaterialTheme.colorScheme.background)
+//                )
+                Icon(
+                    painter = painterResource(iconState),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.padding(start = 60.dp).size(100.dp)
+                )
+            }
+
+
+
+
+
+
+            /*Row(
                 modifier = Modifier.fillMaxWidth()
                     .padding(start =  5.dp),
                 verticalAlignment = Alignment.CenterVertically,
 
             ) {
                 ThreeStateButton()
-                ChipGroup(
-                    categories = categories,
-                    selectedCategory = selectedCategory,
-                    onCategorySelected = { category ->
-                        selectedCategory = category
-                    }
-                )
-            }
+                CatPop {
+                    ChipGroup(
+                        categories = categories,
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { category ->
+                            selectedCategory = category
+                        }
+                    )
+                }
+            }*/
         }
         item {
             CustomCardProduct()

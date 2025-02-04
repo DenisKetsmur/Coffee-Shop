@@ -1,5 +1,6 @@
 package com.example.coffeeshop.screens.CardForScreens
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ fun ThreeStateButton() {
     var buttonState by remember { mutableStateOf(ButtonState.BYNAME) }
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        modifier = Modifier.padding(start = 8.dp, top =  8.dp, bottom = 8.dp)
     ){
         IconButton(
             onClick = {

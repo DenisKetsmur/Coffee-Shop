@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 // Світла тема
 val LightPrimary = Color(0xFFD299E7)  // кнопки / ввід тексту (0xFF590075)
 val LightSecondary = Color(0xFF590075)
-val LightBackground = Color(0xFFFFF1F1)  // Фон (білий)
+val LightBackground = Color(0xFFFFFFFF)  // Фон (білий)
 val LightSurface = Color(0xFFFFFFFF)  // Поверхня (білий)
 val LightOnPrimary = Color(0xFF000000)
 val LightOnSecondary = Color(0xFF2A3D80)

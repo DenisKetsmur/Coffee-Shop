@@ -3,21 +3,33 @@ package com.example.coffeeshop.screens.CardForScreens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.example.coffeeshop.R
 
 @Composable
 fun ChipGroup(
@@ -28,16 +40,62 @@ fun ChipGroup(
 ) {
     LazyRow(
         modifier = modifier.then(
-            Modifier.fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp)),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 8.dp)),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories) { category ->
             FilterChip(
                 label = category,
                 isSelected = selectedCategory == category,
-                onSelected = { onCategorySelected.invoke(category) }
+                onSelected = { onCategorySelected.invoke(category) },
             )
+        }
+    }
+}
+
+
+@Composable
+fun ChipGroup(
+    categories: List<String>,
+    selectedCategory: String?,
+    onCategorySelected: (String) -> Unit,
+    onIconStateChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var firstItemX by remember { mutableStateOf(0f) }
+    var lastItemX by remember { mutableStateOf(0f) }
+
+    LazyRow(
+        modifier = modifier.then(
+            Modifier.fillMaxWidth()
+            .padding(top = 8.dp, bottom = 8.dp)),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        item{
+            Spacer(modifier = Modifier.width(100.dp))
+        }
+        itemsIndexed(categories) { index, category ->
+            FilterChip(
+                label = category,
+                isSelected = selectedCategory == category,
+                onSelected = { onCategorySelected.invoke(category) },
+                modifier = Modifier.onGloballyPositioned { coordinates ->
+                    if (index == 0) firstItemX = coordinates.positionInRoot().x
+                    if (index == categories.lastIndex) lastItemX = coordinates.positionInRoot().x
+                }
+            )
+            if (index == categories.lastIndex) {
+                Spacer(modifier = Modifier.width(300.dp))
+            }
+
+            val iconRes = when {
+                firstItemX > 440  -> R.drawable.cat_close_mouth
+                lastItemX < 180 && lastItemX > 0 -> R.drawable.cat_close_mouth
+                else -> R.drawable.cat_front
+            }
+            onIconStateChange(iconRes)
         }
     }
 }
@@ -46,7 +104,8 @@ fun ChipGroup(
 fun FilterChip(
     label: String,
     isSelected: Boolean,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val focusManager = LocalFocusManager.current
     Card(
@@ -54,20 +113,19 @@ fun FilterChip(
             containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
             contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
         ),
-        modifier = Modifier
+        modifier = modifier.then(Modifier
             .height(40.dp)
             .clickable {
                 onSelected.invoke()
                 focusManager.clearFocus()
-            },
+            }),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
     ) {
         Box(
-            modifier = Modifier
-                .padding(8.dp),
+            modifier = Modifier.padding(8.dp),
             contentAlignment = Alignment.Center
         ){
             Text(label)

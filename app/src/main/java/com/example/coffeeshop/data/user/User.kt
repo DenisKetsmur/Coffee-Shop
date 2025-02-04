@@ -13,4 +13,21 @@ data class User(
     val position: Position = Position.CLIENT,
 )
 
+/*sealed class User(
+    open val email: String,
+    open val password: String
+) {
+    data class Employee(
+        override val email: String,
+        override val password: String,
+        val position: Position
+    ) : User(email, password)
+
+    data class Client(
+        override val email: String,
+        override val password: String,
+        val discount: Double
+    ) : User(email, password)
+}*/
+
 
