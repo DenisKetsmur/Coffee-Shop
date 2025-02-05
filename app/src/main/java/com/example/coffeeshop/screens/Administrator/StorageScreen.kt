@@ -116,6 +116,7 @@ fun StorageScreen() {
                         onIconStateChange = { newState -> onIconStateChange(newState) },
                         modifier = Modifier.padding(start = 24.dp),
                         firstItemThreshold = 330f,
+                        lastItemMaxThreshold = -150f,
                         endPadding = 350.dp
                     )
                 }

@@ -71,7 +71,6 @@ fun CardSupplier(
                     .height(128.dp),
                 contentScale = ContentScale.Fit
             )
-            VerticalDivider(modifier = Modifier.height(128.dp).width(2.dp))
             Column(
                 modifier = Modifier.weight(2.5f)
                     .padding(start = 10.dp, top = 5.dp)

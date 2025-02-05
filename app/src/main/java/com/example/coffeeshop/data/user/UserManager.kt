@@ -10,7 +10,7 @@ object ManagerUser {
         User(email ="manager@gmail.com", password = "123456789", position = Position.MANAGER),
     )
 
-    var currentUser by mutableStateOf<User?>(User(email ="manager@gmail.com", password = "123456789", position = Position.MANAGER))
+    var currentUser by mutableStateOf<User?>(null)
 
     fun login(email: String, password: String): Boolean {
         val user = users.find { it.email == email && it.password == password }

@@ -69,6 +69,7 @@ fun ChipGroup(
 ) {
     var firstItemX:Float? by remember { mutableStateOf(null) }
     var lastItemX:Float? by remember { mutableStateOf(null) }
+
     println("AAAA: $firstItemX, $lastItemX")
     LazyRow(
         modifier = modifier
