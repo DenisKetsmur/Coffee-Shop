@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,10 +31,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
+import com.example.coffeeshop.screens.CardForScreens.ButtonState
 import com.example.coffeeshop.screens.CardForScreens.CatPop
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
 import com.example.coffeeshop.screens.CardForScreens.CustomCardProduct
@@ -55,9 +58,7 @@ fun MenuContent() {
     val focusRequester = FocusRequester()
 
     val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
-
-    //var iconState: Int by remember { mutableStateOf(R.drawable.cat_close_mouth) }
+    var selectedCategories by remember { mutableStateOf(setOf<String>()) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -78,7 +79,7 @@ fun MenuContent() {
                 label = {
                     Text(
                         text = "Search",
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
                 singleLine = true,
@@ -91,8 +92,9 @@ fun MenuContent() {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Description",
-                            tint = Color.Unspecified
+                            contentDescription = stringResource(R.string.clear_text),
+                            tint = Color.Unspecified,
+
                         )
                     }
                 },
@@ -114,32 +116,25 @@ fun MenuContent() {
                     modifier = Modifier.padding(start = 16.dp, top = 36.dp)
                 )
                 CatPop(
-                    modifier = Modifier.padding(start = 4.dp)
+                    modifier = Modifier.padding(start = 4.dp),
                 ) { onIconStateChange ->
                     ChipGroup(
                         categories = categories,
-                        selectedCategory = selectedCategory,
+                        selectedCategories = selectedCategories,
                         onCategorySelected = { category ->
-                            selectedCategory = category
+                            selectedCategories = category
                         },
-
                         onIconStateChange = { newState -> onIconStateChange(newState) },
                         modifier = Modifier.padding(start = 24.dp)
                     )
                 }
             }
         }
-        item {
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
-            CustomCardProduct()
+        items(6) {
             CustomCardProduct()
         }
     }
 }
-
 
 @Preview(showSystemUi = true)
 @Composable

@@ -50,7 +50,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.breens.beetablescompose.components.TableHeaderComponentPreview
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.CoffeeShop
 import com.example.coffeeshop.R
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 @Composable
@@ -83,13 +85,13 @@ fun GeneralPageScreen() {
                         Text(
                             text = "Вхід",
                             fontSize = 20.sp,
-                            color = MaterialTheme.colorScheme.secondary
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
                             contentDescription = null,
                             modifier = Modifier.size(50.dp),
-                            tint = MaterialTheme.colorScheme.secondary
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -100,18 +102,18 @@ fun GeneralPageScreen() {
                     Icon(
                         painter = painterResource(R.drawable.logo),
                         contentDescription = stringResource(R.string.logo),
-                        tint = Color.Unspecified,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(120.dp)
                     )
                     Text(
                         text = stringResource(R.string.app_name),
-                        color = MaterialTheme.colorScheme.secondary,
                         fontSize = 96.sp,
                         fontFamily = FontFamily(Font(R.font.comicoon_regular)),
                         maxLines = 2,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.width(300.dp),
-                        lineHeight = 80.sp
+                        lineHeight = 80.sp,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }
@@ -124,7 +126,7 @@ fun GeneralPageScreen() {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "ПРО НАС",
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -134,7 +136,7 @@ fun GeneralPageScreen() {
                             "кави, оригінальні рецепти напоїв, індивідуальне обслуговування, " +
                             "неповторна атмосфера радості, щастя та тепла кав’ярні зроблять " +
                             "ваш відпочинок у Coffee Shop дійсно затишним.",
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Start,
@@ -144,7 +146,7 @@ fun GeneralPageScreen() {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Рекомендовані Напої",
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Light,
                 )
@@ -179,7 +181,7 @@ fun GeneralPageScreen() {
                     border = BorderStroke(1.dp, Color.Gray),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,
-                        contentColor = Color.Gray
+                        contentColor = MaterialTheme.colorScheme.onSurface
                     )
                 ) {
                     Text(
@@ -217,5 +219,7 @@ fun PointBeforeText(
 @Preview(showBackground = true, heightDp = 1500)
 @Composable
 private fun PreviewGeneralPageScreen() {
-    GeneralPageScreen()
+    CoffeeAppTheme {
+        GeneralPageScreen()
+    }
 }

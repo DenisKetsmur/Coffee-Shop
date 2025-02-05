@@ -41,11 +41,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.R
 import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.screens.CardForScreens.CardStorageProduct
 import com.example.coffeeshop.screens.CardForScreens.CatPop
+import com.example.coffeeshop.screens.CardForScreens.CustomOutlinedTextField
 import com.example.navigationmodule.LocalRouter
 
 
@@ -53,76 +57,33 @@ import com.example.navigationmodule.LocalRouter
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StorageScreen() {
-    var searchText by remember { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = FocusRequester()
     val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки", "Редагувати")
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
+    var selectedCategories by remember { mutableStateOf(setOf<String>()) }
 
     LazyColumn{
         stickyHeader {
-                OutlinedTextField(
-                    value = searchText,
-                    onValueChange = { newText ->
-                        searchText = newText
-                    },
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    shape = RoundedCornerShape(28),
-                    label = {
-                        Text(
-                            text = "Search",
-                            color = Color.Gray
-                        )
-                    },
-                    singleLine = true,
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                searchText = ""
-                                focusManager.clearFocus()
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Clear,
-                                contentDescription = "Description",
-                                tint = Color.Unspecified
-                            )
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                        }
-                    ),
-                )
+            CustomOutlinedTextField()
         }
         item{
-                CatPop(
-                    modifier = Modifier.padding(start = 4.dp)
-                ) { onIconStateChange ->
-                    ChipGroup(
-                        categories = categories,
-                        selectedCategory = selectedCategory,
-                        onCategorySelected = { category ->
-                            selectedCategory = category
-                        },
-                        onIconStateChange = { newState -> onIconStateChange(newState) },
-                        modifier = Modifier.padding(start = 24.dp),
-                        firstItemThreshold = 330f,
-                        lastItemMaxThreshold = -150f,
-                        endPadding = 350.dp
-                    )
-                }
+            CatPop(
+                modifier = Modifier.padding(start = 4.dp),
+            ) { onIconStateChange ->
+                ChipGroup(
+                    categories = categories,
+                    selectedCategories = selectedCategories,
+                    onCategorySelected = { category ->
+                        selectedCategories = category
+                    },
+                    onIconStateChange = { newState -> onIconStateChange(newState) },
+                    modifier = Modifier.padding(start = 24.dp),
+                    firstItemThreshold = 330f,
+                    lastItemMaxThreshold = -150f,
+                    endPadding = 350.dp,
+                )
+            }
         }
         items(productList) {
-                CardStorageProduct(it)
+            CardStorageProduct(it)
         }
     }
 }
@@ -269,7 +230,6 @@ val productList = listOf(
         quantity = 1.0
     )
 )
-
 
 @Preview(showSystemUi = true)
 @Composable

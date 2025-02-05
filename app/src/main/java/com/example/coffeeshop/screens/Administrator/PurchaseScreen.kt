@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,6 +41,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -54,6 +56,7 @@ import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.screens.CardForScreens.CardSupplier
 import com.example.coffeeshop.screens.CardForScreens.CatPop
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
+import com.example.coffeeshop.screens.CardForScreens.CustomOutlinedTextField
 import com.example.coffeeshop.screens.CardForScreens.ThreeStateButton
 import com.example.navigationmodule.LocalRouter
 
@@ -61,88 +64,32 @@ import com.example.navigationmodule.LocalRouter
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PurchaseScreen() {
-    var searchText by remember { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = FocusRequester()
     val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
+    var selectedCategories by remember { mutableStateOf(setOf<String>()) }
     val router = LocalRouter.current
 
     LazyColumn {
         stickyHeader {
-            OutlinedTextField(
-                value = searchText,
-                onValueChange = { newText ->
-                    searchText = newText
-                },
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                shape = RoundedCornerShape(28),
-                label = {
-                    Text(
-                        text = "Search",
-                        color = Color.Gray
-                    )
-                },
-                singleLine = true,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            searchText = ""
-                            focusManager.clearFocus()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = "Description",
-                            tint = Color.Unspecified
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
-                ),
-            )
+            CustomOutlinedTextField()
         }
         item{
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-            ){
-                CatPop(
-                    modifier = Modifier.padding(start = 4.dp)
-                ) { onIconStateChange ->
-                    ChipGroup(
-                        categories = categories,
-                        selectedCategory = selectedCategory,
-                        onCategorySelected = { category ->
-                            selectedCategory = category
-                        },
-                        onIconStateChange = { newState -> onIconStateChange(newState) },
-                        modifier = Modifier.padding(start = 24.dp),
-                        firstItemThreshold = 330f,
-                        endPadding = 350.dp
-                    )
-                }
+            CatPop(
+                modifier = Modifier.padding(start = 4.dp),
+            ) { onIconStateChange ->
+                ChipGroup(
+                    categories = categories,
+                    selectedCategories = selectedCategories,
+                    onCategorySelected = { category ->
+                        selectedCategories = category
+                    },
+                    onIconStateChange = { newState -> onIconStateChange(newState) },
+                    modifier = Modifier.padding(start = 24.dp),
+                    firstItemThreshold = 330f,
+                    endPadding = 350.dp
+                )
             }
         }
-        item{
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
-            CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
+        items(8){
             CardSupplier(supplierDataList[0]){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}
         }
     }
@@ -171,10 +118,6 @@ val supplierDataList = listOf(
         photo = null
     )
 )
-
-
-
-
 
 @Preview(showSystemUi = true)
 @Composable

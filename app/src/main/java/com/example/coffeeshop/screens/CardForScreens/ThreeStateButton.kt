@@ -1,10 +1,14 @@
 package com.example.coffeeshop.screens.CardForScreens
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,31 +23,31 @@ import com.example.coffeeshop.R
 
 @Composable
 fun ThreeStateButton(
-    modifier: Modifier = Modifier,
-    onStateChange: (ButtonState) -> Unit = {}
+    modifier: Modifier = Modifier
 ) {
-    var buttonState by remember { mutableStateOf(ButtonState.BYNAME) }
-
+    var buttonState by remember { mutableStateOf(ButtonState.NEUTRAL) }
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)),
         modifier = modifier
     ) {
         IconButton(
             onClick = {
                 buttonState = when (buttonState) {
-                    ButtonState.BYNAME -> ButtonState.CHEAPER
+                    ButtonState.NEUTRAL -> ButtonState.CHEAPER
                     ButtonState.CHEAPER -> ButtonState.RATHER
-                    ButtonState.RATHER -> ButtonState.BYNAME
+                    ButtonState.RATHER -> ButtonState.NEUTRAL
                 }
-                onStateChange(buttonState)
-            }
+            },
         ) {
             Icon(
                 painter = painterResource(
                     when (buttonState) {
                         ButtonState.CHEAPER -> R.drawable.filterdown
                         ButtonState.RATHER -> R.drawable.filterup
-                        ButtonState.BYNAME -> R.drawable.byname
+                        ButtonState.NEUTRAL -> R.drawable.neutral
                     }
                 ),
                 contentDescription = "filter",
@@ -54,5 +58,5 @@ fun ThreeStateButton(
 }
 
 enum class ButtonState {
-    CHEAPER, RATHER, BYNAME
+    CHEAPER, RATHER, NEUTRAL
 }

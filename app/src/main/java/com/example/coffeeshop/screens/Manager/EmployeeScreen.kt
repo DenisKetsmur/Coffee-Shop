@@ -33,69 +33,24 @@ import com.example.coffeeshop.R
 import com.example.coffeeshop.data.supplier.Employee
 import com.example.coffeeshop.screens.CardForScreens.CardEmployee
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
+import com.example.coffeeshop.screens.CardForScreens.CustomOutlinedTextField
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EmployeeScreen() {
-    var searchText by remember { mutableStateOf("") }
-
-    val focusManager = LocalFocusManager.current
-    val focusRequester = FocusRequester()
-
     val categories = listOf("Активний", "Неактивний")
-
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
+    var selectedCategories by remember { mutableStateOf(setOf<String>()) }
 
     LazyColumn {
         stickyHeader {
-            OutlinedTextField(
-                value = searchText,
-                onValueChange = { newText ->
-                    searchText = newText
-                },
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                shape = RoundedCornerShape(28),
-                label = {
-                    Text(
-                        text = "Search",
-                        color = Color.Gray
-                    )
-                },
-                singleLine = true,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            searchText = ""
-                            focusManager.clearFocus()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = "Description",
-                            tint = Color.Unspecified
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
-                ),
-            )
+            CustomOutlinedTextField()
         }
         item {
             ChipGroup(
                 categories,
-                selectedCategory,
+                selectedCategories,
                 onCategorySelected = { category ->
-                    selectedCategory = category
+                    selectedCategories = category
                 },
                 modifier = Modifier.padding(start = 8.dp)
             )

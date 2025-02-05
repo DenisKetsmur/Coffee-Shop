@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -81,6 +82,12 @@ fun LoginContent(
             label = { Text("Електронна пошта") },
             isError = emailError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                cursorColor = MaterialTheme.colorScheme.primary,
+                focusedPlaceholderColor =MaterialTheme.colorScheme.onSurfaceVariant
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
@@ -114,6 +121,12 @@ fun LoginContent(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                cursorColor = MaterialTheme.colorScheme.primary,
+                focusedPlaceholderColor =MaterialTheme.colorScheme.onSurfaceVariant
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
@@ -146,7 +159,10 @@ fun LoginContent(
                     password.isNotEmpty() and
                     email.isNotEmpty(),
             colors = ButtonDefaults.buttonColors(
-                disabledContainerColor = MaterialTheme.colorScheme.secondary
+                containerColor = MaterialTheme.colorScheme.primary, // Основний колір кнопки
+                contentColor = MaterialTheme.colorScheme.onSecondary, // Колір тексту та іконок
+                disabledContainerColor = MaterialTheme.colorScheme.secondary, // Колір кнопки у неактивному стані
+                disabledContentColor = MaterialTheme.colorScheme.onSecondary // Колір тексту у неактивному стані
             )
         ) {
             Text("Увійти")

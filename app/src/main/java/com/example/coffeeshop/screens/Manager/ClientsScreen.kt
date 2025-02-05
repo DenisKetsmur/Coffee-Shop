@@ -1,5 +1,6 @@
 package com.example.coffeeshop.screens.Manager
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,62 +28,23 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.screens.CardForScreens.CardClients
+import com.example.coffeeshop.screens.CardForScreens.CustomOutlinedTextField
 
+@SuppressLint("ResourceType")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ClientsScreen() {
-    var searchText by remember { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = FocusRequester()
     LazyColumn {
         stickyHeader {
-            OutlinedTextField(
-                value = searchText,
-                onValueChange = { newText ->
-                    searchText = newText
-                },
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                shape = RoundedCornerShape(28),
-                label = {
-                    Text(
-                        text = "Search",
-                        color = Color.Gray
-                    )
-                },
-                singleLine = true,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            searchText = ""
-                            focusManager.clearFocus()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = "Description",
-                            tint = Color.Unspecified
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
-                ),
-            )
+            CustomOutlinedTextField()
         }
         items(6){
             CardClients(client = User(photo = painterResource(id = R.mipmap.face_photo)))
