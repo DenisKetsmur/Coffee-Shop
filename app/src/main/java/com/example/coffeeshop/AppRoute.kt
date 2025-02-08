@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import com.example.navigationmodule.Route
 
 
@@ -34,6 +35,7 @@ sealed class AppRoute(
         ) : Manager(titleRes, icon) {
             object RevisionClients : Clients(R.string.clients, icon = R.drawable.person)
             object RevisionHistoryClient : Clients(R.string.clients)
+            object AddNewClientScreen: Clients(R.string.add_new_client)
         }
     }
 
@@ -47,7 +49,8 @@ sealed class AppRoute(
             icon: Int? = null,
         ) : Administrator(titleRes, icon) {
             object RevisionStorage : Storage(R.string.storage, icon = R.drawable.garage_home)
-            object EditStorage : Storage(R.string.storage)
+            object EditProduct : Storage(R.string.edit_product_screen)
+            object InformationProduct: Storage(R.string.information_about_product_screen)
         }
 
         sealed class Purchase(

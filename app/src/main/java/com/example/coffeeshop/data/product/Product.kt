@@ -7,7 +7,7 @@ data class Product(
     val description: String? = null,
     val price: String? = null,
     val unit:String? = "unit",
-    val quantity:Double? = null,
+    val quantity: Double = 0.0,
     val image: Int? = null,
     val type: Type = Type.RAW,
 )

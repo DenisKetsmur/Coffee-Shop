@@ -54,6 +54,7 @@ fun ChipGroup(
                     }
                     onCategorySelected(newSelection)
                 },
+                modifier = Modifier.padding(start = 8.dp)
             )
         }
     }
@@ -143,86 +144,3 @@ fun FilterChip(
         }
     }
 }
-
-
-
-
-/*@Composable
-fun ChipGroup(
-    categories: List<String>,
-    selectedCategory: String?,
-    onCategorySelected: (String) -> Unit,
-    onIconStateChange: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    firstItemThreshold: Float = 470f,
-    lastItemMaxThreshold: Float = firstItemThreshold - 290f,
-    startPadding: Dp = 100.dp,
-    endPadding: Dp = 300.dp
-) {
-    var firstItemX:Float? by remember { mutableStateOf(null) }
-    var lastItemX:Float? by remember { mutableStateOf(null) }
-
-    LazyRow(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        item {
-            Spacer(modifier = Modifier.width(startPadding))
-        }
-        itemsIndexed(categories) { index, category ->
-            FilterChip(
-                label = category,
-                isSelected = selectedCategory == category,
-                onSelected = { onCategorySelected.invoke(category) },
-                modifier = Modifier.onGloballyPositioned { coordinates ->
-                    if (index == 0) firstItemX = coordinates.positionInRoot().x
-                    if (index == categories.lastIndex) lastItemX = coordinates.positionInRoot().x
-                }
-            )
-            if (index == categories.lastIndex) {
-                Spacer(modifier = Modifier.width(endPadding))
-            }
-            val iconRes = when {
-                firstItemX != null && firstItemX!! > firstItemThreshold -> R.drawable.cat_close_mouth
-                lastItemX != null && lastItemX!! < lastItemMaxThreshold -> R.drawable.cat_close_mouth
-                else -> R.drawable.cat_front
-            }
-            onIconStateChange(iconRes)
-        }
-    }
-}
-
-@Composable
-fun FilterChip(
-    label: String,
-    isSelected: Boolean,
-    onSelected: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val focusManager = LocalFocusManager.current
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-            contentColor = if (isSelected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onSurface
-        ),
-        modifier = modifier.then(Modifier
-            .height(40.dp)
-            .clickable {
-                onSelected.invoke()
-                focusManager.clearFocus()
-            }),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-    ) {
-        Box(
-            modifier = Modifier.padding(8.dp),
-            contentAlignment = Alignment.Center
-        ){
-            Text(label)
-        }
-    }
-}*/

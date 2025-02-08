@@ -13,4 +13,10 @@
     <string name="my_account">My Account</string>
     <string name="search">Пошук</string>
     <string name="clear_text_in_text_field">Clear Text in Text Field</string>
+    <string name="added_new_client">Added new client</string>
+    <string name="name_and_surname_client">Ім\'я та прізвище клієнта</string>
+    <string name="telephone_number_client">Номер телефону клієнта</string>
+    <string name="add_new_client">Реєстрація користувача</string>
+    <string name="edit_product_screen">Редагування Продукту</string>
+    <string name="information_about_product_screen">Інформація про продукт</string>
 </resources>

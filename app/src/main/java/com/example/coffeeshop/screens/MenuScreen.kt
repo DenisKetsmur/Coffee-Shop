@@ -40,6 +40,7 @@ import com.example.coffeeshop.screens.CardForScreens.ButtonState
 import com.example.coffeeshop.screens.CardForScreens.CatPop
 import com.example.coffeeshop.screens.CardForScreens.ChipGroup
 import com.example.coffeeshop.screens.CardForScreens.CustomCardProduct
+import com.example.coffeeshop.screens.CardForScreens.CustomOutlinedTextField
 import com.example.coffeeshop.screens.CardForScreens.ThreeStateButton
 
 
@@ -65,48 +66,7 @@ fun MenuContent() {
 
     ) {
         stickyHeader {
-            OutlinedTextField(
-                value = searchText,
-                onValueChange = { newText ->
-                    searchText = newText
-                },
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                shape = RoundedCornerShape(28),
-                label = {
-                    Text(
-                        text = "Search",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                },
-                singleLine = true,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            searchText = ""
-                            focusManager.clearFocus()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = stringResource(R.string.clear_text),
-                            tint = Color.Unspecified,
-
-                        )
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
-                ),
-            )
+            CustomOutlinedTextField()
         }
         item{
             Row(

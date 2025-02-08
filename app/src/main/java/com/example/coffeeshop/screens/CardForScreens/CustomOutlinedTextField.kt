@@ -1,5 +1,6 @@
 package com.example.coffeeshop.screens.CardForScreens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,11 +29,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun CustomOutlinedTextField() {
-    var searchText by remember { mutableStateOf("") }
+fun CustomOutlinedTextField(
+//    searchText:String,
+//    onTextChange: (String) -> Unit,
+    label: String = stringResource(R.string.search),
+) {
     val focusManager = LocalFocusManager.current
     val focusRequester = FocusRequester()
+    var searchText by mutableStateOf("")
     OutlinedTextField(
         value = searchText,
         onValueChange = { newText ->
@@ -40,16 +46,11 @@ fun CustomOutlinedTextField() {
         },
         modifier = Modifier
             .background(MaterialTheme.colorScheme.surface)
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 12.dp)
             .fillMaxWidth()
             .focusRequester(focusRequester),
         shape = RoundedCornerShape(28),
-        label = {
-            Text(
-                text = stringResource(R.string.search),
-                color = Color.Gray
-            )
-        },
+        label = { Text(text = label, color = Color.Gray) },
         singleLine = true,
         trailingIcon = {
             IconButton(
@@ -73,5 +74,6 @@ fun CustomOutlinedTextField() {
                 focusManager.clearFocus()
             }
         ),
+
     )
 }

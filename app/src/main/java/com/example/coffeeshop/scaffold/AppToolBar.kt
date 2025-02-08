@@ -36,7 +36,7 @@ fun AppToolBar(
             navigationIcon = {
                 if(navigationState.currentRoute == AppRoute.StartUI.Login ||
                     navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase ||
-                    navigationState.currentRoute == AppRoute.Administrator.Storage.EditStorage ||
+                    navigationState.currentRoute == AppRoute.Administrator.Storage.EditProduct ||
                     navigationState.currentRoute == AppRoute.Manager.Personal.EditPersonal ||
                     navigationState.currentRoute == AppRoute.Manager.Clients.RevisionHistoryClient
                     ) {

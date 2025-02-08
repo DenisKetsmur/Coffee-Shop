@@ -29,7 +29,7 @@ fun CardStorageProduct(
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .clickable {
-                router.launch(AppRoute.Administrator.Storage.EditStorage)
+                router.launch(AppRoute.Administrator.Storage.InformationProduct)
             }),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(

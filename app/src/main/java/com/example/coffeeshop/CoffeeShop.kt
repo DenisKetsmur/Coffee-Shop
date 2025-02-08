@@ -24,11 +24,11 @@ fun CoffeeShop(){
             }
         },
         floatingActionButton = {
-            if(navigationState.currentRoute == AppRoute.StartUI.Menu){
+            if(navigationState.currentRoute == AppRoute.StartUI.Menu
+                || navigationState.currentRoute == AppRoute.Manager.Clients.RevisionClients){
                 AppFloatingActionButton(
-                    onLaunchAction = {
-                        TODO()
-                    }
+                    router = router,
+                    navigationState = navigationState,
                 )
             }
         },

@@ -37,9 +37,9 @@ fun CustomCardProduct(
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
+//        colors = CardDefaults.cardColors(
+//            containerColor = MaterialTheme.colorScheme.surface
+//        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         )
