@@ -59,6 +59,7 @@ sealed class AppRoute(
         ) : Administrator(titleRes, icon) {
             object RevisionPurchase : Purchase(R.string.purchase, icon = R.drawable.shopping_cart)
             object InformationPurchase : Purchase(R.string.purchase)
+            object EditSupplier: Purchase(R.string.purchase)
         }
     }
 

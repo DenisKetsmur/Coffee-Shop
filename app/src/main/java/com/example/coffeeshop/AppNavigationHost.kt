@@ -2,17 +2,18 @@ package com.example.coffeeshop
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.coffeeshop.screens.Administrator.EditProductScreen
-import com.example.coffeeshop.screens.Administrator.InformationProductScreen
-import com.example.coffeeshop.screens.Administrator.InformationPurchaseScreen
-import com.example.coffeeshop.screens.Administrator.PurchaseScreen
-import com.example.coffeeshop.screens.Administrator.StorageScreen
+import com.example.coffeeshop.screens.administrator.storage.EditProductScreen
+import com.example.coffeeshop.screens.administrator.purchase.EditSupplierScreen
+import com.example.coffeeshop.screens.administrator.storage.InformationProductScreen
+import com.example.coffeeshop.screens.administrator.purchase.InformationPurchaseScreen
+import com.example.coffeeshop.screens.administrator.purchase.PurchaseScreen
+import com.example.coffeeshop.screens.administrator.storage.StorageScreen
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
-import com.example.coffeeshop.screens.Manager.AddNewClientScreen
-import com.example.coffeeshop.screens.Manager.ClientsScreen
-import com.example.coffeeshop.screens.Manager.EditEmployeeScreen
-import com.example.coffeeshop.screens.Manager.EmployeeScreen
+import com.example.coffeeshop.screens.manager.client.AddNewClientScreen
+import com.example.coffeeshop.screens.manager.client.ClientsScreen
+import com.example.coffeeshop.screens.manager.employee.EditEmployeeScreen
+import com.example.coffeeshop.screens.manager.employee.EmployeeScreen
 import com.example.coffeeshop.screens.MenuScreen
 import com.example.navigationmodule.Navigation
 import com.example.navigationmodule.NavigationHost
@@ -39,6 +40,7 @@ fun AppNavigationHost(
 
             AppRoute.Administrator.Purchase.RevisionPurchase -> PurchaseScreen()
             AppRoute.Administrator.Purchase.InformationPurchase -> InformationPurchaseScreen()
+            AppRoute.Administrator.Purchase.EditSupplier -> EditSupplierScreen()
             AppRoute.Administrator.Storage.RevisionStorage -> StorageScreen()
             AppRoute.Administrator.Storage.EditProduct-> EditProductScreen()
             AppRoute.Administrator.Storage.InformationProduct -> InformationProductScreen()

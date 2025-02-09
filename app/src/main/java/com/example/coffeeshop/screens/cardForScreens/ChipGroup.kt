@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.CardForScreens
+package com.example.coffeeshop.screens.cardForScreens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.CardForScreens
+package com.example.coffeeshop.screens.cardForScreens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,10 +8,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,83 +18,89 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.coffeeshop.data.product.Product
-import org.w3c.dom.Text
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomExposedDropdownMenuBox(
+    firstValue:String,
     options:List<String>,
     onOptionsUpdated: (String) -> Unit,
     label: @Composable ()->Unit,
+    isSearchable:Boolean = true,
 ) {
-    var searchQuery by remember { mutableStateOf("") } // Поле пошуку
-    var selectedOption by remember { mutableStateOf<String?>(null) }
-    var expanded by remember { mutableStateOf(false) } // Меню відкривається лише при кліку
-    var isError by remember { mutableStateOf(false) } // Помилка, якщо нема результатів
-
-    val filteredOptions = options.filter { it.contains(searchQuery, ignoreCase = true) } // Фільтрація
-
+    var searchQuery by remember { mutableStateOf(firstValue) }
+    var selectedOption by remember { mutableStateOf(firstValue) }
+    var expanded by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
+    var isError by remember { mutableStateOf(false) }
+
+    val displayedOptions = if (isSearchable) {
+        options.filter { it.contains(searchQuery, ignoreCase = true) }
+    } else {
+        options
+    }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = { expanded = it } // Контроль відкриття/закриття
+        onExpandedChange = {
+            expanded = it
+        }
     ) {
         OutlinedTextField(
             value = searchQuery,
             onValueChange = {
                 searchQuery = it
-                isError = filteredOptions.isEmpty() // Якщо нема збігів — помилка
-                expanded = true // Тримаємо меню відкритим
+                expanded = true
                 onOptionsUpdated(searchQuery)
             },
-            label = { label.invoke() },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            singleLine = true,
+            readOnly = !isSearchable,
+            label = { label() },
+            isError = isError && searchQuery != "",
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
-                .clickable { expanded = true }, // Відкриваємо при натисканні
-
-            isError = isError && searchQuery != "", // Підсвічує червоним, якщо є помилка
-//            supportingText = {
-//                if (isError) Text("Помилка: Нічого не знайдено!", color = MaterialTheme.colorScheme.error)
-//            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    focusManager.clearFocus()
+                .onFocusChanged { focusState ->
+                    if (focusState.hasFocus){
+                        expanded = true
+                        isError = false
+                    }else{
+                        isError = !options.contains(searchQuery)
+                    }
                 }
-            ),
+                .clickable { expanded = true },
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
 
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false } // Закриваємо лише при втраті фокусу
+            onDismissRequest = { expanded = false },
+
         ) {
-            if (filteredOptions.isEmpty()) {
+            if (displayedOptions.isEmpty()) {
                 DropdownMenuItem(
                     text = { Text("Нічого не знайдено", color = Color.Gray) },
                     onClick = { }
                 )
             } else {
-                filteredOptions.forEach { option ->
+                displayedOptions.forEach { option ->
                     DropdownMenuItem(
                         text = { Text(option) },
                         onClick = {
                             selectedOption = option
-                            searchQuery = option // Записуємо вибір у поле
-                            isError = false // Скидаємо помилку
-                            expanded = false // Закриваємо меню
+                            searchQuery = option
+                            expanded = false
+                            focusManager.clearFocus()
+                            onOptionsUpdated(option)
                         }
                     )
                 }
@@ -111,6 +115,7 @@ private fun PreviewCustomExposedDropdownMenuBox(){
     var category by remember { mutableStateOf("") }
     val categoryList = listOf("Apple", "Banana", "Cherry", "Date", "Fig", "Grapes")
     CustomExposedDropdownMenuBox(
+        firstValue = "dfsdf",
         options = categoryList,
         onOptionsUpdated = { newValueCategory ->
             category = newValueCategory

@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.CardForScreens
+package com.example.coffeeshop.screens.manager.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,16 +17,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.user.User
 import com.example.navigationmodule.LocalRouter
-import kotlin.math.max
 
 @Composable
 fun CardClients(
-    client: User
+    client: User.Client
 ) {
     val router = LocalRouter.current
     Card(

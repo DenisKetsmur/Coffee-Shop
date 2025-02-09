@@ -1,33 +1,34 @@
 package com.example.coffeeshop.data.user
 
-import androidx.compose.ui.graphics.painter.Painter
+import com.example.coffeeshop.R
 
-data class User(
-    val id: Int? = 1,
-    val name: String? = "name",
-    val surname: String? = "surname",
-    val phoneNumber: String = "234234234234",
-    val email: String = "2323423@23232.com",
-    val password: String = "2342342342",
-    val photo: Painter? = null,
-    val position: Position = Position.CLIENT,
-)
-
-/*sealed class User(
+sealed class User(
     open val email: String,
-    open val password: String
+    open val password: String,
+    open val position: Position,
+    open val phoneNumber: String,
 ) {
     data class Employee(
-        override val email: String,
-        override val password: String,
-        val position: Position
-    ) : User(email, password)
+        override val email: String = "",
+        override val password: String = "",
+        override val position: Position = Position.MANAGER,
+        override val phoneNumber: String = "+380345345",
+        val id: Int = 1,
+        val name: String = "name",
+        val surname: String = "surname",
+        val salary: String = "34234",
+        val experience: String = "2 years",
+        val startJob: String = "12/12/12",
+        val photo: Int = R.mipmap.face_photo,
+        val status: Boolean = true,
+    ) : User(email, password, position, phoneNumber)
 
     data class Client(
-        override val email: String,
-        override val password: String,
-        val discount: Double
-    ) : User(email, password)
-}*/
-
-
+        override val email: String = "",
+        override val password: String = "",
+        override val position: Position = Position.CLIENT,
+        override val phoneNumber: String = "+380345345",
+        val name: String = "name",
+        val surname: String = "surname",
+    ) : User(email, password, position, phoneNumber)
+}

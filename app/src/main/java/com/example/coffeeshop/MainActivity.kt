@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.coffeeshop.screens.Administrator.InformationPurchaseScreen
-import com.example.coffeeshop.screens.Administrator.PurchaseScreen
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CoffeeAppTheme(darkTheme = true) {
+            CoffeeAppTheme(darkTheme = false) {
                 CoffeeShop()
             }
         }

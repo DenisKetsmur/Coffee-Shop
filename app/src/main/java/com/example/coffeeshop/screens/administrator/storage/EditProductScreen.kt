@@ -1,31 +1,19 @@
-package com.example.coffeeshop.screens.Administrator
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+package com.example.coffeeshop.screens.administrator.storage
+
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -38,46 +26,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeeshop.data.product.Product
-import com.example.coffeeshop.screens.CardForScreens.CustomExposedDropdownMenuBox
+import com.example.coffeeshop.data.filled.rawMaterialCategories
+import com.example.coffeeshop.data.filled.unitList
+import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
+import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun EditProductScreen() {
     EditProductContent(
-        Product(
+        RawMaterial(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
                     "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
                     "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            price = "24234",
             unit = "мл",
-            quantity = 234.0,
+            quantity = 234f,
         ),
         onProductUpdated = {}
     )
 }
 
-
 @Composable
 fun EditProductContent(
-    product:Product,
-    onProductUpdated: (Product) -> Unit
+    rawMaterial: RawMaterial,
+    onProductUpdated: (RawMaterial) -> Unit
 ) {
-    var name by remember { mutableStateOf(product.name) }
-    var category by remember { mutableStateOf("") }
-    var unit by remember { mutableStateOf("") }
-    var quantity by remember { mutableStateOf(product.quantity.toString()) }
-    var description by remember { mutableStateOf(product.description!!) }
+    var name by remember { mutableStateOf(rawMaterial.name) }
+    var category by remember { mutableStateOf(rawMaterial.category) }
+    var unit by remember { mutableStateOf(rawMaterial.unit) }
+    var quantity by remember { mutableStateOf(rawMaterial.quantity.toString()) }
+    var description by remember { mutableStateOf(rawMaterial.description) }
 
-    val categoryList = listOf("Apple", "Banana", "Cherry", "Date", "Fig", "Grapes")
-    val unitList = listOf("кг", "мл", "л", "г")
+
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
+    val router = LocalRouter.current
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,11 +91,21 @@ fun EditProductContent(
                         name = newValueName
                     },
                     singleLine = true,
-                    label = {Text(text = "Назва")},
-                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text(text = "Назва") },
+                    modifier = Modifier.fillMaxWidth()
+                        .focusRequester(focusRequester),
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }
+                    ),
                 )
                 CustomExposedDropdownMenuBox(
-                    options = categoryList,
+                    firstValue = rawMaterial.category,
+                    options = rawMaterialCategories,
                     onOptionsUpdated = { newValueCategory ->
                         category = newValueCategory
                     },
@@ -116,6 +116,7 @@ fun EditProductContent(
                     }
                 )
                 CustomExposedDropdownMenuBox(
+                    firstValue = rawMaterial.unit,
                     options = unitList,
                     onOptionsUpdated = { newValueUnit ->
                         unit = newValueUnit
@@ -124,7 +125,8 @@ fun EditProductContent(
                         Text(
                             "Виберіть одиницю виміру"
                         )
-                    }
+                    },
+                    isSearchable = false
                 )
                 OutlinedTextField(
                     value = quantity,
@@ -149,25 +151,26 @@ fun EditProductContent(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    FloatingActionButton(
+                    Button(
                         modifier = Modifier.padding(12.dp),
                         onClick = {
-                            val updateProduct = product.copy(
+                            val updateProduct = rawMaterial.copy(
                                 name = name,
                                 category = category,
                                 unit = unit,
-                                quantity = quantity.toDoubleOrNull() ?: 0.0,
+                                quantity = quantity.toFloatOrNull() ?: 0f,
                                 description = description
                             )
                             onProductUpdated(updateProduct)
+                            router.pop()
                         },
-                        contentColor = MaterialTheme.colorScheme.primary,
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                        //modifier = Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(15.dp))
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Done,
-                            contentDescription = null
+                        Text(
+                            text = "Підтвердити зміни"
                         )
                     }
                 }
@@ -180,15 +183,14 @@ fun EditProductContent(
 @Composable
 private fun PreviewEditProductScreen(){
     EditProductContent(
-        Product(
+        RawMaterial(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
                     "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
                     "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            price = "24234",
             unit = "мл",
-            quantity = 234.0,
+            quantity = 234f,
         ),
         onProductUpdated = {}
     )

@@ -64,7 +64,6 @@ fun LoginContent(
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,12 +81,6 @@ fun LoginContent(
             label = { Text("Електронна пошта") },
             isError = emailError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                cursorColor = MaterialTheme.colorScheme.primary,
-                focusedPlaceholderColor =MaterialTheme.colorScheme.onSurfaceVariant
-            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
@@ -121,12 +114,6 @@ fun LoginContent(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                cursorColor = MaterialTheme.colorScheme.primary,
-                focusedPlaceholderColor =MaterialTheme.colorScheme.onSurfaceVariant
-            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
@@ -158,12 +145,6 @@ fun LoginContent(
                     email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")) and
                     password.isNotEmpty() and
                     email.isNotEmpty(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary, // Основний колір кнопки
-                contentColor = MaterialTheme.colorScheme.onSecondary, // Колір тексту та іконок
-                disabledContainerColor = MaterialTheme.colorScheme.secondary, // Колір кнопки у неактивному стані
-                disabledContentColor = MaterialTheme.colorScheme.onSecondary // Колір тексту у неактивному стані
-            )
         ) {
             Text("Увійти")
         }

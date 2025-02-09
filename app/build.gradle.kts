@@ -59,4 +59,5 @@ dependencies {
     implementation(libs.beetablescompose)
     implementation(projects.navigationModule)
     implementation (libs.androidx.constraintlayout.compose)
+    implementation(libs.coil.compose)
 }

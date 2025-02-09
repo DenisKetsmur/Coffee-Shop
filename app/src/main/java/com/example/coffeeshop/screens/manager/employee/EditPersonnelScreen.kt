@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.Manager
+package com.example.coffeeshop.screens.manager.employee
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -19,12 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.supplier.Employee
+import com.example.coffeeshop.data.user.User
 import com.example.navigationmodule.LocalRouter
 
 @Composable
@@ -34,7 +34,7 @@ fun EditEmployeeScreen() {
 
 @Composable
 fun EditEmployeeContent(
-    personnel: Employee,
+    employee: User.Employee,
     onClick: ()->Unit = {},
 ) {
     val router = LocalRouter.current
@@ -45,7 +45,7 @@ fun EditEmployeeContent(
     ) {
         Row {
             Image(
-                painter = personnel.photo,
+                painter = painterResource(employee.photo),
                 contentDescription = null,
                 modifier = Modifier
                     .size(200.dp)
@@ -57,22 +57,22 @@ fun EditEmployeeContent(
                     .padding(start = 10.dp, top = 5.dp)
             ) {
                 Text(
-                    text = "${personnel.name} ${personnel.surname}",
+                    text = "${employee.name} ${employee.surname}",
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
                     text = """
-                        |Контакти: ${personnel.phoneNumber}
-                        |${personnel.email}
-                        |Посада: ${personnel.position}
-                        |Зарплата: ${personnel.salary}
-                        |Стаж: ${personnel.experience}
-                        |Найм: ${personnel.startJob}
+                        |Контакти: ${employee.phoneNumber}
+                        |${employee.email}
+                        |Посада: ${employee.position}
+                        |Зарплата: ${employee.salary}
+                        |Стаж: ${employee.experience}
+                        |Найм: ${employee.startJob}
                     """.trimMargin(), style = TextStyle(lineHeight = 23.sp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = personnel.status,
+                    text = if (employee.status) "активний" else "неактивний",
                     fontWeight = FontWeight.Bold,
                 )
             }
