@@ -21,6 +21,7 @@ import com.example.navigationmodule.LocalRouter
 @Composable
 fun CardStorageProduct(
     rawMaterial: RawMaterial,
+    onRoute:()->Unit,
     modifier: Modifier = Modifier,
 ) {
     val router = LocalRouter.current
@@ -29,12 +30,9 @@ fun CardStorageProduct(
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .clickable {
-                router.launch(AppRoute.Administrator.Storage.InformationProduct)
+                onRoute.invoke()
             }),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         )
@@ -67,11 +65,11 @@ fun CardStorageProduct(
             ) {
                 Text(
                     text = rawMaterial.category,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    //color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
                 Text(
                     text = "${rawMaterial.quantity}",
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    //color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
             }
         }

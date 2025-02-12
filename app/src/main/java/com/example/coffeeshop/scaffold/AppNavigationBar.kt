@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
@@ -30,6 +31,11 @@ val AdminTabs = listOf(
     AppRoute.Administrator.Purchase.RevisionPurchase,
 )
 
+val SupplierTab = listOf(
+    AppRoute.Administrator.Purchase.InformationPurchase,
+    AppRoute.Administrator.Purchase.PurchaseInSupplier,
+)
+
 
 @Composable
 fun AppNavigationBar(
@@ -37,12 +43,15 @@ fun AppNavigationBar(
     router: Router,
 ) {
     NavigationBar {
-        val currentUser = if(ManagerUser.isManager())
+        val currentTabs = if(ManagerUser.isManager())
             ManagerTabs
-        else
+        else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase ||
+            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier){
+            SupplierTab
+        }else
             AdminTabs
 
-        currentUser.forEach { tab ->
+        currentTabs.forEach { tab ->
             NavigationBarItem(
                 selected = navigationState.currentRoute == tab,
                 label = { Text(stringResource(tab.titleRes)) },
@@ -52,7 +61,6 @@ fun AppNavigationBar(
                         imageVector =  ImageVector.vectorResource(tab.icon!!),
                         contentDescription = stringResource(tab.titleRes),
                         modifier = Modifier.size(25.dp),
-                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 },
             )

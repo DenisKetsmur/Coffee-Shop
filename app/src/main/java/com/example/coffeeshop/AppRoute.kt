@@ -57,9 +57,11 @@ sealed class AppRoute(
             @StringRes titleRes: Int,
             icon: Int? = null,
         ) : Administrator(titleRes, icon) {
-            object RevisionPurchase : Purchase(R.string.purchase, icon = R.drawable.shopping_cart)
-            object InformationPurchase : Purchase(R.string.purchase)
-            object EditSupplier: Purchase(R.string.purchase)
+            object RevisionPurchase : Purchase(R.string.Suppliers, icon = R.drawable.groups)
+            object InformationPurchase : Purchase(R.string.informatiom_about_supplier, icon = R.drawable.person_apron)
+            object AddSupplier: Purchase(R.string.data_filling )
+            object PurchaseInSupplier: Purchase(R.string.purchase, icon = R.drawable.shopping_cart)
+            object ShoppingCart : Purchase(R.string.shopping_cart)
         }
     }
 
@@ -68,7 +70,7 @@ sealed class AppRoute(
         icon: Int? = null,
     ) : AppRoute(titleRes, icon) {
         object Login : StartUI(R.string.login)
-        object Menu : StartUI(R.string.coffee_shop, icon = R.drawable.menu)
+        object Menu : StartUI(R.string.goods, icon = R.drawable.menu)
         object GeneralPageScreen : StartUI(R.string.app_name)
     }
 }

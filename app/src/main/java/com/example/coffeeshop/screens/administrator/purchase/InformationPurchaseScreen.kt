@@ -80,7 +80,7 @@ fun SupplierInfo(supplier: Supplier) {
             }
             FloatingActionButton(
                 onClick = {
-                    router.launch(AppRoute.Administrator.Purchase.EditSupplier)
+                    TODO()
                 },
                 contentColor = MaterialTheme.colorScheme.primary,
                 containerColor = MaterialTheme.colorScheme.onPrimary,

@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.R
 import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.navigationmodule.LocalRouter
@@ -42,9 +41,6 @@ fun CardSupplier(
                 onClick.invoke()
             },
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         )

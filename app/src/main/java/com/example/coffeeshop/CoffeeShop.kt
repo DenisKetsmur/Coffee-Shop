@@ -24,8 +24,10 @@ fun CoffeeShop(){
             }
         },
         floatingActionButton = {
-            if(navigationState.currentRoute == AppRoute.StartUI.Menu
-                || navigationState.currentRoute == AppRoute.Manager.Clients.RevisionClients){
+            if(navigationState.currentRoute == AppRoute.StartUI.Menu ||
+                navigationState.currentRoute == AppRoute.Manager.Clients.RevisionClients ||
+                navigationState.currentRoute == AppRoute.Administrator.Purchase.RevisionPurchase
+                ){
                 AppFloatingActionButton(
                     router = router,
                     navigationState = navigationState,
@@ -33,7 +35,8 @@ fun CoffeeShop(){
             }
         },
         bottomBar = {
-            if(ManagerUser.currentUser != null){
+            if(ManagerUser.currentUser != null &&
+                navigationState.currentRoute != AppRoute.Administrator.Purchase.ShoppingCart){
                 AppNavigationBar(
                     navigationState,
                     router

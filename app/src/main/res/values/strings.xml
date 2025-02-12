@@ -19,4 +19,9 @@
     <string name="add_new_client">Реєстрація користувача</string>
     <string name="edit_product_screen">Редагування Продукту</string>
     <string name="information_about_product_screen">Інформація про продукт</string>
+    <string name="informatiom_about_supplier">Постачальник</string>
+    <string name="data_filling">Заповнення даних</string>
+    <string name="goods">Товари</string>
+    <string name="Suppliers">Постачальники</string>
+    <string name="shopping_cart">Кошик</string>
 </resources>

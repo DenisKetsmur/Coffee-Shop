@@ -134,7 +134,9 @@ fun FilterChip(
                 focusManager.clearFocus()
             },
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp,
+                    ),
     ) {
         Box(
             modifier = Modifier.padding(8.dp),

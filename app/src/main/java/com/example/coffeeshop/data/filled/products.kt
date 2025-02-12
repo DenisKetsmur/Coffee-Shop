@@ -92,7 +92,7 @@ val products = listOf(
     ),
 )
 
-val rawMaterial = listOf(
+var rawMaterial = listOf(
     RawMaterial(
         name = "Кава арабіка",
         category = rawMaterialCategories[0], // Кавові зерна

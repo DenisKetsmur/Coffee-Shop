@@ -30,6 +30,16 @@ fun AppFloatingActionButton(
                 contentDescription = stringResource(R.string.added_new_client)
             )
         }
+    }else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.RevisionPurchase){
+        FloatingActionButton(
+            modifier = modifier,
+            onClick = { router.launch(AppRoute.Administrator.Purchase.AddSupplier) }
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = stringResource(R.string.added_new_client)
+            )
+        }
     }else{
         FloatingActionButton(
             modifier = modifier,

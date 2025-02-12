@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.administrator.storage
+package com.example.coffeeshop.screens.administrator.purchase
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -14,22 +14,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.screens.cardForScreens.ChipGroup
 import androidx.compose.foundation.lazy.items
-import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.rawMaterial
 import com.example.coffeeshop.data.filled.rawMaterialCategories
 import com.example.coffeeshop.screens.administrator.components.CardStorageProduct
 import com.example.coffeeshop.screens.cardForScreens.CatPop
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedTextField
-import com.example.navigationmodule.LocalRouter
 
+
+@Composable
+fun PurchaseInSupplierScreen() {
+    PurchaseInSupplierContent()
+}
 
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StorageScreen() {
+fun PurchaseInSupplierContent() {
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
 
-    val router = LocalRouter.current
     LazyColumn{
         stickyHeader {
             CustomOutlinedTextField()
@@ -55,7 +57,9 @@ fun StorageScreen() {
         items(rawMaterial) {
             CardStorageProduct(
                 rawMaterial = it,
-                onRoute = {router.launch(AppRoute.Administrator.Storage.InformationProduct)}
+                onRoute = {
+                    TODO()
+                }
             )
         }
     }
@@ -63,6 +67,6 @@ fun StorageScreen() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewStorageScreen(){
-    StorageScreen()
+fun PreviewPurchaseInSupplierScreen(){
+    PurchaseInSupplierScreen()
 }
