@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.screens.cardForScreens.CatPop
 import com.example.coffeeshop.screens.cardForScreens.ChipGroup
 import com.example.coffeeshop.screens.administrator.components.CustomCardProduct
-import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedTextField
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
 import com.example.coffeeshop.screens.cardForScreens.ThreeStateButton
 
 
@@ -45,7 +45,7 @@ fun MenuContent() {
 
     ) {
         stickyHeader {
-            CustomOutlinedTextField()
+            CustomOutlinedSearchTextField()
         }
         item{
             Row(

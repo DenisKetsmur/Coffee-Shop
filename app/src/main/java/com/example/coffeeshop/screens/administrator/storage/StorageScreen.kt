@@ -19,7 +19,7 @@ import com.example.coffeeshop.data.filled.rawMaterial
 import com.example.coffeeshop.data.filled.rawMaterialCategories
 import com.example.coffeeshop.screens.administrator.components.CardStorageProduct
 import com.example.coffeeshop.screens.cardForScreens.CatPop
-import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedTextField
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
 import com.example.navigationmodule.LocalRouter
 
 
@@ -32,7 +32,7 @@ fun StorageScreen() {
     val router = LocalRouter.current
     LazyColumn{
         stickyHeader {
-            CustomOutlinedTextField()
+            CustomOutlinedSearchTextField()
         }
         item{
             CatPop(

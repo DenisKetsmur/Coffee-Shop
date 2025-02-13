@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.manager.client
+package com.example.coffeeshop.screens.manager.employee
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
-import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedTextField
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
@@ -40,15 +42,30 @@ fun AddNewClientScreen() {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            CustomOutlinedTextField(
+            CustomOutlinedSearchTextField(
 //                searchText = searchText,
 //                onTextChange = {newText -> searchText = newText},
-                label = stringResource(R.string.name_and_surname_client)
+                label = "Імя"
             )
-            CustomOutlinedTextField(
+            CustomOutlinedSearchTextField(
+//                searchText = searchText,
+//                onTextChange = { newText -> searchText = newText },
+                label = "Прізвище"
+            )
+            CustomOutlinedSearchTextField(
+//                searchText = searchText,
+//                onTextChange = { newText -> searchText = newText },
+                label = "Пошта"
+            )
+            CustomOutlinedSearchTextField(
 //                searchText = searchText,
 //                onTextChange = { newText -> searchText = newText },
                 label = stringResource(R.string.telephone_number_client)
+            )
+            CustomOutlinedSearchTextField(
+//                searchText = searchText,
+//                onTextChange = { newText -> searchText = newText },
+                label = "Пароль"
             )
         }
         Button(
@@ -67,15 +84,17 @@ fun AddNewClientScreen() {
                 disabledContentColor = MaterialTheme.colorScheme.onSecondary // Колір тексту у неактивному стані
             )
         ) {
-        Text(text = "Зареєструвати користувача")
+        Text(text = "Зареєструвати працівника")
         }
-
     }
-
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewAddNewClientScreen() {
-    AddNewClientScreen()
+    CoffeeAppTheme(darkTheme = true){
+        Surface {
+            AddNewClientScreen()
+        }
+    }
 }

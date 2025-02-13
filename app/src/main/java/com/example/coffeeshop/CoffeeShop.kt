@@ -25,7 +25,7 @@ fun CoffeeShop(){
         },
         floatingActionButton = {
             if(navigationState.currentRoute == AppRoute.StartUI.Menu ||
-                navigationState.currentRoute == AppRoute.Manager.Clients.RevisionClients ||
+                navigationState.currentRoute == AppRoute.Manager.Personal.RevisionPersonal ||
                 navigationState.currentRoute == AppRoute.Administrator.Purchase.RevisionPurchase
                 ){
                 AppFloatingActionButton(

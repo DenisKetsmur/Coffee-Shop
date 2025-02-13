@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.administrator.purchase
+package com.example.coffeeshop.screens.manager.client
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
@@ -18,6 +19,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,29 +29,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.filled.sampleSupplier
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.supplier.Supplier
+import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.screens.manager.employee.convertMillisToDate
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 
 @Composable
-fun InformationPurchaseScreen() {
-    InformationPurchaseContent(sampleSupplier)
+fun InformationClientScreen() {
+    InformationClientContent(client = client)
 }
 
 @Composable
-fun InformationPurchaseContent(supplier: Supplier) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        SupplierInfo(supplier)
-        Spacer(modifier = Modifier.height(16.dp))
-        OrderHistory(supplier.orders)
+fun InformationClientContent(client: User.Client) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()
+        .padding(start = 16.dp, end = 16.dp)) {
+        item {
+            ClientInfo(client = client)
+            Spacer(modifier = Modifier.height(16.dp))
+            OrderHistory(client.orders)
+        }
     }
 }
 
 @Composable
-fun SupplierInfo(supplier: Supplier) {
+fun ClientInfo(client:User.Client) {
     val router = LocalRouter.current
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -74,14 +83,14 @@ fun SupplierInfo(supplier: Supplier) {
                     modifier = Modifier.padding(top = 16.dp).align(Alignment.CenterHorizontally)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Ім'я компанії: ${supplier.nameCompany}")
-                Text(text = "Телефон: ${supplier.phoneNumber}")
-                Text(text = "Пошта: ${supplier.email}")
+                Text(text = "Ім'я компанії: ${client.name}, ${client.surname}")
+                Text(text = "Телефон: ${client.phoneNumber}")
+                Text(text = "Пошта: ${client.email}")
 
             }
             FloatingActionButton(
                 onClick = {
-                    router.launch(AppRoute.Administrator.Purchase.EditSupplier)
+                    router.launch(AppRoute.Manager.Clients.EditClient)
                 },
                 contentColor = MaterialTheme.colorScheme.primary,
                 containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -98,7 +107,7 @@ fun SupplierInfo(supplier: Supplier) {
 }
 
 @Composable
-fun OrderHistory(orders: List<Order<RawMaterial>>) {
+fun OrderHistory(orders: List<Order<Product>>) {
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
@@ -123,9 +132,9 @@ fun OrderHistory(orders: List<Order<RawMaterial>>) {
 }
 
 @Composable
-fun OrderItem(order: Order<RawMaterial>) {
+fun OrderItem(order: Order<Product>) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Дата: ${order.date}", fontWeight = FontWeight.Bold)
+        Text(text = "Дата: ${convertMillisToDate(order.date)}", fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(4.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Назва")
@@ -160,8 +169,14 @@ fun OrderRow(name: String, quantity: String, price: String) {
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewInformationPurchaseScreen(){
-    InformationPurchaseScreen()
+fun PreviewInformationClientScreen(){
+    CoffeeAppTheme(darkTheme = true) {
+        Surface {
+            InformationClientContent(
+                client
+            )
+        }
+    }
 }
 
 

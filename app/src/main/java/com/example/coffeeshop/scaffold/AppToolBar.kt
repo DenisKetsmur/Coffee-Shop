@@ -29,11 +29,13 @@ val routesWithBackButton = setOf(
     AppRoute.Administrator.Purchase.AddSupplier,
     AppRoute.Administrator.Purchase.ShoppingCart,
     AppRoute.Administrator.Purchase.PurchaseInSupplier,
+    AppRoute.Administrator.Purchase.EditSupplier,
     AppRoute.Administrator.Storage.EditProduct,
     AppRoute.Administrator.Storage.InformationProduct,
     AppRoute.Manager.Personal.EditPersonal,
+    AppRoute.Manager.Personal.InfoPersonal,
     AppRoute.Manager.Clients.AddNewClientScreen,
-    AppRoute.Manager.Clients.RevisionHistoryClient
+    AppRoute.Manager.Clients.InfoClient
 )
 
 var routesWithoutActionButton = listOf(
@@ -41,11 +43,13 @@ var routesWithoutActionButton = listOf(
     AppRoute.Administrator.Purchase.InformationPurchase,
     AppRoute.Administrator.Purchase.AddSupplier,
     AppRoute.Administrator.Purchase.ShoppingCart,
+    AppRoute.Administrator.Purchase.EditSupplier,
     AppRoute.Administrator.Storage.EditProduct,
     AppRoute.Administrator.Storage.InformationProduct,
     AppRoute.Manager.Personal.EditPersonal,
+    AppRoute.Manager.Personal.InfoPersonal,
     AppRoute.Manager.Clients.AddNewClientScreen,
-    AppRoute.Manager.Clients.RevisionHistoryClient
+    AppRoute.Manager.Clients.InfoClient
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +66,10 @@ fun AppToolBar(
             if(navigationState.currentRoute in routesWithBackButton) {
                 IconButton(
                     onClick = {
-                        router.pop()
+                        if(navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase||
+                            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier ){
+                            router.restart(AppRoute.Administrator.Purchase.RevisionPurchase)
+                        }else router.pop()
                     }
                 ) {
                     Icon(

@@ -26,6 +26,7 @@ sealed class AppRoute(
         ) : Manager(titleRes, icon) {
 
             object RevisionPersonal : Personal(R.string.personal, icon = R.drawable.person_apron)
+            object InfoPersonal: Personal(R.string.info)
             object EditPersonal : Personal(R.string.personal)
         }
 
@@ -34,8 +35,9 @@ sealed class AppRoute(
             icon: Int? = null,
         ) : Manager(titleRes, icon) {
             object RevisionClients : Clients(R.string.clients, icon = R.drawable.person)
-            object RevisionHistoryClient : Clients(R.string.clients)
             object AddNewClientScreen: Clients(R.string.add_new_client)
+            object EditClient: Clients(R.string.edit)
+            object InfoClient: Clients(R.string.info)
         }
     }
 
@@ -62,6 +64,7 @@ sealed class AppRoute(
             object AddSupplier: Purchase(R.string.data_filling )
             object PurchaseInSupplier: Purchase(R.string.purchase, icon = R.drawable.shopping_cart)
             object ShoppingCart : Purchase(R.string.shopping_cart)
+            object EditSupplier: Purchase(R.string.edit)
         }
     }
 

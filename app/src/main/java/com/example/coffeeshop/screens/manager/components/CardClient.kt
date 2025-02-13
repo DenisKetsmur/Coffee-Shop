@@ -1,6 +1,7 @@
 package com.example.coffeeshop.screens.manager.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,23 +19,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.user.User
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun CardClients(
-    client: User.Client
+    client: User.Client,
+    modifier: Modifier = Modifier
 ) {
     val router = LocalRouter.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            .clickable {
+                router.launch(AppRoute.Manager.Clients.InfoClient)
+            },
         shape = RoundedCornerShape(16.dp),
-//        colors = CardDefaults.cardColors(
-//            containerColor = MaterialTheme.colorScheme.surface
-//        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         )
@@ -43,8 +46,8 @@ fun CardClients(
             Image(
                 painter = painterResource(R.mipmap.face_photo),
                 contentDescription = null,
-                modifier = Modifier.weight(1f).heightIn(min = 128.dp, max = 128.dp),
-                contentScale = ContentScale.Fit
+                modifier = Modifier.heightIn(min = 128.dp, max = 128.dp),
+                contentScale = ContentScale.FillHeight
             )
             Column(
                 modifier = Modifier

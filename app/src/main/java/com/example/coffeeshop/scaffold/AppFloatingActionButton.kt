@@ -20,7 +20,7 @@ fun AppFloatingActionButton(
     modifier: Modifier = Modifier,
     router: Router
 ) {
-    if(navigationState.currentRoute == AppRoute.Manager.Clients.RevisionClients){
+    if(navigationState.currentRoute == AppRoute.Manager.Personal.RevisionPersonal){
         FloatingActionButton(
             modifier = modifier,
             onClick = { router.launch(AppRoute.Manager.Clients.AddNewClientScreen) }
@@ -38,16 +38,6 @@ fun AppFloatingActionButton(
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = stringResource(R.string.added_new_client)
-            )
-        }
-    }else{
-        FloatingActionButton(
-            modifier = modifier,
-            onClick = { TODO() }
-        ) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = stringResource(R.string.turns_back_to_the_top)
             )
         }
     }

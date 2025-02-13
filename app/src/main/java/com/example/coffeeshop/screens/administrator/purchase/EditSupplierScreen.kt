@@ -38,22 +38,25 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.R
+import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.supplier.Supplier
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun AddSupplierScreen() {
-    AddSupplierContent()
+fun EditSupplierScreen() {
+    EditSupplierContent(
+        supplier = sampleSupplier
+    )
 }
 
 @Composable
-fun AddSupplierContent(
+fun EditSupplierContent(
+    supplier: Supplier,
     //onSaveSuccess: () -> Unit = {}
 ) {
     val router = LocalRouter.current
-    var rawMaterials by remember { mutableStateOf(listOf(RawMaterial())) }
+    var rawMaterials by remember { mutableStateOf(supplier.products) }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +64,7 @@ fun AddSupplierContent(
         horizontalAlignment = Alignment.End
     ) {
         item {
-            SupplierInfoInout()
+            SupplierInfoInout1(supplier)
 
             Spacer(modifier = Modifier.height(16.dp))
             Card(
@@ -90,7 +93,7 @@ fun AddSupplierContent(
                         fontSize = 16.sp,
                         modifier = Modifier.padding(start = 16.dp),
                     )
-                    ProductInputItem1(
+                    ProductInputItem(
                         rawMaterial = rawMaterial,
                         onProductChange = { updatedProduct ->
                             rawMaterials = rawMaterials.toMutableList().apply {
@@ -145,10 +148,12 @@ fun AddSupplierContent(
 }
 
 @Composable
-fun SupplierInfoInout(){
-    var supplierName by remember { mutableStateOf("") }
-    var supplierNumber by remember { mutableStateOf("") }
-    var supplierEmail by remember { mutableStateOf("") }
+fun SupplierInfoInout1(
+    supplier:Supplier,
+){
+    var supplierName by remember { mutableStateOf(supplier.nameCompany) }
+    var supplierNumber by remember { mutableStateOf(supplier.phoneNumber) }
+    var supplierEmail by remember { mutableStateOf(supplier.email) }
 
     Card(
         modifier = Modifier
@@ -192,7 +197,7 @@ fun SupplierInfoInout(){
 }
 
 @Composable
-fun ProductInputItem(
+fun ProductInputItem1(
     rawMaterial: RawMaterial,
     onProductChange: (RawMaterial) -> Unit,
     onRemove: () -> Unit
@@ -257,6 +262,6 @@ fun ProductInputItem(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun PreviewAddSupplierScreen(){
-    AddSupplierScreen()
+private fun PreviewEditSupplierScreen(){
+    EditSupplierScreen()
 }

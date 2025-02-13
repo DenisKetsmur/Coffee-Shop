@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CoffeeAppTheme(darkTheme = false) {
+            CoffeeAppTheme(darkTheme = true) {
                 CoffeeShop()
             }
         }

@@ -139,7 +139,7 @@ fun FilterChip(
                     ),
     ) {
         Box(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(start = 12.dp, end =  12.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(label)

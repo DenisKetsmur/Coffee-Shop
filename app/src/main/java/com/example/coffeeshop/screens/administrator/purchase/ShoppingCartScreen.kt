@@ -33,6 +33,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -49,6 +50,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,7 +72,7 @@ fun ShoppingCartScreen(){
 @Composable
 fun ShoppingCartContent() {
     var items by remember { mutableStateOf(rawMaterial.toMutableList()) }
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     var tempItem by remember { mutableStateOf<RawMaterial?>(null) }
@@ -121,10 +124,10 @@ fun ShoppingCartContent() {
                                 scope.launch {
                                     val job = launch {
                                         kotlinx.coroutines.delay(2000)
-                                        snackbarHostState.currentSnackbarData?.dismiss()
+                                        snackBarHostState.currentSnackbarData?.dismiss()
                                     }
 
-                                    val result = snackbarHostState.showSnackbar(
+                                    val result = snackBarHostState.showSnackbar(
                                         message = "Видалено ${item.name}",
                                         actionLabel = "Скасувати"
                                     )
@@ -160,51 +163,55 @@ fun ShoppingCartContent() {
                     background = { DeleteBackground(dismissState) },
                     dismissContent = { ItemCard(item) }
                 )
+
             }
+
         }
+
     }
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-        SnackbarHost(hostState = snackbarHostState)
+
+    Box(modifier = Modifier.fillMaxSize()
+        .padding(bottom = 90.dp), contentAlignment = Alignment.BottomCenter) {
+        SnackbarHost(hostState = snackBarHostState)
     }
-}
-
-@Composable
-fun FooterBar() {
 
 }
-
-
-
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DeleteBackground(dismissState: DismissState) {
     val color by animateColorAsState(
         targetValue = if (dismissState.targetValue == DismissValue.DismissedToEnd)
-            Color.Red else MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.background,
         label = "Background Color"
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color)
-            .padding(horizontal = 16.dp),
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(color),
         contentAlignment = Alignment.CenterStart
     ) {
-        Icon(
-            imageVector = Icons.Default.Delete,
-            contentDescription = "Delete",
-            tint = Color.White
-        )
+        Box(
+            modifier = Modifier.padding(start = 8.dp)
+        ){
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Delete",
+                tint = Color.White
+            )
+        }
     }
 }
 
 @Composable
 fun ItemCard(item: RawMaterial) {
-    Column(
+    Card(
         modifier = Modifier.fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
+            .padding(top = 16.dp, start =  16.dp, end = 16.dp),
+            //.background(MaterialTheme.colorScheme.background)
     ) {
         Row(
             modifier = Modifier
@@ -216,13 +223,13 @@ fun ItemCard(item: RawMaterial) {
                     .weight(1f)
                     .padding(4.dp)
             ) {
-                Text(text = item.name, fontSize = 18.sp)
+                Text(text = item.name, fontSize = 16.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = item.price.toString(), fontSize = 18.sp)
             }
             QuantityInput(item)
         }
-        Divider(thickness = 2.dp)
+        //Divider(thickness = 2.dp)
     }
 }
 

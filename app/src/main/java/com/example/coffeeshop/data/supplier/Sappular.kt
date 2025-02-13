@@ -8,7 +8,8 @@ data class Supplier(
     val nameCompany: String,
     val email: String,
     val phoneNumber: String,
-    val orders: List<Order>,
+    val products:List<RawMaterial>,
+    val orders: List<Order<RawMaterial>>,
     val imageUri: Int = R.mipmap.face_photo
 ) {
     companion object {
@@ -18,16 +19,22 @@ data class Supplier(
         }
     }
 
+
+//    fun getSupplierRawMaterials(): String {
+//        return orders
+//            .flatMap { it.items }
+//            .map { it.name }
+//            .joinToString(", ")
+//    }
+
     fun getSupplierRawMaterials(): String {
         return orders
-            .flatMap { it.items }
-            .map { it.name }
-            .joinToString(", ")
+            .flatMap { it.items }.joinToString(", ") { it.name }
     }
 }
 
-data class Order(
-    val date: String,
-    val items: List<RawMaterial>,
+data class Order<T>(
+    val date: Long,
+    val items: List<T>,
     val total: Double
 )

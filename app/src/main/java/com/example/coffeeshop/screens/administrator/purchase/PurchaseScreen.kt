@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.screens.administrator.components.CardSupplier
-import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedTextField
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
 import com.example.navigationmodule.LocalRouter
 
 
@@ -18,7 +18,7 @@ fun PurchaseScreen() {
 
     LazyColumn {
         stickyHeader {
-            CustomOutlinedTextField()
+            CustomOutlinedSearchTextField()
         }
         items(8){
             CardSupplier(sampleSupplier){router.launch(AppRoute.Administrator.Purchase.InformationPurchase)}

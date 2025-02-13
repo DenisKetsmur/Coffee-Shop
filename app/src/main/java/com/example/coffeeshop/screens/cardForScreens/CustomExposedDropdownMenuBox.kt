@@ -32,6 +32,7 @@ fun CustomExposedDropdownMenuBox(
     onOptionsUpdated: (String) -> Unit,
     label: @Composable ()->Unit,
     isSearchable:Boolean = true,
+    modifier: Modifier = Modifier
 ) {
     var searchQuery by remember { mutableStateOf(firstValue) }
     var selectedOption by remember { mutableStateOf(firstValue) }
@@ -50,7 +51,8 @@ fun CustomExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
             expanded = it
-        }
+        },
+        modifier = modifier
     ) {
         OutlinedTextField(
             value = searchQuery,
@@ -64,9 +66,7 @@ fun CustomExposedDropdownMenuBox(
             label = { label() },
             isError = isError && searchQuery != "",
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
-            modifier = Modifier
-                .menuAnchor()
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().menuAnchor()
                 .focusRequester(focusRequester)
                 .onFocusChanged { focusState ->
                     if (focusState.hasFocus){

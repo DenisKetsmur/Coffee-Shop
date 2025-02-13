@@ -24,4 +24,6 @@
     <string name="goods">Товари</string>
     <string name="Suppliers">Постачальники</string>
     <string name="shopping_cart">Кошик</string>
+    <string name="edit">Редагування</string>
+    <string name="info">Інформація</string>
 </resources>
