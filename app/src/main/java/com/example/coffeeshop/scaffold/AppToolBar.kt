@@ -88,8 +88,7 @@ fun AppToolBar(
         },
         actions = {
             if(navigationState.currentRoute in routesWithoutActionButton){}
-            else if(navigationState.currentRoute != AppRoute.StartUI.Login &&
-                ManagerUser.currentUser == null
+            else if(navigationState.currentRoute != AppRoute.StartUI.Login && ManagerUser.currentUser == null
                 ){
                 IconButton(onClick = { router.launch(AppRoute.StartUI.Login) }
                 ) {
@@ -98,7 +97,9 @@ fun AppToolBar(
                         contentDescription = stringResource(R.string.login),
                     )
                 }
-            }else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier){
+            }else if(
+                navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier ||
+                navigationState.currentRoute == AppRoute.StartUI.Menu){
                 IconButton(onClick = {
                     router.launch(AppRoute.Administrator.Purchase.ShoppingCart) }
                 ) {

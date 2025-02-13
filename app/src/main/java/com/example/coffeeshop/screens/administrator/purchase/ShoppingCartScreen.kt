@@ -1,5 +1,6 @@
 package com.example.coffeeshop.screens.administrator.purchase
 
+import android.annotation.SuppressLint
 import android.widget.Space
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -44,6 +45,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,8 +59,11 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.coffeeshop.data.filled.products
 import com.example.coffeeshop.data.filled.rawMaterial
+import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 import kotlinx.coroutines.launch
 
@@ -75,9 +80,101 @@ fun ShoppingCartContent() {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
+    val deletedItemsStack = remember { mutableStateListOf<Pair<Int, RawMaterial>>() }
+    val router = LocalRouter.current
+
+    Scaffold(
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    Text(text = "Разом: 0 грн", fontSize = 18.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Кількість товарів", fontSize = 18.sp)
+                }
+                Button(
+                    onClick = {
+
+                    },
+                ) {
+                    Text(text = "Замовити")
+                }
+            }
+        },
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+        ) {
+            items(items, key = { it.name }) { item ->
+                val dismissState = rememberDismissState(
+                    confirmStateChange = { dismissValue ->
+                        if (dismissValue == DismissValue.DismissedToEnd) {
+                            val index = items.indexOf(item)
+                            if (index != -1) {
+                                // Додаємо видалений елемент у стек
+                                deletedItemsStack.add(index to item)
+
+                                // Видаляємо елемент
+                                items = items.toMutableList().apply { removeAt(index) }
+
+                                // Показуємо Snackbar
+                                scope.launch {
+                                    val result = snackBarHostState.showSnackbar(
+                                        message = "Видалено ${item.name}",
+                                        actionLabel = "Скасувати",
+                                        duration = SnackbarDuration.Short
+                                    )
+
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        // Повертаємо останній видалений товар
+                                        deletedItemsStack.removeLastOrNull()?.let { (restoredIndex, restoredItem) ->
+                                            items = items.toMutableList().apply {
+                                                add(restoredIndex, restoredItem)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        true
+                    }
+                )
+
+                SwipeToDismiss(
+                    state = dismissState,
+                    directions = setOf(DismissDirection.StartToEnd),
+                    background = { DeleteBackground(dismissState) },
+                    dismissContent = { ItemCard(item) }
+                )
+            }
+        }
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .padding(bottom = 90.dp),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        SnackbarHost(hostState = snackBarHostState)
+    }
+}
+
+/*@SuppressLint("MutableCollectionMutableState")
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ShoppingCartContent() {
+    var items by remember { mutableStateOf(rawMaterial.toMutableList()) }
+    val snackBarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     var tempItem by remember { mutableStateOf<RawMaterial?>(null) }
     var tempIndex by remember { mutableStateOf<Int?>(null) }
-
+    val deletedItemsStack = remember { mutableStateListOf<Pair<Int, RawMaterial>>() }
     val router = LocalRouter.current
 
     Scaffold(
@@ -108,7 +205,6 @@ fun ShoppingCartContent() {
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         ) {
             items(items, key = { it.name }) { item ->
-                println("AAAAA: $paddingValues")
                 val dismissState = rememberDismissState(
                     confirmStateChange = { dismissValue ->
                         if (dismissValue == DismissValue.DismissedToEnd) {
@@ -122,19 +218,13 @@ fun ShoppingCartContent() {
 
                                 // Показуємо Snackbar
                                 scope.launch {
-                                    val job = launch {
-                                        kotlinx.coroutines.delay(2000)
-                                        snackBarHostState.currentSnackbarData?.dismiss()
-                                    }
+                                    snackBarHostState.currentSnackbarData?.dismiss()
 
                                     val result = snackBarHostState.showSnackbar(
                                         message = "Видалено ${item.name}",
-                                        actionLabel = "Скасувати"
+                                        actionLabel = "Скасувати",
+                                        duration = SnackbarDuration.Short
                                     )
-
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        job.cancel() // Якщо натиснуто "Скасувати", не закриваємо Snackbar передчасно
-                                    }
 
                                     if (result == SnackbarResult.ActionPerformed) {
                                         // Повертаємо товар на місце
@@ -175,7 +265,8 @@ fun ShoppingCartContent() {
         SnackbarHost(hostState = snackBarHostState)
     }
 
-}
+}*/
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -237,7 +328,7 @@ fun ItemCard(item: RawMaterial) {
 fun QuantityInput(item: RawMaterial) {
     var quantity by remember { mutableStateOf(0.0) }
 
-    OutlinedTextField(
+    CustomOutlinedInputTextField(
         value = quantity.toString(),
         onValueChange = { quantity = it.toDouble() },
         label = { Text(text = "Кількість") },

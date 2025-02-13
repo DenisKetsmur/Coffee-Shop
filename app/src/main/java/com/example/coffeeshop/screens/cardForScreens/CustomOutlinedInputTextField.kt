@@ -37,6 +37,7 @@ fun CustomOutlinedInputTextField(
     value:String,
     onValueChange: (String) -> Unit,
     label: @Composable () -> Unit = {Text(text = stringResource(R.string.search))},
+    trailingIcon: @Composable ()-> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -48,6 +49,7 @@ fun CustomOutlinedInputTextField(
         },
         singleLine = true,
         label = label,
+        trailingIcon = trailingIcon,
         modifier = modifier.focusRequester(focusRequester),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done
