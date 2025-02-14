@@ -40,9 +40,11 @@ fun LoginScreen(){
         onLogin = { email, password ->
             if (ManagerUser.login(email, password)) {
                 if (ManagerUser.isAdmin()) {
-                    router.launch(AppRoute.StartUI.Menu)
+                    router.launch(AppRoute.Menu.Menu)
                 } else if (ManagerUser.isManager()) {
-                    router.launch(AppRoute.StartUI.Menu)
+                    router.launch(AppRoute.Menu.Menu)
+                } else if (ManagerUser.isClient()){
+                    router.launch(AppRoute.Menu.Menu)
                 }
             }else {
                 Toast.makeText(

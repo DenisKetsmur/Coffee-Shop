@@ -27,8 +27,8 @@ import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun InformationProductScreen(){
-    InformationProductContent(
+fun InformationRawProductScreen(){
+    InformationRawProductContent(
         RawMaterial(
             name = "Какао",
             category = "Молоко",
@@ -42,7 +42,7 @@ fun InformationProductScreen(){
 }
 
 @Composable
-fun InformationProductContent(
+fun InformationRawProductContent(
     rawMaterial:RawMaterial
 ) {
     val router = LocalRouter.current
@@ -105,9 +105,9 @@ fun InformationProductContent(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun PreviewInformationProductScreen(){
+private fun PreviewInformationRawProductScreen(){
     CoffeeAppTheme(darkTheme = false) {
-        InformationProductContent(
+        InformationRawProductContent(
             RawMaterial(
                 name = "Какао",
                 category = "Молоко",

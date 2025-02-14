@@ -30,10 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.client
-import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.supplier.Order
-import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.screens.manager.employee.convertMillisToDate
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
@@ -42,11 +40,11 @@ import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun InformationClientScreen() {
-    InformationClientContent(client = client)
+    InfoClientContent(client = client)
 }
 
 @Composable
-fun InformationClientContent(client: User.Client) {
+fun InfoClientContent(client: User.Client) {
     LazyColumn(modifier = Modifier.fillMaxWidth()
         .padding(start = 16.dp, end = 16.dp)) {
         item {
@@ -172,7 +170,7 @@ fun OrderRow(name: String, quantity: String, price: String) {
 fun PreviewInformationClientScreen(){
     CoffeeAppTheme(darkTheme = true) {
         Surface {
-            InformationClientContent(
+            InfoClientContent(
                 client
             )
         }

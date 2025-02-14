@@ -61,4 +61,5 @@ dependencies {
     implementation (libs.androidx.constraintlayout.compose)
     implementation(libs.coil.compose)
     implementation("androidx.compose.material:material:1.7.7")
+    implementation(libs.androidx.datastore.preferences)
 }

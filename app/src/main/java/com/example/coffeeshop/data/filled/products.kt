@@ -52,7 +52,7 @@ val products = listOf(
         name = "Чорний чай",
         category = finishedProductCategories[1], // Чай
         unit = "мл",
-        quantity = 300f
+        quantity = 300f,
     ),
     Product(
         name = "Чізкейк",

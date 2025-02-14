@@ -3,11 +3,15 @@ package com.example.coffeeshop
 import android.net.wifi.ScanResult.InformationElement
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.navigationmodule.Route
+import java.io.ObjectOutputStream.PutField
 
 
 sealed class AppRoute(
@@ -66,6 +70,24 @@ sealed class AppRoute(
             object ShoppingCart : Purchase(R.string.shopping_cart)
             object EditSupplier: Purchase(R.string.edit)
         }
+
+
+    }
+
+    sealed class Client(
+        @StringRes titleRes: Int,
+        icon: Int? = null,
+    ) : AppRoute(titleRes, icon){
+        object ShoppingCart : Client(R.string.shopping_cart, icon = R.drawable.shopping_cart)
+    }
+
+    sealed class Menu(
+        @StringRes titleRes: Int,
+        int: Int? = null,
+    ) : Administrator(titleRes, int){
+        object Menu : StartUI(R.string.goods, icon = R.drawable.menu)
+        object InfoProduct : Purchase(R.string.info)
+        object EditProduct : Purchase(R.string.edit)
     }
 
     sealed class StartUI(
@@ -73,7 +95,7 @@ sealed class AppRoute(
         icon: Int? = null,
     ) : AppRoute(titleRes, icon) {
         object Login : StartUI(R.string.login)
-        object Menu : StartUI(R.string.goods, icon = R.drawable.menu)
         object GeneralPageScreen : StartUI(R.string.app_name)
+        object MyProfile: StartUI(R.string.my_profile, icon = R.drawable.account_circle)
     }
 }

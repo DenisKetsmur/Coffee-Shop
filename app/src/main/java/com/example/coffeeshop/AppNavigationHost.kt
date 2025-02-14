@@ -6,15 +6,18 @@ import androidx.compose.ui.Modifier
 import com.example.coffeeshop.screens.GeneralPageScreen
 import com.example.coffeeshop.screens.LoginScreen
 import com.example.coffeeshop.screens.MenuScreen
+import com.example.coffeeshop.screens.MyProfileScreen
 import com.example.coffeeshop.screens.administrator.purchase.AddSupplierScreen
 import com.example.coffeeshop.screens.administrator.purchase.EditSupplierScreen
 import com.example.coffeeshop.screens.administrator.purchase.InformationPurchaseScreen
 import com.example.coffeeshop.screens.administrator.purchase.PurchaseInSupplierScreen
 import com.example.coffeeshop.screens.administrator.purchase.PurchaseScreen
-import com.example.coffeeshop.screens.administrator.purchase.ShoppingCartScreen
-import com.example.coffeeshop.screens.administrator.storage.EditProductScreen
-import com.example.coffeeshop.screens.administrator.storage.InformationProductScreen
+import com.example.coffeeshop.screens.cardForScreens.ShoppingCartScreen
+import com.example.coffeeshop.screens.administrator.storage.EditRawProductScreen
+import com.example.coffeeshop.screens.administrator.storage.InformationRawProductScreen
 import com.example.coffeeshop.screens.administrator.storage.StorageScreen
+import com.example.coffeeshop.screens.manager.EditProductScreen
+import com.example.coffeeshop.screens.manager.InformationProductScreen
 import com.example.coffeeshop.screens.manager.employee.AddNewClientScreen
 import com.example.coffeeshop.screens.manager.client.ClientsScreen
 import com.example.coffeeshop.screens.manager.client.InformationClientScreen
@@ -35,9 +38,15 @@ fun AppNavigationHost(
         modifier = modifier
     ) { currentRoute ->
         when (currentRoute) {
-            AppRoute.StartUI.Menu -> MenuScreen()
             AppRoute.StartUI.Login -> LoginScreen()
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
+            AppRoute.StartUI.MyProfile -> MyProfileScreen()
+
+            AppRoute.Menu.Menu -> MenuScreen()
+            AppRoute.Menu.InfoProduct -> InformationProductScreen()
+            AppRoute.Menu.EditProduct -> EditProductScreen()
+
+            AppRoute.Client.ShoppingCart -> ShoppingCartScreen()
 
             AppRoute.Manager.Personal.RevisionPersonal -> EmployeeScreen()
             AppRoute.Manager.Personal.InfoPersonal -> InfoEmployeeScreen()
@@ -56,8 +65,8 @@ fun AppNavigationHost(
             AppRoute.Administrator.Purchase.EditSupplier -> EditSupplierScreen()
 
             AppRoute.Administrator.Storage.RevisionStorage -> StorageScreen()
-            AppRoute.Administrator.Storage.EditProduct-> EditProductScreen()
-            AppRoute.Administrator.Storage.InformationProduct -> InformationProductScreen()
+            AppRoute.Administrator.Storage.EditProduct-> EditRawProductScreen()
+            AppRoute.Administrator.Storage.InformationProduct -> InformationRawProductScreen()
         }
     }
 }

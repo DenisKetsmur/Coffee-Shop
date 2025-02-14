@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.user.ManagerUser
@@ -20,15 +21,17 @@ import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
 
 val ManagerTabs = listOf(
-    AppRoute.StartUI.Menu,
+    AppRoute.Menu.Menu,
     AppRoute.Manager.Personal.RevisionPersonal,
     AppRoute.Manager.Clients.RevisionClients,
+    AppRoute.StartUI.MyProfile
 )
 
 val AdminTabs = listOf(
-    AppRoute.StartUI.Menu,
+    AppRoute.Menu.Menu,
     AppRoute.Administrator.Storage.RevisionStorage,
     AppRoute.Administrator.Purchase.RevisionPurchase,
+    AppRoute.StartUI.MyProfile
 )
 
 val SupplierTab = listOf(
@@ -36,6 +39,11 @@ val SupplierTab = listOf(
     AppRoute.Administrator.Purchase.PurchaseInSupplier,
 )
 
+val ClientTabs = listOf(
+    AppRoute.Menu.Menu,
+    AppRoute.Client.ShoppingCart,
+    AppRoute.StartUI.MyProfile
+)
 
 @Composable
 fun AppNavigationBar(
@@ -43,26 +51,28 @@ fun AppNavigationBar(
     router: Router,
 ) {
     NavigationBar {
-        val currentTabs = if(ManagerUser.isManager())
-            ManagerTabs
-        else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase ||
-            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier){
-            SupplierTab
-        }else
-            AdminTabs
+        val currentTabs = when{
+            navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase -> SupplierTab
+            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier -> SupplierTab
+            ManagerUser.isAdmin() -> AdminTabs
+            ManagerUser.isManager() -> ManagerTabs
+            else -> ClientTabs
+        }
 
         currentTabs.forEach { tab ->
             NavigationBarItem(
                 selected = navigationState.currentRoute == tab,
-                label = { Text(stringResource(tab.titleRes)) },
+                label = {
+                    Text(text = stringResource(tab.titleRes), fontSize = 10.sp, modifier = Modifier.weight(1f)) },
                 onClick = { router.restart(tab) },
                 icon = {
                     Icon(
                         imageVector =  ImageVector.vectorResource(tab.icon!!),
                         contentDescription = stringResource(tab.titleRes),
-                        modifier = Modifier.size(25.dp),
+                        modifier = Modifier.size(24.dp),
                     )
                 },
+
             )
         }
     }

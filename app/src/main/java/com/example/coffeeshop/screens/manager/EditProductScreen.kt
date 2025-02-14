@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.administrator.storage
+package com.example.coffeeshop.screens.manager
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -30,23 +30,26 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.coffeeshop.data.filled.rawMaterial
 import com.example.coffeeshop.data.filled.rawMaterialCategories
 import com.example.coffeeshop.data.filled.unitList
+import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.product.RawMaterial
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun EditProductScreen() {
     EditProductContent(
-        RawMaterial(
+        Product(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
                     "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
                     "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
             unit = "мл",
-            quantity = 234f,
+            quantity = 234f
         ),
         onProductUpdated = {}
     )
@@ -54,14 +57,14 @@ fun EditProductScreen() {
 
 @Composable
 fun EditProductContent(
-    rawMaterial: RawMaterial,
-    onProductUpdated: (RawMaterial) -> Unit
+    product: Product,
+    onProductUpdated: (Product) -> Unit
 ) {
-    var name by remember { mutableStateOf(rawMaterial.name) }
-    var category by remember { mutableStateOf(rawMaterial.category) }
-    var unit by remember { mutableStateOf(rawMaterial.unit) }
-    var quantity by remember { mutableStateOf(rawMaterial.quantity.toString()) }
-    var description by remember { mutableStateOf(rawMaterial.description) }
+    var name by remember { mutableStateOf(product.name) }
+    var category by remember { mutableStateOf(product.category) }
+    var unit by remember { mutableStateOf(product.unit) }
+    var quantity by remember { mutableStateOf(product.quantity.toString()) }
+    var description by remember { mutableStateOf(product.description) }
 
 
     val focusManager = LocalFocusManager.current
@@ -72,7 +75,6 @@ fun EditProductContent(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-            //.wrapContentHeight(),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -85,7 +87,7 @@ fun EditProductContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
-                OutlinedTextField(
+                CustomOutlinedInputTextField(
                     value = name,
                     onValueChange = { newValueName ->
                         name = newValueName
@@ -93,42 +95,33 @@ fun EditProductContent(
                     singleLine = true,
                     label = { Text(text = "Назва") },
                     modifier = Modifier.fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                        }
-                    ),
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = rawMaterial.category,
+                    firstValue = product.category,
                     options = rawMaterialCategories,
                     onOptionsUpdated = { newValueCategory ->
                         category = newValueCategory
                     },
                     label = {
                         Text(
-                            "Виберіть категорію"
+                            "Категорія"
                         )
                     }
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = rawMaterial.unit,
+                    firstValue = product.unit,
                     options = unitList,
                     onOptionsUpdated = { newValueUnit ->
                         unit = newValueUnit
                     },
                     label = {
                         Text(
-                            "Виберіть одиницю виміру"
+                            "Одиниця виміру"
                         )
                     },
                     isSearchable = false
                 )
-                OutlinedTextField(
+                CustomOutlinedInputTextField(
                     value = quantity,
                     onValueChange = { newValueQuantity ->
                         quantity = newValueQuantity
@@ -137,7 +130,7 @@ fun EditProductContent(
                     label = {Text(text = "Кількість")},
                     modifier = Modifier.fillMaxWidth(),
                 )
-                OutlinedTextField(
+                CustomOutlinedInputTextField(
                     value = description,
                     onValueChange = { newValueDescription ->
                         description = newValueDescription
@@ -154,7 +147,7 @@ fun EditProductContent(
                     Button(
                         modifier = Modifier.padding(12.dp),
                         onClick = {
-                            val updateProduct = rawMaterial.copy(
+                            val updateProduct = product.copy(
                                 name = name,
                                 category = category,
                                 unit = unit,
@@ -183,14 +176,14 @@ fun EditProductContent(
 @Composable
 private fun PreviewEditProductScreen(){
     EditProductContent(
-        RawMaterial(
+        Product(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
                     "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
                     "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
             unit = "мл",
-            quantity = 234f,
+            quantity = 234f
         ),
         onProductUpdated = {}
     )

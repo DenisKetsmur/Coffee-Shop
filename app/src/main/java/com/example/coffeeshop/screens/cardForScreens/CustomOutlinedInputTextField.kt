@@ -36,8 +36,9 @@ import com.example.coffeeshop.R
 fun CustomOutlinedInputTextField(
     value:String,
     onValueChange: (String) -> Unit,
+    singleLine:Boolean = false,
     label: @Composable () -> Unit = {Text(text = stringResource(R.string.search))},
-    trailingIcon: @Composable ()-> Unit = {},
+    trailingIcon: @Composable (()-> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -47,7 +48,7 @@ fun CustomOutlinedInputTextField(
         onValueChange = { newValueName ->
             onValueChange(newValueName)
         },
-        singleLine = true,
+        singleLine = singleLine,
         label = label,
         trailingIcon = trailingIcon,
         modifier = modifier.focusRequester(focusRequester),

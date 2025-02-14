@@ -6,11 +6,13 @@ data class Product(
     val id:Int = generateId(),
     val name: String = "",
     val category: String = "",
-    val description: String = "",
+    val description: String = "aleugpauiregh ;ih;g iah" +
+            " skjgh;kjdfhg;kjdsfhg;kjsdfh;ksldfg s" +
+            "s ldghlskdfhg'klhf;gilshflkghsdflkg",
+    val quantity: Float? = 0f,
     val price: Double = 0.0,
     val unit:String = "",
-    val quantity: Float? = 0f,
-    val image: Int? = R.drawable.cat_close_mouth,
+    val image: Int = R.mipmap.face_photo,
 ){
     companion object{
         private var idCounter = 0
