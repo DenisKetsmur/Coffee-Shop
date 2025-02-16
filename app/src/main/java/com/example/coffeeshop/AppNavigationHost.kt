@@ -16,11 +16,13 @@ import com.example.coffeeshop.screens.cardForScreens.ShoppingCartScreen
 import com.example.coffeeshop.screens.administrator.storage.EditRawProductScreen
 import com.example.coffeeshop.screens.administrator.storage.InformationRawProductScreen
 import com.example.coffeeshop.screens.administrator.storage.StorageScreen
+import com.example.coffeeshop.screens.manager.AddProductScreen
 import com.example.coffeeshop.screens.manager.EditProductScreen
 import com.example.coffeeshop.screens.manager.InformationProductScreen
 import com.example.coffeeshop.screens.manager.employee.AddNewClientScreen
 import com.example.coffeeshop.screens.manager.client.ClientsScreen
 import com.example.coffeeshop.screens.manager.client.InformationClientScreen
+import com.example.coffeeshop.screens.manager.employee.AddNewEmployeeScreen
 import com.example.coffeeshop.screens.manager.employee.EditEmployeeScreen
 import com.example.coffeeshop.screens.manager.employee.EmployeeScreen
 import com.example.coffeeshop.screens.manager.employee.InfoEmployeeScreen
@@ -45,12 +47,14 @@ fun AppNavigationHost(
             AppRoute.Menu.Menu -> MenuScreen()
             AppRoute.Menu.InfoProduct -> InformationProductScreen()
             AppRoute.Menu.EditProduct -> EditProductScreen()
+            AppRoute.Menu.AddProduct -> AddProductScreen()
 
             AppRoute.Client.ShoppingCart -> ShoppingCartScreen()
 
             AppRoute.Manager.Personal.RevisionPersonal -> EmployeeScreen()
             AppRoute.Manager.Personal.InfoPersonal -> InfoEmployeeScreen()
             AppRoute.Manager.Personal.EditPersonal -> EditEmployeeScreen()
+            AppRoute.Manager.Personal.AddNewPersonal -> AddNewEmployeeScreen()
 
             AppRoute.Manager.Clients.RevisionClients -> ClientsScreen()
             AppRoute.Manager.Clients.AddNewClientScreen -> AddNewClientScreen()

@@ -31,8 +31,10 @@ sealed class AppRoute(
 
             object RevisionPersonal : Personal(R.string.personal, icon = R.drawable.person_apron)
             object InfoPersonal: Personal(R.string.info)
-            object EditPersonal : Personal(R.string.personal)
+            object EditPersonal : Personal(R.string.edit)
+            object AddNewPersonal : Personal(R.string.data_filling)
         }
+
 
         sealed class Clients(
             @StringRes titleRes: Int,
@@ -88,6 +90,7 @@ sealed class AppRoute(
         object Menu : StartUI(R.string.goods, icon = R.drawable.menu)
         object InfoProduct : Purchase(R.string.info)
         object EditProduct : Purchase(R.string.edit)
+        object AddProduct : Purchase(R.string.add_goods)
     }
 
     sealed class StartUI(

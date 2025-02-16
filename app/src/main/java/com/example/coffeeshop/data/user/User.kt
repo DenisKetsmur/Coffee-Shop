@@ -28,11 +28,11 @@ sealed class User(
         override val password: String = "",
         override val position: Position = Position.MANAGER,
         override val phoneNumber: String = "+380345345",
-
-        val salary: Double = 0.0,
+        val age: Int? = null,
         val startJob: Long = 0,
         val photo: Int = R.mipmap.face_photo,
         val isActive: Boolean = true,
+        var workSchedule: WorkSchedule = WorkSchedule.NONE,
     ) : User(id, name, surname, email, password, position, phoneNumber)
     data class Client(
         override val id: Int = generateId(),
@@ -45,6 +45,29 @@ sealed class User(
 
         val orders:List<Order<Product>> = listOf()
     ) : User(id, name, surname, email, password, position, phoneNumber)
+}
+
+
+data class WorkSchedule(
+    val shift: Shift,
+    val workSchedule: String,
+    val hourlyRate: Double
+) {
+    companion object {
+        val NONE: WorkSchedule = WorkSchedule(
+            shift = Shift.SECOND,
+            workSchedule = "",
+            hourlyRate = 0.0
+        )
+    }
+}
+
+
+
+
+enum class Shift(val time:String) {
+    FIRST("8:00-16:00"),
+    SECOND("16:00-24:00")
 }
 
 

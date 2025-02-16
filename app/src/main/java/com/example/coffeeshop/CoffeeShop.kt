@@ -13,17 +13,18 @@ import com.example.navigationmodule.rememberNavigation
 
 @Composable
 fun CoffeeShop(
-    viewModel: ThemeViewModel
+    viewModel: ThemeViewModel,
 ){
     val navigation = rememberNavigation(AppRoute.StartUI.GeneralPageScreen)
-    val (router, navigationState) = navigation
+    val router = navigation.router
+    val navigationState = navigation.navigationState
     Scaffold(
         topBar = {
             if(navigationState.currentRoute != AppRoute.StartUI.GeneralPageScreen){
                 AppToolBar(
                     navigationState = navigationState,
                     router = router,
-                    viewModel,
+                    viewModel = viewModel,
                 )
             }
         },
@@ -33,17 +34,16 @@ fun CoffeeShop(
                 navigationState.currentRoute == AppRoute.Administrator.Purchase.RevisionPurchase
                 ){
                 AppFloatingActionButton(
-                    router = router,
                     navigationState = navigationState,
+                    router = router,
                 )
             }
         },
         bottomBar = {
-            if(ManagerUser.currentUser != null &&
-                navigationState.currentRoute != AppRoute.Administrator.Purchase.ShoppingCart){
+            if(navigationState.currentRoute != AppRoute.Administrator.Purchase.ShoppingCart){
                 AppNavigationBar(
-                    navigationState,
-                    router
+                    navigationState = navigationState,
+                    router = router,
                 )
             }
         },

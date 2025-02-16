@@ -20,7 +20,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.ui.input.pointer.motionEventSpy
 import com.example.coffeeshop.data.filled.client
+import com.example.coffeeshop.data.filled.sampleEmployee
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.screens.manager.client.ClientInfo
 import com.example.coffeeshop.screens.manager.client.InfoClientContent
@@ -46,14 +48,12 @@ fun MyProfileContent(user: User){
         item{
             when (user) {
                 is User.Client -> {
-                    ClientInfo(client = user)
+                    ClientInfo(client = user, isEdit = false )
                     Spacer(modifier = Modifier.height(16.dp))
                     OrderHistory(client.orders)
                 }
                 is User.Employee -> {
-                    InfoEmployeeContent(employee = user)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text("Функція в розробці", color = Color.Gray)
+                    CardInfoEmployee(employee = user, )
                 }
             }
         }

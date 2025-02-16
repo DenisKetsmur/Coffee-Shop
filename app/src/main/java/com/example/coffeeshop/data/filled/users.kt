@@ -6,7 +6,9 @@ import com.example.coffeeshop.R
 import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.user.Position
+import com.example.coffeeshop.data.user.Shift
 import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.data.user.WorkSchedule
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -22,13 +24,6 @@ fun getRandomDate(): Long {
     return Random.nextLong(past, now) // Генеруємо випадковий час у мілісекундах
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun formatDate(millis: Long): String {
-    val dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
-    return dateTime.toString()
-}
-
-
 val sampleEmployee = User.Employee(
     email = "manager@gmail.com",
     password = "123456789",
@@ -36,7 +31,12 @@ val sampleEmployee = User.Employee(
     phoneNumber = "+380345345",
     name = "Борис",
     surname = "Ангелінів",
-    salary = 34234.0,
+    workSchedule = WorkSchedule(
+        shift = Shift.FIRST,
+        workSchedule = "33",
+        hourlyRate = 10.0,
+    ),
+    age = 23,
     startJob = getRandomDate(),
 )
 

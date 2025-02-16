@@ -1,4 +1,5 @@
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -60,19 +61,35 @@ fun EditClientContent(
     //onSaveSuccess: () -> Unit = {}
 ) {
     val router = LocalRouter.current
-    Column {
-        ClientInfoInout(client)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+        //.wrapContentHeight(),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 6.dp
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            ClientInfoInout(client)
 
-        Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = {
-                //onSaveSuccess()
-                router.pop()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Зберегти")
+            Button(
+                onClick = {
+                    //onSaveSuccess()
+                    router.pop()
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Зберегти")
+            }
         }
     }
 }
@@ -86,19 +103,9 @@ fun ClientInfoInout(
     var clientNumber by remember { mutableStateOf(client.phoneNumber) }
     var clientEmail by remember { mutableStateOf(client.email) }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        )
-    ){
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -130,5 +137,4 @@ fun ClientInfoInout(
                 modifier = Modifier.fillMaxWidth()
             )
         }
-    }
 }

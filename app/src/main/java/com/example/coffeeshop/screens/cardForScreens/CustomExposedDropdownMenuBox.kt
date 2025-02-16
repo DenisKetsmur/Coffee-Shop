@@ -21,6 +21,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -32,14 +33,17 @@ fun CustomExposedDropdownMenuBox(
     onOptionsUpdated: (String) -> Unit,
     label: @Composable ()->Unit,
     isSearchable:Boolean = true,
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+
+    ) {
     var searchQuery by remember { mutableStateOf(firstValue) }
     var selectedOption by remember { mutableStateOf(firstValue) }
     var expanded by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     var isError by remember { mutableStateOf(false) }
+
+
 
     val displayedOptions = if (isSearchable) {
         options.filter { it.contains(searchQuery, ignoreCase = true) }

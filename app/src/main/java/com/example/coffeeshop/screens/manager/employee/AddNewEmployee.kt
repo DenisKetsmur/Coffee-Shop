@@ -58,6 +58,7 @@ import com.example.coffeeshop.data.filled.sampleEmployee
 import com.example.coffeeshop.data.user.Position
 import com.example.coffeeshop.data.user.Shift
 import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.data.user.WorkSchedule
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.coffeeshop.screens.manager.components.DatePickerDocked
@@ -75,26 +76,24 @@ import kotlin.math.absoluteValue
 
 
 @Composable
-fun EditEmployeeScreen() {
-        EditEmployeeContent(
-            employee = sampleEmployee
-        )
+fun AddNewEmployeeScreen() {
+    AddNewEmployeeContent(
+    )
 }
 
 
 @Composable
-fun EditEmployeeContent(
-    employee: User.Employee,
+fun AddNewEmployeeContent(
     onClick: ()->Unit = {},
 ) {
-    var name by remember { mutableStateOf(employee.name) }
-    var surname by remember { mutableStateOf(employee.surname) }
-    var phoneNumber by remember { mutableStateOf(employee.phoneNumber) }
-    var email by remember { mutableStateOf(employee.email) }
-    var position by remember { mutableStateOf(employee.position) }
-    var startJob:Long by remember { mutableStateOf(employee.startJob) }
-    var status by remember { mutableStateOf(employee.isActive) }
-    var workSchedule by remember { mutableStateOf(employee.workSchedule) }
+    var name by remember { mutableStateOf("") }
+    var surname by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var position by remember { mutableStateOf("") }
+    var startJob:Long by remember { mutableStateOf(0) }
+    var status:Boolean by remember { mutableStateOf(false) }
+    var workSchedule by remember { mutableStateOf(WorkSchedule.NONE) }
 
     val router = LocalRouter.current
 
@@ -147,10 +146,10 @@ fun EditEmployeeContent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = position.displayName,
+                    firstValue = position,
                     options = Position.entries.map { it.displayName },
                     onOptionsUpdated = { newValueCategory ->
-                        position = Position.entries.first { it.displayName == newValueCategory }
+                        position = Position.entries.first { it.displayName == newValueCategory }.toString()
                     },
                     label = {
                         Text("Виберіть категорію")
@@ -200,23 +199,23 @@ fun EditEmployeeContent(
                         modifier = Modifier.weight(2f)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                        CustomOutlinedInputTextField(
-                            value = workSchedule.workSchedule,
-                            onValueChange = {
-                                if (it.length <= 2){
-                                    workSchedule = workSchedule.copy(
-                                        workSchedule = it.filter { it.isDigit() }
-                                    )
-                                }
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true,
-                            placeholder = {
-                                Text(text = "  / ")
-                            },
-                            visualTransformation = true,
-                            modifier = Modifier.padding(top = 8.dp).width(60.dp)
-                        )
+                    CustomOutlinedInputTextField(
+                        value = workSchedule.workSchedule,
+                        onValueChange = {
+                            if (it.length <= 2){
+                                workSchedule = workSchedule.copy(
+                                    workSchedule = it.filter { it.isDigit() }
+                                )
+                            }
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        placeholder = {
+                            Text(text = "  / ")
+                        },
+                        visualTransformation = true,
+                        modifier = Modifier.padding(top = 8.dp).width(60.dp)
+                    )
 
                     Spacer(modifier = Modifier.width(8.dp))
                     CustomOutlinedInputTextField(
@@ -254,10 +253,10 @@ fun EditEmployeeContent(
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewEditEmployeeScreen() {
+fun PreviewAddNewEmployeeScreen() {
     CoffeeAppTheme(darkTheme = true){
         Surface {
-            EditEmployeeScreen()
+            AddNewEmployeeScreen()
         }
     }
 }

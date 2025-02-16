@@ -33,7 +33,7 @@ import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.product.Product
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.user.User
-import com.example.coffeeshop.screens.manager.employee.convertMillisToDate
+import com.example.coffeeshop.screens.manager.components.convertMillisToDate
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
@@ -56,7 +56,11 @@ fun InfoClientContent(client: User.Client) {
 }
 
 @Composable
-fun ClientInfo(client:User.Client) {
+fun ClientInfo(
+    client:User.Client,
+    modifier: Modifier = Modifier,
+    isEdit:Boolean = true,
+) {
     val router = LocalRouter.current
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -81,26 +85,27 @@ fun ClientInfo(client:User.Client) {
                     modifier = Modifier.padding(top = 16.dp).align(Alignment.CenterHorizontally)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Ім'я компанії: ${client.name}, ${client.surname}")
+                Text(text = "Ім'я клієнта: ${client.name} ${client.surname}")
                 Text(text = "Телефон: ${client.phoneNumber}")
                 Text(text = "Пошта: ${client.email}")
 
             }
-            FloatingActionButton(
-                onClick = {
-                    router.launch(AppRoute.Manager.Clients.EditClient)
-                },
-                contentColor = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.padding(bottom = 16.dp, end = 16.dp).size(44.dp).align(Alignment.BottomEnd)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Create,
-                    contentDescription = null
-                )
+            if(isEdit){
+                FloatingActionButton(
+                    onClick = {
+                        router.launch(AppRoute.Manager.Clients.EditClient)
+                    },
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(bottom = 16.dp, end = 16.dp).size(44.dp).align(Alignment.BottomEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Create,
+                        contentDescription = null
+                    )
+                }
             }
         }
-
     }
 }
 

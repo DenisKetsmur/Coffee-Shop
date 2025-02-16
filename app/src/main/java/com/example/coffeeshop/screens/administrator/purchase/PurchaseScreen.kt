@@ -2,9 +2,12 @@ package com.example.coffeeshop.screens.administrator.purchase
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.R
 import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.screens.administrator.components.CardSupplier
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
