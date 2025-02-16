@@ -1,22 +1,11 @@
 package com.example.coffeeshop
 
-import android.net.wifi.ScanResult.InformationElement
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.example.navigationmodule.Route
-import java.io.ObjectOutputStream.PutField
-
 
 sealed class AppRoute(
     @StringRes val titleRes: Int,
-    val icon: Int? = null
+    val icon: Int? = null,
 ) : Route {
 
     sealed class Manager(
@@ -28,7 +17,6 @@ sealed class AppRoute(
             @StringRes titleRes: Int,
             icon: Int? = null,
         ) : Manager(titleRes, icon) {
-
             object RevisionPersonal : Personal(R.string.personal, icon = R.drawable.person_apron)
             object InfoPersonal: Personal(R.string.info)
             object EditPersonal : Personal(R.string.edit)
@@ -72,7 +60,6 @@ sealed class AppRoute(
             object ShoppingCart : Purchase(R.string.shopping_cart)
             object EditSupplier: Purchase(R.string.edit)
         }
-
 
     }
 

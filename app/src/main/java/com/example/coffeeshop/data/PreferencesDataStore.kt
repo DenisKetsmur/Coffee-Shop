@@ -1,3 +1,5 @@
+package com.example.coffeeshop.data
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -10,7 +12,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 
 val Context.dataStore by preferencesDataStore(name = "settings")
@@ -29,27 +33,16 @@ class ThemePreferences(private val context: Context) {
 }
 
 
-
 class ThemeViewModel(private val preferences: ThemePreferences) : ViewModel() {
-    private val _isDarkTheme = MutableStateFlow(false)
-    val isDarkTheme: StateFlow<Boolean> = _isDarkTheme
-
-    init {
-        viewModelScope.launch {
-            _isDarkTheme.value = preferences.themeFlow.first()
-        }
-    }
+    val isDarkTheme: StateFlow<Boolean> = preferences.themeFlow
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     fun toggleTheme() {
         viewModelScope.launch {
-            val newTheme = !_isDarkTheme.value
-            preferences.saveTheme(newTheme)
-            _isDarkTheme.value = newTheme
+            preferences.saveTheme(!isDarkTheme.value)
         }
     }
 }
-
-
 
 class ThemeViewModelFactory(private val preferences: ThemePreferences) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

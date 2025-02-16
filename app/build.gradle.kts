@@ -60,6 +60,6 @@ dependencies {
     implementation(projects.navigationModule)
     implementation (libs.androidx.constraintlayout.compose)
     implementation(libs.coil.compose)
-    implementation("androidx.compose.material:material:1.7.7")
+    implementation(libs.androidx.material)
     implementation(libs.androidx.datastore.preferences)
 }

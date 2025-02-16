@@ -19,35 +19,20 @@ fun AppFloatingActionButton(
     modifier: Modifier = Modifier,
     router: Router
 ) {
-    if(navigationState.currentRoute == AppRoute.Manager.Personal.RevisionPersonal){
-        FloatingActionButton(
-            modifier = modifier,
-            onClick = { router.launch(AppRoute.Manager.Personal.AddNewPersonal) }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.added_new_client)
-            )
+    FloatingActionButton(
+        modifier = modifier,
+        onClick = {
+            when (navigationState.currentRoute) {
+                AppRoute.Manager.Personal.RevisionPersonal -> router.launch(AppRoute.Manager.Personal.AddNewPersonal)
+                AppRoute.Administrator.Purchase.RevisionPurchase ->router.launch(AppRoute.Administrator.Purchase.AddSupplier)
+                AppRoute.Menu.Menu ->router.launch(AppRoute.Menu.AddProduct)
+            }
+            router.launch(AppRoute.Manager.Personal.AddNewPersonal)
         }
-    }else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.RevisionPurchase){
-        FloatingActionButton(
-            modifier = modifier,
-            onClick = { router.launch(AppRoute.Administrator.Purchase.AddSupplier) }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.added_new_client)
-            )
-        }
-    }else if(navigationState.currentRoute == AppRoute.Menu.Menu){
-        FloatingActionButton(
-            modifier = modifier,
-            onClick = { router.launch(AppRoute.Menu.AddProduct) }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.added_new_client)
-            )
-        }
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.added_new_cart)
+        )
     }
 }

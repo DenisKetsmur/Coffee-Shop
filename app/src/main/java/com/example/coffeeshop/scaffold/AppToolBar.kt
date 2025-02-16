@@ -1,27 +1,30 @@
 package com.example.coffeeshop.scaffold
 
-import ThemeViewModel
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.user.ManagerUser
@@ -46,121 +49,98 @@ val routesWithBackButton = setOf(
     AppRoute.Manager.Clients.EditClient
 )
 
-var routesWithoutActionButton = listOf(
-    AppRoute.StartUI.Login,
-    AppRoute.Administrator.Purchase.InformationPurchase,
-    AppRoute.Administrator.Purchase.AddSupplier,
-    AppRoute.Administrator.Purchase.ShoppingCart,
-    AppRoute.Administrator.Purchase.EditSupplier,
-    AppRoute.Administrator.Storage.EditProduct,
-    AppRoute.Administrator.Storage.InformationProduct,
-    AppRoute.Manager.Personal.EditPersonal,
-    AppRoute.Manager.Personal.InfoPersonal,
-    AppRoute.Manager.Clients.AddNewClientScreen,
-    AppRoute.Manager.Clients.InfoClient
-)
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppToolBar(
     navigationState: NavigationState,
     router: Router,
-    viewModel: ThemeViewModel
+    darkTheme: Boolean,
+    onThemeUpdate: () -> Unit,
 ) {
-    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
-    CenterAlignedTopAppBar(
-        title = {
-            Text(text = stringResource((navigationState.currentRoute as? AppRoute)?.titleRes?:R.string.logo))
-        },
-        navigationIcon = {
-            if(navigationState.currentRoute in routesWithBackButton) {
-                IconButton(
-                    onClick = {
-                        if(navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase||
-                            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier ){
-                            router.restart(AppRoute.Administrator.Purchase.RevisionPurchase)
-                        }else router.pop()
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null
-                    )
-                }
-            }else{
-                if(isDarkTheme){
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(88.dp)
+            .background(MaterialTheme.colorScheme.surface),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
+                if (navigationState.currentRoute in routesWithBackButton) {
                     IconButton(
                         onClick = {
-                            viewModel.toggleTheme()
+                            if (navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase ||
+                                navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier
+                            ) router.restart(AppRoute.Administrator.Purchase.RevisionPurchase)
+                            else router.pop()
                         }
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.dark_mode),
-                            contentDescription = stringResource(R.string.logo),
-                            tint = Color.Unspecified,
-                            modifier = Modifier.padding(start = 10.dp)
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back),
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                }else{
+                } else {
                     IconButton(
-                        onClick = {
-                            viewModel.toggleTheme()
-                        }
+                        onClick = { onThemeUpdate.invoke() },
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.light_1),
-                            contentDescription = stringResource(R.string.logo),
+                            painter = if (darkTheme) painterResource(id = R.drawable.dark_mode)
+                            else painterResource(id = R.drawable.light_1),
+                            contentDescription = stringResource(R.string.toggle_theme),
                             tint = Color.Unspecified,
-                            modifier = Modifier.padding(start = 10.dp)
                         )
                     }
                 }
             }
-        },
-        actions = {
-            if(navigationState.currentRoute in routesWithoutActionButton){}
-            else if(
-                navigationState.currentRoute != AppRoute.StartUI.Login &&
-                ManagerUser.currentUser == null){
 
-                IconButton(onClick = { router.launch(AppRoute.StartUI.Login) }
+            // Центральний елемент (заголовок)
+            Box(modifier = Modifier.weight(2f), contentAlignment = Alignment.Center) {
+                Text(
+                    text = stringResource(
+                        (navigationState.currentRoute as? AppRoute)?.titleRes ?: R.string.logo
+                    ),
+                    fontSize = 24.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            // Правий елемент (кнопка "Вийти")
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
+                if (navigationState.currentRoute == AppRoute.StartUI.MyProfile &&
+                    ManagerUser.currentUser != null
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.AccountCircle,
-                        contentDescription = stringResource(R.string.login),
-                    )
-                }
-
-            }else if(
-                navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier ||
-                navigationState.currentRoute == AppRoute.Menu.Menu){
-
-                IconButton(onClick = {
-                    router.launch(AppRoute.Administrator.Purchase.ShoppingCart) }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = null,
-                    )
-                }
-            } else if(navigationState.currentRoute == AppRoute.StartUI.MyProfile &&
-                ManagerUser.currentUser != null ){
-                Row(
-                    modifier = Modifier.padding(8.dp).clickable {
-                        ManagerUser.logout()
-                        router.launch(AppRoute.StartUI.GeneralPageScreen)
+                    Row(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable {
+                                ManagerUser.logout()
+                                router.launch(AppRoute.StartUI.GeneralPageScreen)
+                            },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Вийти",
+                            modifier = Modifier.padding(end = 8.dp),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = stringResource(R.string.my_account),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
                     }
-                ) {
-                    Text(
-                        text = "Вийти",
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = stringResource(R.string.my_account),
-                    )
                 }
             }
-        },
-    )
+        }
+    }
 }
+

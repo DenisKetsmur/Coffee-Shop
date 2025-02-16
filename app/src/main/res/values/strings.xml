@@ -13,7 +13,7 @@
     <string name="my_account">My Account</string>
     <string name="search">Пошук</string>
     <string name="clear_text_in_text_field">Clear Text in Text Field</string>
-    <string name="added_new_client">Added new client</string>
+    <string name="added_new_cart">Added new cart</string>
     <string name="name_and_surname_client">Ім\'я та прізвище клієнта</string>
     <string name="telephone_number_client">Номер телефону клієнта</string>
     <string name="add_new_client">Реєстрація користувача</string>
@@ -28,4 +28,8 @@
     <string name="info">Інформація</string>
     <string name="my_profile">Профіль</string>
     <string name="add_goods">Додати товар</string>
+    <string name="back">back</string>
+    <string name="toggle_theme">toggle Theme</string>
+    <string name="toggle_theme_light">toggle theme light</string>
+    <string name="toggle_theme_dark">toggle theme dark</string>
 </resources>

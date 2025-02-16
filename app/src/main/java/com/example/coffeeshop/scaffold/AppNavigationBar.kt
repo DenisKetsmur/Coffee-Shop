@@ -14,7 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.ThemeViewModel
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.navigationmodule.NavigationState
@@ -72,7 +74,6 @@ fun AppNavigationBar(
                         modifier = Modifier.size(24.dp),
                     )
                 },
-
             )
         }
     }
