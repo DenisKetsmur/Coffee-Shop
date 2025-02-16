@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens
+package com.example.coffeeshop.screens.shareScreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

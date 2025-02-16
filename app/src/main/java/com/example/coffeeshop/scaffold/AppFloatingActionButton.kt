@@ -23,9 +23,12 @@ fun AppFloatingActionButton(
         modifier = modifier,
         onClick = {
             when (navigationState.currentRoute) {
-                AppRoute.Manager.Personal.RevisionPersonal -> router.launch(AppRoute.Manager.Personal.AddNewPersonal)
-                AppRoute.Administrator.Purchase.RevisionPurchase ->router.launch(AppRoute.Administrator.Purchase.AddSupplier)
-                AppRoute.Menu.Menu ->router.launch(AppRoute.Menu.AddProduct)
+                AppRoute.Manager.Personal.RevisionPersonal ->
+                    router.launch(AppRoute.Manager.Personal.AddNewPersonal)
+                AppRoute.Administrator.Purchase.RevisionPurchase ->
+                    router.launch(AppRoute.Administrator.Purchase.AddSupplier)
+                AppRoute.Menu.Menu ->
+                    router.launch(AppRoute.Menu.AddProduct)
             }
             router.launch(AppRoute.Manager.Personal.AddNewPersonal)
         }

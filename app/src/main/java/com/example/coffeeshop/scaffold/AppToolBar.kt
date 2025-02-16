@@ -101,7 +101,6 @@ fun AppToolBar(
                 }
             }
 
-            // Центральний елемент (заголовок)
             Box(modifier = Modifier.weight(2f), contentAlignment = Alignment.Center) {
                 Text(
                     text = stringResource(
@@ -113,7 +112,6 @@ fun AppToolBar(
                 )
             }
 
-            // Правий елемент (кнопка "Вийти")
             Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
                 if (navigationState.currentRoute == AppRoute.StartUI.MyProfile &&
                     ManagerUser.currentUser != null
@@ -143,4 +141,3 @@ fun AppToolBar(
         }
     }
 }
-

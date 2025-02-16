@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens
+package com.example.coffeeshop.screens.shareScreens.menu
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable

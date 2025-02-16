@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.manager
+package com.example.coffeeshop.screens.shareScreens.menu
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -8,14 +8,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,38 +22,46 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeeshop.data.filled.rawMaterial
 import com.example.coffeeshop.data.filled.rawMaterialCategories
 import com.example.coffeeshop.data.filled.unitList
 import com.example.coffeeshop.data.product.Product
-import com.example.coffeeshop.data.product.RawMaterial
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun AddProductScreen() {
-    AddProductContent(
+fun EditProductScreen() {
+    EditProductContent(
+        Product(
+            name = "Какао",
+            category = "Молоко",
+            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
+                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
+                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
+            unit = "мл",
+            quantity = 234f
+        ),
         onProductUpdated = {}
     )
 }
 
 @Composable
-fun AddProductContent(
+fun EditProductContent(
+    product: Product,
     onProductUpdated: (Product) -> Unit
 ) {
-    val product by remember { mutableStateOf(Product()) }
     var name by remember { mutableStateOf(product.name) }
     var category by remember { mutableStateOf(product.category) }
     var unit by remember { mutableStateOf(product.unit) }
     var quantity by remember { mutableStateOf(product.quantity.toString()) }
     var description by remember { mutableStateOf(product.description) }
 
+
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
     val router = LocalRouter.current
 
     Card(
@@ -151,7 +156,7 @@ fun AddProductContent(
                         ),
                     ) {
                         Text(
-                            text = "Додати товар"
+                            text = "Підтвердити зміни"
                         )
                     }
                 }
@@ -162,8 +167,17 @@ fun AddProductContent(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun PreviewAddProductScreen(){
-    AddProductContent(
+private fun PreviewEditProductScreen(){
+    EditProductContent(
+        Product(
+            name = "Какао",
+            category = "Молоко",
+            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
+                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
+                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
+            unit = "мл",
+            quantity = 234f
+        ),
         onProductUpdated = {}
     )
 }

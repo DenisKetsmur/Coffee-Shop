@@ -2,9 +2,7 @@ package com.example.coffeeshop.scaffold
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,10 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.ThemeViewModel
-import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router

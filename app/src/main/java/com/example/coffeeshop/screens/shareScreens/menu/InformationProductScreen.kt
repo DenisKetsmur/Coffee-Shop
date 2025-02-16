@@ -1,4 +1,4 @@
-package com.example.coffeeshop.screens.manager
+package com.example.coffeeshop.screens.shareScreens.menu
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -26,9 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.filled.rawMaterial
 import com.example.coffeeshop.data.product.Product
-import com.example.coffeeshop.data.product.RawMaterial
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter

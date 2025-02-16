@@ -19,9 +19,6 @@ import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
-//        val preferences = ThemePreferences(this)
-//        val viewModel: ThemeViewModel by viewModels { ThemeViewModelFactory(preferences) }
         enableEdgeToEdge()
         setContent {
             var darkTheme by remember { mutableStateOf(false) }
