@@ -30,7 +30,6 @@ fun AppFloatingActionButton(
                 AppRoute.Menu.Menu ->
                     router.launch(AppRoute.Menu.AddProduct)
             }
-            router.launch(AppRoute.Manager.Personal.AddNewPersonal)
         }
     ) {
         Icon(

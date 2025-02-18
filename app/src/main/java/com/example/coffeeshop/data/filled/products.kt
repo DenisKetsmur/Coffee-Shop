@@ -1,9 +1,8 @@
 package com.example.coffeeshop.data.filled
 
-import com.example.coffeeshop.data.product.Product
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.productAndGoods.Product
 
-val rawMaterialCategories = listOf(
+val productCategories = listOf(
     "Кавові зерна",
     "Молоко",
     "Чайне листя",
@@ -16,141 +15,67 @@ val rawMaterialCategories = listOf(
     "Вершки"
 )
 
-val finishedProductCategories = listOf(
-    "Кава",
-    "Чай",
-    "Десерти",
-    "Випічка",
-    "Сендвічі",
-    "Смузі",
-    "Фреші",
-    "Коктейлі"
-)
+val unitList = listOf("кг", "мл", "л", "г", "десятки", "шт")
 
-val unitList = listOf("кг", "мл", "л", "г")
-
-val products = listOf(
+var productsList = listOf(
     Product(
-        name = "Еспресо",
-        category = finishedProductCategories[0], // Кава
-        unit = "мл",
-        quantity = 50f,
-    ),
-    Product(
-        name = "Капучино",
-        category = finishedProductCategories[0], // Кава
-        unit = "мл",
-        quantity = 250f
-    ),
-    Product(
-        name = "Зелений чай",
-        category = finishedProductCategories[1], // Чай
-        unit = "мл",
-        quantity = 300f
-    ),
-    Product(
-        name = "Чорний чай",
-        category = finishedProductCategories[1], // Чай
-        unit = "мл",
-        quantity = 300f,
-    ),
-    Product(
-        name = "Чізкейк",
-        category = finishedProductCategories[2], // Десерти
-        unit = "шт",
-        quantity = 1f
-    ),
-    Product(
-        name = "Круасан",
-        category = finishedProductCategories[3], // Випічка
-        unit = "шт",
-        quantity = 1f
-    ),
-    Product(
-        name = "Сендвіч з лососем",
-        category = finishedProductCategories[4], // Сендвічі
-        unit = "шт",
-        quantity = 1f
-    ),
-    Product(
-        name = "Смузі манго",
-        category = finishedProductCategories[5], // Смузі
-        unit = "мл",
-        quantity = 300f
-    ),
-    Product(
-        name = "Апельсиновий фреш",
-        category = finishedProductCategories[6], // Фреші
-        unit = "мл",
-        quantity = 300f
-    ),
-    Product(
-        name = "Молочний коктейль ванільний",
-        category = finishedProductCategories[7], // Коктейлі
-        unit = "мл",
-        quantity = 300f
-    ),
-)
-
-var rawMaterial = listOf(
-    RawMaterial(
         name = "Кава арабіка",
-        category = rawMaterialCategories[0], // Кавові зерна
-        unit = "кг",
+        category = productCategories[0], // Кавові зерна
+        unit = unitList[1], // мл
         quantity = 10f
     ),
-    RawMaterial(
+    Product(
         name = "Кава робуста",
-        category = rawMaterialCategories[0], // Кавові зерна
-        unit = "кг",
+        category = productCategories[0], // Кавові зерна
+        unit = unitList[0], // кг
         quantity = 8f
     ),
-    RawMaterial(
+    Product(
         name = "Молоко коров’яче",
-        category = rawMaterialCategories[1], // Молоко
-        unit = "л",
+        category = productCategories[1], // Молоко
+        unit = unitList[2], // л
         quantity = 25f
     ),
-    RawMaterial(
+    Product(
         name = "Зелений чай листовий",
-        category = rawMaterialCategories[2], // Чайне листя
-        unit = "кг",
+        category = productCategories[2], // Чайне листя
+        unit = unitList[0], // кг
         quantity = 2f
     ),
-    RawMaterial(
+    Product(
         name = "Чорний чай листовий",
-        category = rawMaterialCategories[2], // Чайне листя
-        unit = "кг",
+        category = productCategories[2], // Чайне листя
+        unit = unitList[0], // кг
         quantity = 3f
     ),
-    RawMaterial(
+    Product(
         name = "Цукор тростниковий",
-        category = rawMaterialCategories[3], // Цукор та підсолоджувачі
-        unit = "кг",
+        category = productCategories[3], // Цукор та підсолоджувачі
+        unit = unitList[0], // кг
         quantity = 7f
     ),
-    RawMaterial(
+    Product(
         name = "Борошно пшеничне",
-        category = rawMaterialCategories[4], // Борошно
-        unit = "кг",
+        category = productCategories[4], // Борошно
+        unit = unitList[0], // кг
         quantity = 15f
     ),
-    RawMaterial(
+    Product(
         name = "Яйця курячі",
-        category = rawMaterialCategories[5], // Яйця
-        unit = "десятки",
+        category = productCategories[5], // Яйця
+        unit = unitList[4], // десятки
         quantity = 3f
     ),
-    RawMaterial(
+    Product(
         name = "Яблука",
-        category = rawMaterialCategories[6], // Фрукти
-        unit = "кг",
+        category = productCategories[6], // Фрукти
+        unit = unitList[0], // кг
         quantity = 20f
     ),
-    RawMaterial(
+    Product(
         name = "Темний шоколад",
-        category = rawMaterialCategories[7], // Шоколад
-        unit = "кг",
+        category = productCategories[7], // Шоколад
+        unit = unitList[0], // кг
         quantity = 5f
     )
 )

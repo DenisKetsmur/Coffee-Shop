@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,9 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.filled.productCategories
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 
 @Composable
 fun ChipGroup(
@@ -124,25 +129,39 @@ fun FilterChip(
     val focusManager = LocalFocusManager.current
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-            contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
         ),
-        modifier = modifier
+                modifier = modifier
             .height(40.dp)
             .clickable {
                 onSelected()
                 focusManager.clearFocus()
             },
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp,
-                    ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
     ) {
         Box(
-            modifier = Modifier.padding(start = 12.dp, end =  12.dp),
+            modifier = Modifier.fillMaxSize().padding(start = 12.dp, end =  12.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(label)
+        }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewChipGroup(){
+    CoffeeAppTheme(darkTheme = true) {
+        Surface {
+            val selectedCategories by remember { mutableStateOf(setOf<String>()) }
+            ChipGroup(
+                categories = productCategories,
+                selectedCategories = selectedCategories,
+                onCategorySelected = {},
+            )
         }
     }
 }

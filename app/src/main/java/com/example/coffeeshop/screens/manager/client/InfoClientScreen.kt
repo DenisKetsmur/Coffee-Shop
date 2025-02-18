@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.client
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.Goods
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.screens.manager.components.convertMillisToDate
@@ -110,7 +110,7 @@ fun ClientInfo(
 }
 
 @Composable
-fun OrderHistory(orders: List<Order<Product>>) {
+fun OrderHistory(orders: List<Order<Goods>>) {
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
@@ -135,7 +135,7 @@ fun OrderHistory(orders: List<Order<Product>>) {
 }
 
 @Composable
-fun OrderItem(order: Order<Product>) {
+fun OrderItem(order: Order<Goods>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = "Дата: ${convertMillisToDate(order.date)}", fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(4.dp))

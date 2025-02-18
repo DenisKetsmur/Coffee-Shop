@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.sampleSupplier
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.navigationmodule.LocalRouter
@@ -98,7 +98,7 @@ fun SupplierInfo(supplier: Supplier) {
 }
 
 @Composable
-fun OrderHistory(orders: List<Order<RawMaterial>>) {
+fun OrderHistory(orders: List<Order<Product>>) {
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
@@ -123,7 +123,7 @@ fun OrderHistory(orders: List<Order<RawMaterial>>) {
 }
 
 @Composable
-fun OrderItem(order: Order<RawMaterial>) {
+fun OrderItem(order: Order<Product>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = "Дата: ${order.date}", fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(4.dp))

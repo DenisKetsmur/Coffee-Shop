@@ -15,53 +15,51 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeeshop.data.filled.rawMaterialCategories
+import com.example.coffeeshop.data.filled.goodsCategories
 import com.example.coffeeshop.data.filled.unitList
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.Goods
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
+import com.example.coffeeshop.data.productAndGoods.goods
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun EditProductScreen() {
+fun EditGoodsScreen(
+    goodsId: String,
+    viewModel: GoodsViewModel = viewModel()
+) {
+    val goodsList by viewModel.goods.collectAsState()
+    val goods = goodsList.find { it.id == goodsId.toInt() }
     EditProductContent(
-        Product(
-            name = "Какао",
-            category = "Молоко",
-            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            unit = "мл",
-            quantity = 234f
-        ),
-        onProductUpdated = {}
+        goods = goods!!,
+        inUpdateGoods = {
+            viewModel.editGoods(it)
+        }
     )
 }
 
 @Composable
 fun EditProductContent(
-    product: Product,
-    onProductUpdated: (Product) -> Unit
+    goods: Goods,
+    inUpdateGoods:(Goods) -> Unit = {},
 ) {
-    var name by remember { mutableStateOf(product.name) }
-    var category by remember { mutableStateOf(product.category) }
-    var unit by remember { mutableStateOf(product.unit) }
-    var quantity by remember { mutableStateOf(product.quantity.toString()) }
-    var description by remember { mutableStateOf(product.description) }
-
-
-    val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
+    var name by remember { mutableStateOf(goods.name) }
+    var category by remember { mutableStateOf(goods.category) }
+    var unit by remember { mutableStateOf(goods.unit) }
+    var quantity by remember { mutableStateOf(goods.quantity.toString()) }
+    var description by remember { mutableStateOf(goods.description) }
+    
     val router = LocalRouter.current
 
     Card(
@@ -90,8 +88,8 @@ fun EditProductContent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = product.category,
-                    options = rawMaterialCategories,
+                    firstValue = goods.category,
+                    options = goodsCategories,
                     onOptionsUpdated = { newValueCategory ->
                         category = newValueCategory
                     },
@@ -102,7 +100,7 @@ fun EditProductContent(
                     }
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = product.unit,
+                    firstValue = goods.unit,
                     options = unitList,
                     onOptionsUpdated = { newValueUnit ->
                         unit = newValueUnit
@@ -140,14 +138,14 @@ fun EditProductContent(
                     Button(
                         modifier = Modifier.padding(12.dp),
                         onClick = {
-                            val updateProduct = product.copy(
+                            val updateProduct = goods.copy(
                                 name = name,
                                 category = category,
                                 unit = unit,
                                 quantity = quantity.toFloatOrNull() ?: 0f,
                                 description = description
                             )
-                            onProductUpdated(updateProduct)
+                            inUpdateGoods(updateProduct)
                             router.pop()
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -169,15 +167,6 @@ fun EditProductContent(
 @Composable
 private fun PreviewEditProductScreen(){
     EditProductContent(
-        Product(
-            name = "Какао",
-            category = "Молоко",
-            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            unit = "мл",
-            quantity = 234f
-        ),
-        onProductUpdated = {}
+        goods= goods[1],
     )
 }

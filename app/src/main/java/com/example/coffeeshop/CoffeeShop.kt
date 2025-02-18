@@ -44,7 +44,9 @@ fun CoffeeShop(
             }
         },
         bottomBar = {
-            if(navigationState.currentRoute != AppRoute.Administrator.Purchase.ShoppingCart){
+            if(navigationState.currentRoute != AppRoute.Administrator.Purchase.ShoppingCart &&
+                navigationState.currentRoute != AppRoute.StartUI.GeneralPageScreen
+                ){
                 AppNavigationBar(
                     navigationState = navigationState,
                     router = router,

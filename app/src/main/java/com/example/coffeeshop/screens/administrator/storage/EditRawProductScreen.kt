@@ -30,16 +30,16 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeeshop.data.filled.rawMaterialCategories
+import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun EditRawProductScreen() {
     EditRawProductContent(
-        RawMaterial(
+        Product(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
@@ -54,14 +54,14 @@ fun EditRawProductScreen() {
 
 @Composable
 fun EditRawProductContent(
-    rawMaterial: RawMaterial,
-    onProductUpdated: (RawMaterial) -> Unit
+    product: Product,
+    onProductUpdated: (Product) -> Unit
 ) {
-    var name by remember { mutableStateOf(rawMaterial.name) }
-    var category by remember { mutableStateOf(rawMaterial.category) }
-    var unit by remember { mutableStateOf(rawMaterial.unit) }
-    var quantity by remember { mutableStateOf(rawMaterial.quantity.toString()) }
-    var description by remember { mutableStateOf(rawMaterial.description) }
+    var name by remember { mutableStateOf(product.name) }
+    var category by remember { mutableStateOf(product.category) }
+    var unit by remember { mutableStateOf(product.unit) }
+    var quantity by remember { mutableStateOf(product.quantity.toString()) }
+    var description by remember { mutableStateOf(product.description) }
 
 
     val focusManager = LocalFocusManager.current
@@ -104,8 +104,8 @@ fun EditRawProductContent(
                     ),
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = rawMaterial.category,
-                    options = rawMaterialCategories,
+                    firstValue = product.category,
+                    options = productCategories,
                     onOptionsUpdated = { newValueCategory ->
                         category = newValueCategory
                     },
@@ -116,7 +116,7 @@ fun EditRawProductContent(
                     }
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = rawMaterial.unit,
+                    firstValue = product.unit,
                     options = unitList,
                     onOptionsUpdated = { newValueUnit ->
                         unit = newValueUnit
@@ -154,7 +154,7 @@ fun EditRawProductContent(
                     Button(
                         modifier = Modifier.padding(12.dp),
                         onClick = {
-                            val updateProduct = rawMaterial.copy(
+                            val updateProduct = product.copy(
                                 name = name,
                                 category = category,
                                 unit = unit,
@@ -183,7 +183,7 @@ fun EditRawProductContent(
 @Composable
 private fun PreviewEditRawProductScreen(){
     EditRawProductContent(
-        RawMaterial(
+        Product(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +

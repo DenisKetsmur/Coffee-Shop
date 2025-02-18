@@ -2,6 +2,7 @@ package com.example.coffeeshop.screens.administrator.purchase
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -14,11 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.screens.cardForScreens.ChipGroup
 import androidx.compose.foundation.lazy.items
-import com.example.coffeeshop.data.filled.rawMaterial
-import com.example.coffeeshop.data.filled.rawMaterialCategories
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import com.example.coffeeshop.data.filled.productsList
+import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.screens.administrator.components.CardStorageProduct
 import com.example.coffeeshop.screens.cardForScreens.CatPop
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 
 
 @Composable
@@ -41,7 +45,7 @@ fun PurchaseInSupplierContent() {
                 modifier = Modifier.padding(start = 4.dp),
             ) { onIconStateChange ->
                 ChipGroup(
-                    categories = rawMaterialCategories,
+                    categories = productCategories,
                     selectedCategories = selectedCategories,
                     onCategorySelected = { category ->
                         selectedCategories = category
@@ -54,12 +58,15 @@ fun PurchaseInSupplierContent() {
                 )
             }
         }
-        items(rawMaterial) {
+        items(productsList) {
             CardStorageProduct(
-                rawMaterial = it,
+                product = it,
                 onRoute = {
                     TODO()
-                }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             )
         }
     }
@@ -68,5 +75,9 @@ fun PurchaseInSupplierContent() {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewPurchaseInSupplierScreen(){
-    PurchaseInSupplierScreen()
+    CoffeeAppTheme(darkTheme = true) {
+        Surface {
+            PurchaseInSupplierScreen()
+        }
+    }
 }

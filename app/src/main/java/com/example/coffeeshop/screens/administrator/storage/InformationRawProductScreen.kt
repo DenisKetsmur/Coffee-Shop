@@ -22,14 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun InformationRawProductScreen(){
     InformationRawProductContent(
-        RawMaterial(
+        Product(
             name = "Какао",
             category = "Молоко",
             description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
@@ -43,7 +43,7 @@ fun InformationRawProductScreen(){
 
 @Composable
 fun InformationRawProductContent(
-    rawMaterial:RawMaterial
+    product:Product
 ) {
     val router = LocalRouter.current
     Card(
@@ -61,23 +61,23 @@ fun InformationRawProductContent(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Назва: ${rawMaterial.name}"
+                text = "Назва: ${product.name}"
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Категорія: ${rawMaterial.category}"
+                text = "Категорія: ${product.category}"
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Одиниця виміру: ${rawMaterial.unit}"
+                text = "Одиниця виміру: ${product.unit}"
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Кількість: ${rawMaterial.quantity}"
+                text = "Кількість: ${product.quantity}"
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Опис: ${rawMaterial.description}"
+                text = "Опис: ${product.description}"
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -108,7 +108,7 @@ fun InformationRawProductContent(
 private fun PreviewInformationRawProductScreen(){
     CoffeeAppTheme(darkTheme = false) {
         InformationRawProductContent(
-            RawMaterial(
+            Product(
                 name = "Какао",
                 category = "Молоко",
                 description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +

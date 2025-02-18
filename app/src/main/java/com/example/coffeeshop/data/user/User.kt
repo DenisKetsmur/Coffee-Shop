@@ -1,7 +1,7 @@
 package com.example.coffeeshop.data.user
 
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.Goods
 import com.example.coffeeshop.data.supplier.Order
 
 sealed class User(
@@ -43,7 +43,7 @@ sealed class User(
         override val position: Position = Position.CLIENT,
         override val phoneNumber: String = "+380345345",
 
-        val orders:List<Order<Product>> = listOf()
+        val orders:List<Order<Goods>> = listOf()
     ) : User(id, name, surname, email, password, position, phoneNumber)
 }
 
@@ -55,8 +55,8 @@ data class WorkSchedule(
 ) {
     companion object {
         val NONE: WorkSchedule = WorkSchedule(
-            shift = Shift.SECOND,
-            workSchedule = "",
+            shift = Shift.NONE,
+            workSchedule = "00",
             hourlyRate = 0.0
         )
     }
@@ -66,6 +66,7 @@ data class WorkSchedule(
 
 
 enum class Shift(val time:String) {
+    NONE("NONE"),
     FIRST("8:00-16:00"),
     SECOND("16:00-24:00")
 }

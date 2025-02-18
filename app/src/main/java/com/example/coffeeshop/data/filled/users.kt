@@ -1,17 +1,11 @@
 package com.example.coffeeshop.data.filled
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.example.coffeeshop.R
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.goods
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.user.Position
 import com.example.coffeeshop.data.user.Shift
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.data.user.WorkSchedule
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.Calendar
 import kotlin.random.Random
 
@@ -49,32 +43,32 @@ val client = User.Client(
     orders = listOf(
         Order(
             date = getRandomDate(),
-            items = products,
+            items = goods,
             total = 10000.0
         ),
         Order(
             date = getRandomDate(),
-            items = products,
+            items = goods,
             total = 103453.0
         ),
         Order(
             date = getRandomDate(),
-            items = products,
+            items = goods,
             total = 34535.0
         ),
         Order(
             date = getRandomDate(),
-            items = products,
+            items = goods,
             total = 436.0
         ),
         Order(
             date = getRandomDate(),
-            items = products,
+            items = goods,
             total = 434.0
         ),
         Order(
             date = getRandomDate(),
-            items = products,
+            items = goods,
             total = 10000.0
         )
     )

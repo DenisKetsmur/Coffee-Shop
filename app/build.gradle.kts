@@ -62,4 +62,5 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.material)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }

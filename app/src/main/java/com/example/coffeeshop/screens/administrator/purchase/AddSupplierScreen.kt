@@ -1,6 +1,5 @@
 package com.example.coffeeshop.screens.administrator.purchase
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,14 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.FloatingActionButtonElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -38,9 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.R
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.navigationmodule.LocalRouter
 
 @Composable
@@ -53,7 +47,7 @@ fun AddSupplierContent(
     //onSaveSuccess: () -> Unit = {}
 ) {
     val router = LocalRouter.current
-    var rawMaterials by remember { mutableStateOf(listOf(RawMaterial())) }
+    var products by remember { mutableStateOf(listOf(Product())) }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -83,7 +77,7 @@ fun AddSupplierContent(
                         fontSize = 32.sp,
                     )
                 }
-                rawMaterials.forEachIndexed { index, rawMaterial ->
+                products.forEachIndexed { index, rawMaterial ->
                     //if(index != 0) Divider(thickness = 4.dp)
                     Text(
                         text = "Товар ${index+1}",
@@ -91,17 +85,17 @@ fun AddSupplierContent(
                         modifier = Modifier.padding(start = 16.dp),
                     )
                     ProductInputItem1(
-                        rawMaterial = rawMaterial,
+                        product = rawMaterial,
                         onProductChange = { updatedProduct ->
-                            rawMaterials = rawMaterials.toMutableList().apply {
+                            products = products.toMutableList().apply {
                                 set(index, updatedProduct)
                             }
                         },
 
                         onRemove = {
-                            rawMaterials = rawMaterials.toMutableList().apply {
-                                if(rawMaterials.size == 1){
-                                    set(index, RawMaterial())
+                            products = products.toMutableList().apply {
+                                if(products.size == 1){
+                                    set(index, Product())
                                 }else{
                                     removeAt(index)
                                 }
@@ -114,7 +108,7 @@ fun AddSupplierContent(
 
             FloatingActionButton(
                 onClick = {
-                    rawMaterials = rawMaterials + RawMaterial()
+                    products = products + Product()
                 },
                 contentColor = MaterialTheme.colorScheme.primary,
                 containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -193,8 +187,8 @@ fun SupplierInfoInout(){
 
 @Composable
 fun ProductInputItem(
-    rawMaterial: RawMaterial,
-    onProductChange: (RawMaterial) -> Unit,
+    product: Product,
+    onProductChange: (Product) -> Unit,
     onRemove: () -> Unit
 ) {
     Card(
@@ -205,15 +199,15 @@ fun ProductInputItem(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
             OutlinedTextField(
-                value = rawMaterial.name,
-                onValueChange = { onProductChange(rawMaterial.copy(name = it)) },
+                value = product.name,
+                onValueChange = { onProductChange(product.copy(name = it)) },
                 label = { Text("Назва товару") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             OutlinedTextField(
-                value = rawMaterial.category,
-                onValueChange = { onProductChange(rawMaterial.copy(category = it)) },
+                value = product.category,
+                onValueChange = { onProductChange(product.copy(category = it)) },
                 label = { Text("Категорія") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -221,24 +215,24 @@ fun ProductInputItem(
                 modifier = Modifier.fillMaxWidth()
             ){
                 OutlinedTextField(
-                    value = rawMaterial.price.toString(),
-                    onValueChange = { onProductChange(rawMaterial.copy(price = it.toDouble())) },
+                    value = product.price.toString(),
+                    onValueChange = { onProductChange(product.copy(price = it.toDouble())) },
                     label = { Text("Ціна") },
                     modifier = Modifier.weight(1f),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 OutlinedTextField(
-                    value = rawMaterial.unit,
-                    onValueChange = { onProductChange(rawMaterial.copy(unit = it)) },
+                    value = product.unit,
+                    onValueChange = { onProductChange(product.copy(unit = it)) },
                     label = { Text("Одиниця виміру") },
                     modifier = Modifier.weight(1f)
                 )
             }
 
             OutlinedTextField(
-                value = rawMaterial.description,
-                onValueChange = { onProductChange(rawMaterial.copy(description = it)) },
+                value = product.description,
+                onValueChange = { onProductChange(product.copy(description = it)) },
                 label = { Text("Опис") },
                 modifier = Modifier.fillMaxWidth()
             )

@@ -19,6 +19,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,29 +28,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.Goods
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
+import com.example.coffeeshop.data.productAndGoods.goods
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun InformationProductScreen(){
+fun InformationProductScreen(
+    goodsId: String,
+    viewModel: GoodsViewModel = viewModel()
+){
+    val goodsList by viewModel.goods.collectAsState()
+    val goods = goodsList.find { it.id == goodsId.toInt() }
     InformationProductContent(
-        Product(
-            name = "Какао",
-            category = "Молоко",
-            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            unit = "мл",
-            quantity = 234f,
-        )
+        goods = goods!!
     )
 }
 
 @Composable
 fun InformationProductContent(
-    product: Product
+    goods: Goods,
 ) {
     val router = LocalRouter.current
     Card(
@@ -65,48 +67,48 @@ fun InformationProductContent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                modifier = Modifier.height(100.dp)
-            ){
+                modifier = Modifier.height(100.dp).weight(2f)
+            ) {
                 Text(
-                    text = "Назва: ${product.name}"
+                    text = "Назва: ${goods.name}"
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Категорія: ${product.category}"
+                    text = "Категорія: ${goods.category}"
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Кількість: ${product.quantity} ${product.unit}"
+                    text = "Кількість: ${goods.quantity} ${goods.unit}"
                 )
             }
             Image(
-                painter = painterResource(product.image),
+                painter = painterResource(goods.image),
                 contentDescription = null,
                 modifier = Modifier.height(100.dp).aspectRatio(1f),
                 contentScale = ContentScale.FillHeight,
             )
         }
         Column(
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
             Text(
-                text = "Опис: ${product.description}"
+                text = "Опис: ${goods.description}"
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if(!ManagerUser.isClient()){
+            if (!ManagerUser.isClient()) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     FloatingActionButton(
                         onClick = {
-                            router.launch(AppRoute.Menu.EditProduct)
-                        },
+                            router.launch(AppRoute.Menu.EditProduct(goods.id.toString()))
+                                  },
                         contentColor = MaterialTheme.colorScheme.primary,
                         containerColor = MaterialTheme.colorScheme.onPrimary,
-                    ) {
+                        ) {
                         Icon(
                             imageVector = Icons.Default.Create,
                             contentDescription = null
@@ -118,20 +120,13 @@ fun InformationProductContent(
     }
 }
 
+
 @Preview(showSystemUi = true)
 @Composable
 private fun PreviewInformationProductScreen(){
     CoffeeAppTheme(darkTheme = false) {
         InformationProductContent(
-            Product(
-                name = "Какао",
-                category = "Молоко",
-                description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                        "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                        "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-                unit = "мл",
-                quantity = 234f,
-            )
+            goods = goods[1]
         )
     }
 }

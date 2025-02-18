@@ -23,30 +23,39 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coffeeshop.data.filled.rawMaterialCategories
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshop.data.filled.goodsCategories
+import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.Goods
+import com.example.coffeeshop.data.productAndGoods.GoodsRepository
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun AddProductScreen() {
+fun AddProductScreen(
+    viewModel: GoodsViewModel = viewModel()
+    ) {
     AddProductContent(
-        onProductUpdated = {}
+        onProductUpdated = { goods ->
+            viewModel.addGoods(goods)
+        }
     )
 }
 
 @Composable
 fun AddProductContent(
-    onProductUpdated: (Product) -> Unit
+    onProductUpdated: (Goods) -> Unit
 ) {
-    val product by remember { mutableStateOf(Product()) }
-    var name by remember { mutableStateOf(product.name) }
-    var category by remember { mutableStateOf(product.category) }
-    var unit by remember { mutableStateOf(product.unit) }
-    var quantity by remember { mutableStateOf(product.quantity.toString()) }
-    var description by remember { mutableStateOf(product.description) }
+    val goods by remember { mutableStateOf(Goods()) }
+
+    var name by remember { mutableStateOf(goods.name) }
+    var category by remember { mutableStateOf(goods.category) }
+    var unit by remember { mutableStateOf(goods.unit) }
+    var quantity by remember { mutableStateOf(goods.quantity.toString()) }
+    var description by remember { mutableStateOf(goods.description) }
 
     val router = LocalRouter.current
 
@@ -76,8 +85,8 @@ fun AddProductContent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = product.category,
-                    options = rawMaterialCategories,
+                    firstValue = goods.category,
+                    options = goodsCategories,
                     onOptionsUpdated = { newValueCategory ->
                         category = newValueCategory
                     },
@@ -88,7 +97,7 @@ fun AddProductContent(
                     }
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = product.unit,
+                    firstValue = goods.unit,
                     options = unitList,
                     onOptionsUpdated = { newValueUnit ->
                         unit = newValueUnit
@@ -126,14 +135,14 @@ fun AddProductContent(
                     Button(
                         modifier = Modifier.padding(12.dp),
                         onClick = {
-                            val updateProduct = product.copy(
+                            val newGoods = goods.copy(
                                 name = name,
                                 category = category,
                                 unit = unit,
                                 quantity = quantity.toFloatOrNull() ?: 0f,
                                 description = description
                             )
-                            onProductUpdated(updateProduct)
+                            onProductUpdated(newGoods)
                             router.pop()
                         },
                         colors = ButtonDefaults.buttonColors(

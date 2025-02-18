@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,18 +28,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.filled.products
-import com.example.coffeeshop.data.product.Product
+import com.example.coffeeshop.data.productAndGoods.Goods
+import com.example.coffeeshop.data.productAndGoods.GoodsRepository
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
+import com.example.coffeeshop.data.productAndGoods.goods
 import com.example.navigationmodule.LocalRouter
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun CustomCardProduct(
-    product: Product,
+fun CustomCardGoods(
+    goodsId: Int,
+    viewModel: GoodsViewModel = viewModel(),
     price: String = "100",
     modifier: Modifier = Modifier,
     enableButtonAddInShoppingCart:Boolean = true,
 ) {
-    val route = LocalRouter.current
+
+    val goodsList by viewModel.goods.collectAsState()
+    val goods = goodsList.find { it.id == goodsId }
+
     var buttonEnabled by remember { mutableStateOf(true) }
     Card(
         modifier = modifier
@@ -55,55 +63,59 @@ fun CustomCardProduct(
                 .fillMaxWidth()
                 .padding(end = 12.dp)
         ) {
-            Image(
-                painter = painterResource(R.mipmap.face_photo),
-                contentDescription = null,
-                modifier = Modifier.height(150.dp).aspectRatio(1f),
-                contentScale = ContentScale.FillHeight
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .weight(2f)
-            ) {
-                Text(
-                    text = product.name,
-                    fontSize = 16.sp
+            if (goods != null) {
+                Image(
+                    painter = painterResource(R.mipmap.face_photo),
+                    contentDescription = null,
+                    modifier = Modifier.height(150.dp).aspectRatio(1f),
+                    contentScale = ContentScale.FillHeight
                 )
-                Spacer(modifier= Modifier.height(8.dp))
-                Text(
-                    text = product.category,
-                    fontSize = 12.sp
-                )
-                Spacer(modifier= Modifier.height(8.dp))
-                Text(
-                    text = "${product.quantity} ${product.unit}",
-                    fontSize = 12.sp
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .height(150.dp)
-                    .padding(start = 8.dp,top = 8.dp, bottom = 8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "$price грн",
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-                if(enableButtonAddInShoppingCart){
-                    Spacer(modifier = Modifier.height(36.dp))
-                    Button(
-                        enabled = buttonEnabled,
-                        onClick = {
-                            buttonEnabled = false
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .weight(2f)
+                ) {
+                    Text(
+                        text = goods.name,
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = goods.category,
+                        fontSize = 12.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "${goods.quantity} ${goods.unit}",
+                        fontSize = 12.sp
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .padding(start = 8.dp, top = 8.dp, bottom = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "$price грн",
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                    if (enableButtonAddInShoppingCart) {
+                        Spacer(modifier = Modifier.height(36.dp))
+                        Button(
+                            enabled = buttonEnabled,
+                            onClick = {
+                                buttonEnabled = false
+                            }
+                        ) {
+                            Text(text = "В кошик")
                         }
-                    ) {
-                        Text(text = "В кошик")
                     }
                 }
+            }else{
+                Text("Product not found")
             }
         }
     }
@@ -113,7 +125,7 @@ fun CustomCardProduct(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewCustomCardProduct(){
-    CustomCardProduct(
-        product = products[1]
+    CustomCardGoods(
+        goodsId = goods[1].id
     )
 }

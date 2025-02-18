@@ -17,7 +17,7 @@ import com.example.coffeeshop.screens.administrator.storage.EditRawProductScreen
 import com.example.coffeeshop.screens.administrator.storage.InformationRawProductScreen
 import com.example.coffeeshop.screens.administrator.storage.StorageScreen
 import com.example.coffeeshop.screens.shareScreens.menu.AddProductScreen
-import com.example.coffeeshop.screens.shareScreens.menu.EditProductScreen
+import com.example.coffeeshop.screens.shareScreens.menu.EditGoodsScreen
 import com.example.coffeeshop.screens.shareScreens.menu.InformationProductScreen
 import com.example.coffeeshop.screens.manager.employee.AddNewClientScreen
 import com.example.coffeeshop.screens.manager.client.ClientsScreen
@@ -42,11 +42,19 @@ fun AppNavigationHost(
         when (currentRoute) {
             AppRoute.StartUI.Login -> LoginScreen()
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
-            AppRoute.StartUI.MyProfile -> MyProfileScreen()
-
+            is AppRoute.StartUI.MyProfile -> {
+                val userId = (currentRoute as? AppRoute.StartUI.MyProfile)?.userId ?: ""
+                MyProfileScreen(userId)
+            }
             AppRoute.Menu.Menu -> MenuScreen()
-            AppRoute.Menu.InfoProduct -> InformationProductScreen()
-            AppRoute.Menu.EditProduct -> EditProductScreen()
+            is AppRoute.Menu.InfoProduct -> {
+                val productId = (currentRoute as? AppRoute.Menu.InfoProduct)?.productId ?: ""
+                InformationProductScreen(productId)
+            }
+            is AppRoute.Menu.EditProduct -> {
+                val productId = (currentRoute as? AppRoute.Menu.EditProduct)?.productId ?: ""
+                EditGoodsScreen(productId)
+            }
             AppRoute.Menu.AddProduct -> AddProductScreen()
 
             AppRoute.Client.ShoppingCart -> ShoppingCartScreen()

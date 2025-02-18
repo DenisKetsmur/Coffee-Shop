@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.user.ManagerUser
+import com.example.coffeeshop.data.user.ManagerUser.users
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
 
@@ -21,14 +22,14 @@ val ManagerTabs = listOf(
     AppRoute.Menu.Menu,
     AppRoute.Manager.Personal.RevisionPersonal,
     AppRoute.Manager.Clients.RevisionClients,
-    AppRoute.StartUI.MyProfile
+    AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
 )
 
 val AdminTabs = listOf(
     AppRoute.Menu.Menu,
     AppRoute.Administrator.Storage.RevisionStorage,
     AppRoute.Administrator.Purchase.RevisionPurchase,
-    AppRoute.StartUI.MyProfile
+    AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
 )
 
 val SupplierTab = listOf(
@@ -39,8 +40,9 @@ val SupplierTab = listOf(
 val ClientTabs = listOf(
     AppRoute.Menu.Menu,
     AppRoute.Client.ShoppingCart,
-    AppRoute.StartUI.MyProfile
+    AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
 )
+
 
 @Composable
 fun AppNavigationBar(
@@ -53,8 +55,8 @@ fun AppNavigationBar(
             navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier -> SupplierTab
             ManagerUser.isAdmin() -> AdminTabs
             ManagerUser.isManager() -> ManagerTabs
-            else -> ClientTabs
-        }
+            else-> ClientTabs
+         }
 
         currentTabs.forEach { tab ->
             NavigationBarItem(

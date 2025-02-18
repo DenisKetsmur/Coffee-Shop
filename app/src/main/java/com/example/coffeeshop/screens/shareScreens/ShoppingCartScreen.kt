@@ -47,8 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.data.filled.rawMaterial
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.filled.productsList
+import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 import kotlinx.coroutines.launch
@@ -62,11 +62,11 @@ fun ShoppingCartScreen(){
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ShoppingCartContent() {
-    var items by remember { mutableStateOf(rawMaterial.toMutableList()) }
+    var items by remember { mutableStateOf(productsList.toMutableList()) }
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    val deletedItemsStack = remember { mutableStateListOf<Pair<Int, RawMaterial>>() }
+    val deletedItemsStack = remember { mutableStateListOf<Pair<Int, Product>>() }
     val router = LocalRouter.current
 
     Scaffold(
@@ -284,7 +284,7 @@ fun DeleteBackground(dismissState: DismissState) {
 }
 
 @Composable
-fun ItemCard(item: RawMaterial) {
+fun ItemCard(item: Product) {
     Card(
         modifier = Modifier.fillMaxWidth()
             .padding(top = 16.dp, start =  16.dp, end = 16.dp),
@@ -311,7 +311,7 @@ fun ItemCard(item: RawMaterial) {
 }
 
 @Composable
-fun QuantityInput(item: RawMaterial) {
+fun QuantityInput(item: Product) {
     var quantity by remember { mutableStateOf(0.0) }
 
     CustomOutlinedInputTextField(

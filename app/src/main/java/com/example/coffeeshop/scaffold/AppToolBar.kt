@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
@@ -33,8 +34,8 @@ import com.example.navigationmodule.Router
 
 val routesWithBackButton = setOf(
     AppRoute.StartUI.Login,
-    AppRoute.Menu.InfoProduct,
-    AppRoute.Menu.EditProduct,
+    AppRoute.Menu.InfoProduct(null),
+    AppRoute.Menu.EditProduct(null),
     AppRoute.Administrator.Purchase.InformationPurchase,
     AppRoute.Administrator.Purchase.AddSupplier,
     AppRoute.Administrator.Purchase.ShoppingCart,
@@ -101,19 +102,19 @@ fun AppToolBar(
                 }
             }
 
-            Box(modifier = Modifier.weight(2f), contentAlignment = Alignment.Center) {
+            Box(contentAlignment = Alignment.Center) {
                 Text(
                     text = stringResource(
                         (navigationState.currentRoute as? AppRoute)?.titleRes ?: R.string.logo
                     ),
-                    fontSize = 24.sp,
+                    fontSize = 20.sp,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
                 )
             }
 
             Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
-                if (navigationState.currentRoute == AppRoute.StartUI.MyProfile &&
+                if (navigationState.currentRoute == AppRoute.StartUI.MyProfile(null) &&
                     ManagerUser.currentUser != null
                 ) {
                     Row(
@@ -134,6 +135,17 @@ fun AppToolBar(
                             imageVector = Icons.Default.Person,
                             contentDescription = stringResource(R.string.my_account),
                             tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier){
+                    IconButton(
+                        onClick = { router.launch(AppRoute.Administrator.Purchase.ShoppingCart) },
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.shopping_cart),
+                            contentDescription = stringResource(R.string.shopping_cart),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 }

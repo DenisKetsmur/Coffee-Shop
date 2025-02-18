@@ -13,16 +13,16 @@ import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import com.example.coffeeshop.data.filled.client
+import com.example.coffeeshop.data.user.ManagerUser
+import com.example.coffeeshop.data.user.ManagerUser.users
 import com.example.coffeeshop.screens.manager.client.ClientInfo
 import com.example.coffeeshop.screens.manager.client.OrderHistory
 import com.example.coffeeshop.screens.manager.components.CardInfoEmployee
 
 
 @Composable
-fun MyProfileScreen() {
-    MyProfileContent(
-        user = client
-    )
+fun MyProfileScreen(userId:String) {
+    MyProfileContent(user = users[userId.toInt()-1])
 }
 
 @Composable
@@ -51,7 +51,7 @@ fun MyProfileContent(user: User){
 fun PreviewMyProfileScreen() {
     CoffeeAppTheme {
         Surface {
-            MyProfileScreen()
+            MyProfileScreen(userId = "1")
         }
     }
 }

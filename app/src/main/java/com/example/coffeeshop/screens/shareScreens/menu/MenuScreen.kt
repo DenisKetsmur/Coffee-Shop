@@ -7,23 +7,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.filled.products
+import com.example.coffeeshop.data.filled.productCategories
+import com.example.coffeeshop.data.productAndGoods.GoodsRepository
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.screens.cardForScreens.CatPop
 import com.example.coffeeshop.screens.cardForScreens.ChipGroup
-import com.example.coffeeshop.screens.cardForScreens.CustomCardProduct
+import com.example.coffeeshop.screens.cardForScreens.CustomCardGoods
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField
 import com.example.coffeeshop.screens.cardForScreens.ThreeStateButton
 import com.example.navigationmodule.LocalRouter
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshop.data.ScrollViewModel
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
 
 
 @Composable
@@ -31,17 +42,24 @@ fun MenuScreen() {
     MenuContent()
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MenuContent() {
-    var searchText by remember { mutableStateOf("") }
+fun MenuContent(viewModel: GoodsViewModel = viewModel()) {
+    val goodsList by viewModel.goods.collectAsState()
 
-    val categories = listOf("Кава", "Чай", "Солодощі", "Холодні напої", "Снеки")
+    val viewModel: ScrollViewModel = viewModel()
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewModel.scrollState.value)
+
+    LaunchedEffect(listState.firstVisibleItemIndex) {
+        snapshotFlow { listState.firstVisibleItemIndex }
+            .collect { viewModel.scrollState.value = it }
+    }
+
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
 
     val router = LocalRouter.current
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize()
 
     ) {
@@ -59,7 +77,7 @@ fun MenuContent() {
                     modifier = Modifier.padding(start = 4.dp),
                 ) { onIconStateChange ->
                     ChipGroup(
-                        categories = categories,
+                        categories = productCategories,
                         selectedCategories = selectedCategories,
                         onCategorySelected = { category ->
                             selectedCategories = category
@@ -70,20 +88,11 @@ fun MenuContent() {
                 }
             }
         }
-        items(6) {
-            CustomCardProduct(
-                product = products[1],
-                modifier = when{
-                    ManagerUser.isClient() ->{
-                        Modifier.clickable {
-                            router.launch(AppRoute.Menu.InfoProduct)
-                        }
-                    }
-                    else -> {
-                        Modifier.clickable {
-                            router.launch(AppRoute.Menu.InfoProduct)
-                        }
-                    }
+        items(goodsList) { goods ->
+            CustomCardGoods(
+                goodsId = goods.id,
+                modifier = Modifier.clickable {
+                    router.launch(AppRoute.Menu.InfoProduct(goods.id.toString()))
                 },
                 enableButtonAddInShoppingCart = ManagerUser.isClient()
             )

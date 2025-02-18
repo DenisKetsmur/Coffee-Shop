@@ -1,15 +1,15 @@
 package com.example.coffeeshop.data.supplier
 
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.product.RawMaterial
+import com.example.coffeeshop.data.productAndGoods.Product
 
 data class Supplier(
     val id: Int = generateId(),
     val nameCompany: String,
     val email: String,
     val phoneNumber: String,
-    val products:List<RawMaterial>,
-    val orders: List<Order<RawMaterial>>,
+    val products:List<Product>,
+    val orders: List<Order<Product>>,
     val imageUri: Int = R.mipmap.face_photo
 ) {
     companion object {
