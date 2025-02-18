@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,23 +31,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.sampleEmployee
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
+import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.data.user.employees
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun CardEmployee(
-    employee: User.Employee,
+    employeeId: Int,
+    viewModel: EmployeeViewModel = viewModel(),
+    modifier: Modifier = Modifier
 ){
-    val router = LocalRouter.current
+    val employeeList by viewModel.items.collectAsState()
+    val employee = employeeList.find { it.id == employeeId }
+
+    if (employee == null){
+        Text("Product not found")
+        return
+    }
+
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 8.dp)
-            .clickable {
-                router.launch(AppRoute.Manager.Personal.InfoPersonal)
-            },
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -90,7 +102,7 @@ fun CardEmployee(
 private fun PreviewCardEmployee(){
     MaterialTheme {
         CardEmployee(
-            sampleEmployee
+            sampleEmployee.id
         )
     }
 }

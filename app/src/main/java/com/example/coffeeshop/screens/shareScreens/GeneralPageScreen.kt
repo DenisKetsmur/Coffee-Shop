@@ -159,7 +159,7 @@ fun GeneralPageScreen() {
             ) {
                 Button(
                     shape = RoundedCornerShape(1.dp),
-                    onClick = { router.launch(AppRoute.Menu.Menu) },
+                    onClick = { router.launch(AppRoute.Menu.MenuScreen) },
                     border = BorderStroke(1.dp, Color.Gray),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,

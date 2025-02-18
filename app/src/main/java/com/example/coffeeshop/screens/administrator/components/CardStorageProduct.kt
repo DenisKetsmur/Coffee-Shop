@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.filled.productsList
 import com.example.coffeeshop.data.formatting.formatWithoutZero
 import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.productAndGoods.productsList
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 

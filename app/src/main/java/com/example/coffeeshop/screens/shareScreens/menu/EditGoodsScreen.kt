@@ -39,12 +39,12 @@ fun EditGoodsScreen(
     goodsId: String,
     viewModel: GoodsViewModel = viewModel()
 ) {
-    val goodsList by viewModel.goods.collectAsState()
+    val goodsList by viewModel.items.collectAsState()
     val goods = goodsList.find { it.id == goodsId.toInt() }
     EditProductContent(
         goods = goods!!,
         inUpdateGoods = {
-            viewModel.editGoods(it)
+            viewModel.edit(it)
         }
     )
 }

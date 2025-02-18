@@ -54,7 +54,11 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.filled.sampleEmployee
+import com.example.coffeeshop.data.productAndGoods.Goods
+import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
+import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.Position
 import com.example.coffeeshop.data.user.Shift
 import com.example.coffeeshop.data.user.User
@@ -76,24 +80,29 @@ import kotlin.math.absoluteValue
 
 
 @Composable
-fun AddNewEmployeeScreen() {
+fun AddNewEmployeeScreen(viewModel: EmployeeViewModel = viewModel()) {
     AddNewEmployeeContent(
+        onClick = { employee ->
+            viewModel.add(employee)
+        }
     )
 }
 
 
 @Composable
 fun AddNewEmployeeContent(
-    onClick: ()->Unit = {},
+    onClick: (User.Employee)->Unit = {},
 ) {
-    var name by remember { mutableStateOf("") }
-    var surname by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var position by remember { mutableStateOf("") }
-    var startJob:Long by remember { mutableStateOf(0) }
-    var status:Boolean by remember { mutableStateOf(false) }
-    var workSchedule by remember { mutableStateOf(WorkSchedule.NONE) }
+    val employee by remember { mutableStateOf(User.Employee()) }
+
+    var name by remember { mutableStateOf(employee.name) }
+    var surname by remember { mutableStateOf(employee.surname) }
+    var phoneNumber by remember { mutableStateOf(employee.phoneNumber) }
+    var email by remember { mutableStateOf(employee.email) }
+    var position by remember { mutableStateOf(employee.position) }
+    var startJob by remember { mutableStateOf(employee.startJob) }
+    var isActive:Boolean by remember { mutableStateOf(employee.isActive) }
+    var workSchedule by remember { mutableStateOf(employee.workSchedule) }
 
     val router = LocalRouter.current
 
@@ -146,10 +155,10 @@ fun AddNewEmployeeContent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = position,
+                    firstValue = position.displayName,
                     options = Position.entries.map { it.displayName },
                     onOptionsUpdated = { newValueCategory ->
-                        position = Position.entries.first { it.displayName == newValueCategory }.toString()
+                        position = Position.entries.first { it.displayName == newValueCategory }
                     },
                     label = {
                         Text("Виберіть категорію")
@@ -168,10 +177,10 @@ fun AddNewEmployeeContent(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     CustomExposedDropdownMenuBox(
-                        firstValue = if (status) "Активний" else "Неактивний",
+                        firstValue = if (isActive) "Активний" else "Неактивний",
                         options = listOf("Активний", "Неактивний"),
                         onOptionsUpdated = { newValueCategory ->
-                            status = newValueCategory == "Активний"
+                            isActive = newValueCategory == "Активний"
                         },
                         label = {
                             Text("Статус")
@@ -239,7 +248,17 @@ fun AddNewEmployeeContent(
 
                 Button(
                     onClick = {
-                        //onSaveSuccess()
+                        val newEmployee = employee.copy(
+                            name = name,
+                            surname = surname,
+                            phoneNumber = phoneNumber,
+                            email = email,
+                            position =position,
+                            startJob = startJob,
+                            isActive = isActive,
+                            workSchedule=workSchedule,
+                        )
+                        onClick(newEmployee)
                         router.pop()
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -256,7 +275,7 @@ fun AddNewEmployeeContent(
 fun PreviewAddNewEmployeeScreen() {
     CoffeeAppTheme(darkTheme = true){
         Surface {
-            AddNewEmployeeScreen()
+            AddNewEmployeeContent()
         }
     }
 }

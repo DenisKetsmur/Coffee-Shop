@@ -13,21 +13,39 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.HasId
 import com.example.coffeeshop.data.filled.sampleEmployee
+import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.data.user.employees
 import com.example.coffeeshop.screens.manager.components.CardInfoEmployee
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun InfoEmployeeScreen() {
+fun InfoEmployeeScreen(
+    employeeId: String,
+    viewModel: EmployeeViewModel = viewModel()
+) {
+    val employeeList by viewModel.items.collectAsState()
+    val employee = employeeList.find { it.id == employeeId.toInt() }
+
+    if (employee == null) {
+        Text(text = "Співробітника не знайдено", modifier = Modifier.padding(16.dp))
+        return
+    }
+
     InfoEmployeeContent(
-        employee = sampleEmployee
+        employee = employee
     )
 }
 
@@ -55,7 +73,7 @@ fun InfoEmployeeContent(
         ){
             FloatingActionButton(
                 onClick = {
-                    router.launch(AppRoute.Manager.Personal.EditPersonal)
+                    router.launch(AppRoute.Manager.Personal.EditPersonal(employee.id.toString()))
                 },
                 modifier = Modifier.padding(10.dp)
             ) {

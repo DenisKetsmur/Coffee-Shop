@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.productCategories
-import com.example.coffeeshop.data.productAndGoods.GoodsRepository
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.screens.cardForScreens.CatPop
 import com.example.coffeeshop.screens.cardForScreens.ChipGroup
@@ -33,6 +32,7 @@ import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextFie
 import com.example.coffeeshop.screens.cardForScreens.ThreeStateButton
 import com.example.navigationmodule.LocalRouter
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.ScrollViewModel
 import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
 
@@ -45,7 +45,7 @@ fun MenuScreen() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MenuContent(viewModel: GoodsViewModel = viewModel()) {
-    val goodsList by viewModel.goods.collectAsState()
+    val goodsList by viewModel.items.collectAsState()
 
     val viewModel: ScrollViewModel = viewModel()
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewModel.scrollState.value)

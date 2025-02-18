@@ -1,19 +1,11 @@
 package com.example.coffeeshop.data.productAndGoods
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.HasId
+import com.example.coffeeshop.data.ItemViewModel
+import com.example.coffeeshop.data.RepositoryImpl
 import com.example.coffeeshop.data.filled.goodsCategories
 import com.example.coffeeshop.data.filled.unitList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 val goods = listOf(
     Goods(
@@ -82,7 +74,7 @@ val goods = listOf(
 
 
 data class Goods(
-    val id:Int = generateId(),
+    override val id:Int = generateId(),
     val name: String = "",
     val category: String = "",
     val description: String = "aleugpauiregh ;ih;g iah" +
@@ -92,7 +84,7 @@ data class Goods(
     val price: Double = 0.0,
     val unit:String = "",
     val image: Int = R.mipmap.face_photo,
-){
+) : HasId {
     companion object{
         private var idCounter = 0
         private fun generateId(): Int {
@@ -101,54 +93,7 @@ data class Goods(
     }
 }
 
-
-interface GoodsRepository {
-    fun getGoods():StateFlow<List<Goods>>
-
-    fun getOneGoods(id: Int):Goods?
-
-    fun editGoods(goods: Goods)
-
-    fun addGoods(goods: Goods)
-
-
-    companion object{
-        fun get(): GoodsRepository = GoodsRepositoryImpl
-    }
-}
-
-object GoodsRepositoryImpl : GoodsRepository {
-
-    private val _goods = MutableStateFlow(goods)
-
-    override fun getGoods(): StateFlow<List<Goods>> = _goods
-
-    override fun getOneGoods(id: Int): Goods? = _goods.value.find { it.id == id }
-
-    override fun editGoods(goods: Goods) {
-        _goods.value = _goods.value.map { if (it.id == goods.id) goods else it }
-    }
-
-    override fun addGoods(goods: Goods) {
-        _goods.value += goods
-    }
-}
-
-class GoodsViewModel : ViewModel() {
-    private val repository: GoodsRepository = GoodsRepository.get()
-
-    val goods: StateFlow<List<Goods>> = repository.getGoods()
-
-    fun editGoods(goods: Goods) {
-        viewModelScope.launch {
-            repository.editGoods(goods)
-        }
-    }
-
-    fun addGoods(goods: Goods){
-        viewModelScope.launch {
-            repository.addGoods(goods)
-        }
-    }
-}
+class GoodsViewModel : ItemViewModel<Goods>(
+    RepositoryImpl(goods)
+)
 

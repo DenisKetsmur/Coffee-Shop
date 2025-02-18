@@ -1,11 +1,17 @@
 package com.example.coffeeshop.data.user
 
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.HasId
+import com.example.coffeeshop.data.ItemViewModel
+import com.example.coffeeshop.data.RepositoryImpl
+import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.productAndGoods.Goods
+import com.example.coffeeshop.data.productAndGoods.goods
 import com.example.coffeeshop.data.supplier.Order
 
+
 sealed class User(
-    open val id:Int,
+    override val id:Int,
     open val name: String,
     open val surname: String,
     open val email: String,
@@ -13,7 +19,7 @@ sealed class User(
     open val position: Position,
     open val phoneNumber: String,
 
-) {
+):HasId {
     companion object {
         private var idCounter = 0
         private fun generateId(): Int {
@@ -33,7 +39,14 @@ sealed class User(
         val photo: Int = R.mipmap.face_photo,
         val isActive: Boolean = true,
         var workSchedule: WorkSchedule = WorkSchedule.NONE,
-    ) : User(id, name, surname, email, password, position, phoneNumber)
+    ) : User(id, name, surname, email, password, position, phoneNumber){
+        companion object {
+            private var idCounter = 0
+            private fun generateId(): Int {
+                return ++idCounter
+            }
+        }
+    }
     data class Client(
         override val id: Int = generateId(),
         override val name: String = "",
@@ -47,29 +60,42 @@ sealed class User(
     ) : User(id, name, surname, email, password, position, phoneNumber)
 }
 
+val employees = listOf(
+    User.Employee(name = "Олександр", surname = "Коваль", email = "alex.koval@example.com", phoneNumber = "+380671234567", age = 30, position = Position.MANAGER),
+    User.Employee(name = "Марина", surname = "Іваненко", email = "marina.ivanenko@example.com", phoneNumber = "+380931112233", age = 28, position = Position.MANAGER),
+    User.Employee(name = "Володимир", surname = "Петренко", email = "v.petrenko@example.com", phoneNumber = "+380503332211", age = 35, position = Position.MANAGER),
+    User.Employee(name = "Андрій", surname = "Сидоренко", email = "andriy.sydorenko@example.com", phoneNumber = "+380987654321", age = 27, position = Position.MANAGER),
+    User.Employee(name = "Тетяна", surname = "Мельник", email = "t.melnyk@example.com", phoneNumber = "+380661223344", age = 32, position = Position.MANAGER),
+    User.Employee(name = "Ігор", surname = "Дяченко", email = "i.dyachenko@example.com", phoneNumber = "+380952341567", age = 29, position = Position.MANAGER),
+    User.Employee(name = "Олена", surname = "Шевченко", email = "olena.shevchenko@example.com", phoneNumber = "+380732349876", age = 31, position = Position.MANAGER),
+    User.Employee(name = "Максим", surname = "Гаврилюк", email = "maksym.gavrylyuk@example.com", phoneNumber = "+380662349876", age = 26, position = Position.ADMINISTRATOR),
+    User.Employee(name = "Світлана", surname = "Литвин", email = "svitlana.lytvyn@example.com", phoneNumber = "+380682345678", age = 33, position = Position.MANAGER),
+    User.Employee(name = "Роман", surname = "Захарченко", email = "r.zakharchenko@example.com", phoneNumber = "+380502345678", age = 29, position = Position.ADMINISTRATOR)
+)
 
-data class WorkSchedule(
-    val shift: Shift,
-    val workSchedule: String,
-    val hourlyRate: Double
-) {
-    companion object {
-        val NONE: WorkSchedule = WorkSchedule(
-            shift = Shift.NONE,
-            workSchedule = "00",
-            hourlyRate = 0.0
-        )
-    }
-}
+val clients = listOf(
+    User.Client(name = "Артем", surname = "Кузьменко", email = "artem.kuzmenko@example.com", phoneNumber = "+380671234111"),
+    User.Client(name = "Наталія", surname = "Романенко", email = "nataliya.romanenko@example.com", phoneNumber = "+380931112999"),
+    User.Client(name = "Дмитро", surname = "Поляков", email = "dmytro.polyakov@example.com", phoneNumber = "+380503332888"),
+    User.Client(name = "Оксана", surname = "Григоренко", email = "oksana.hryhorenko@example.com", phoneNumber = "+380987654777"),
+    User.Client(name = "Євген", surname = "Семенов", email = "yevhen.semenov@example.com", phoneNumber = "+380661223666"),
+    User.Client(name = "Ірина", surname = "Федоренко", email = "iryna.fedorenko@example.com", phoneNumber = "+380952341555"),
+    User.Client(name = "Сергій", surname = "Кравченко", email = "serhii.kravchenko@example.com", phoneNumber = "+380732349444"),
+    User.Client(name = "Вікторія", surname = "Ковальчук", email = "viktoriya.kovalchuk@example.com", phoneNumber = "+380662349333"),
+    User.Client(name = "Павло", surname = "Тимошенко", email = "pavlo.tymoshenko@example.com", phoneNumber = "+380682345222"),
+    User.Client(name = "Юлія", surname = "Гончаренко", email = "yulia.honcharenko@example.com", phoneNumber = "+380502345111")
+)
 
 
+class ClientViewModel : ItemViewModel<User.Client>(
+    RepositoryImpl(clients)
+)
+
+class EmployeeViewModel : ItemViewModel<User.Employee>(
+    RepositoryImpl(employees)
+)
 
 
-enum class Shift(val time:String) {
-    NONE("NONE"),
-    FIRST("8:00-16:00"),
-    SECOND("16:00-24:00")
-}
 
 
 

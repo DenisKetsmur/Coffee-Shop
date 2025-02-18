@@ -28,8 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.productAndGoods.Goods
-import com.example.coffeeshop.data.productAndGoods.GoodsRepository
 import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
 import com.example.coffeeshop.data.productAndGoods.goods
 import com.example.navigationmodule.LocalRouter
@@ -44,9 +42,13 @@ fun CustomCardGoods(
     enableButtonAddInShoppingCart:Boolean = true,
 ) {
 
-    val goodsList by viewModel.goods.collectAsState()
+    val goodsList by viewModel.items.collectAsState()
     val goods = goodsList.find { it.id == goodsId }
 
+    if (goods == null){
+        Text("Product not found")
+        return
+    }
     var buttonEnabled by remember { mutableStateOf(true) }
     Card(
         modifier = modifier
@@ -63,7 +65,7 @@ fun CustomCardGoods(
                 .fillMaxWidth()
                 .padding(end = 12.dp)
         ) {
-            if (goods != null) {
+
                 Image(
                     painter = painterResource(R.mipmap.face_photo),
                     contentDescription = null,
@@ -114,9 +116,7 @@ fun CustomCardGoods(
                         }
                     }
                 }
-            }else{
-                Text("Product not found")
-            }
+
         }
     }
 }

@@ -27,7 +27,7 @@ fun AppFloatingActionButton(
                     router.launch(AppRoute.Manager.Personal.AddNewPersonal)
                 AppRoute.Administrator.Purchase.RevisionPurchase ->
                     router.launch(AppRoute.Administrator.Purchase.AddSupplier)
-                AppRoute.Menu.Menu ->
+                AppRoute.Menu.MenuScreen ->
                     router.launch(AppRoute.Menu.AddProduct)
             }
         }

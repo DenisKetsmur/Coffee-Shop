@@ -46,7 +46,7 @@ fun AppNavigationHost(
                 val userId = (currentRoute as? AppRoute.StartUI.MyProfile)?.userId ?: ""
                 MyProfileScreen(userId)
             }
-            AppRoute.Menu.Menu -> MenuScreen()
+            AppRoute.Menu.MenuScreen -> MenuScreen()
             is AppRoute.Menu.InfoProduct -> {
                 val productId = (currentRoute as? AppRoute.Menu.InfoProduct)?.productId ?: ""
                 InformationProductScreen(productId)
@@ -60,8 +60,14 @@ fun AppNavigationHost(
             AppRoute.Client.ShoppingCart -> ShoppingCartScreen()
 
             AppRoute.Manager.Personal.RevisionPersonal -> EmployeeScreen()
-            AppRoute.Manager.Personal.InfoPersonal -> InfoEmployeeScreen()
-            AppRoute.Manager.Personal.EditPersonal -> EditEmployeeScreen()
+            is AppRoute.Manager.Personal.InfoPersonal -> {
+                val employeeId = (currentRoute as? AppRoute.Manager.Personal.InfoPersonal)?.employeeId ?: ""
+                InfoEmployeeScreen(employeeId)
+            }
+            is AppRoute.Manager.Personal.EditPersonal -> {
+                val employeeId = (currentRoute as? AppRoute.Manager.Personal.EditPersonal)?.employeeId ?: ""
+                EditEmployeeScreen(employeeId)
+            }
             AppRoute.Manager.Personal.AddNewPersonal -> AddNewEmployeeScreen()
 
             AppRoute.Manager.Clients.RevisionClients -> ClientsScreen()

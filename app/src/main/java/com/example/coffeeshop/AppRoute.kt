@@ -1,7 +1,8 @@
 package com.example.coffeeshop
 
 import androidx.annotation.StringRes
-import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.AppRoute.Administrator.Purchase
+import com.example.coffeeshop.AppRoute.Menu.InfoProduct
 import com.example.navigationmodule.Route
 
 sealed class AppRoute(
@@ -14,26 +15,33 @@ sealed class AppRoute(
         icon: Int? = null
     ) : AppRoute(titleRes, icon) {
 
+
         sealed class Personal(
             @StringRes titleRes: Int,
             icon: Int? = null,
         ) : Manager(titleRes, icon) {
             data object RevisionPersonal : Personal(R.string.personal, icon = R.drawable.person_apron)
-            data object InfoPersonal: Personal(R.string.info)
-            data object EditPersonal : Personal(R.string.edit)
+            data class InfoPersonal(val employeeId: String?): Personal(R.string.info){
+                override fun equals(other: Any?): Boolean = other is InfoPersonal
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
+            data class EditPersonal(val employeeId: String?) : Personal(R.string.edit){
+                override fun equals(other: Any?): Boolean = other is EditPersonal
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
             data object AddNewPersonal : Personal(R.string.data_filling)
         }
 
 
-        sealed class Clients(
-            @StringRes titleRes: Int,
-            icon: Int? = null,
-        ) : Manager(titleRes, icon) {
-            data object RevisionClients : Clients(R.string.clients, icon = R.drawable.person)
-            data object AddNewClientScreen: Clients(R.string.add_new_client)
-            data object EditClient: Clients(R.string.edit)
-            data object InfoClient: Clients(R.string.info)
-        }
+            sealed class Clients(
+                @StringRes titleRes: Int,
+                icon: Int? = null,
+            ) : Manager(titleRes, icon) {
+                data object RevisionClients : Clients(R.string.clients, icon = R.drawable.person)
+                data object AddNewClientScreen: Clients(R.string.add_new_client)
+                data object EditClient: Clients(R.string.edit)
+                data object InfoClient: Clients(R.string.info)
+            }
     }
 
     sealed class Administrator(
@@ -73,28 +81,19 @@ sealed class AppRoute(
 
     sealed class Menu(
         @StringRes titleRes: Int,
-        int: Int? = null,
-    ) : Administrator(titleRes, int){
-        data object Menu : StartUI(R.string.goods, icon = R.drawable.menu)
-        data class InfoProduct(val productId: String?) : Purchase(R.string.info){
-            override fun equals(other: Any?): Boolean {
-                return other is InfoProduct
-            }
+        icon: Int? = null,
+    ) : Administrator(titleRes, icon){
 
-            override fun hashCode(): Int {
-                return javaClass.hashCode()
-            }
+        data object MenuScreen : Menu(R.string.goods, icon = R.drawable.menu)
+        data class InfoProduct(val productId: String?): Menu(R.string.info){
+            override fun equals(other: Any?): Boolean = other is InfoProduct
+            override fun hashCode(): Int = javaClass.hashCode()
         }
-        data class EditProduct(val productId: String?) : Purchase(R.string.edit) {
-            override fun equals(other: Any?): Boolean {
-                return other is EditProduct
-            }
-
-            override fun hashCode(): Int {
-                return javaClass.hashCode()
-            }
+        data class EditProduct(val productId: String?): Menu(R.string.edit){
+            override fun equals(other: Any?): Boolean = other is EditProduct
+            override fun hashCode(): Int = javaClass.hashCode()
         }
-        data object AddProduct : Purchase(R.string.add_goods)
+        data object AddProduct : Menu(R.string.add_goods)
     }
 
     sealed class StartUI(

@@ -43,8 +43,8 @@ val routesWithBackButton = setOf(
     AppRoute.Administrator.Purchase.EditSupplier,
     AppRoute.Administrator.Storage.EditProduct,
     AppRoute.Administrator.Storage.InformationProduct,
-    AppRoute.Manager.Personal.EditPersonal,
-    AppRoute.Manager.Personal.InfoPersonal,
+    AppRoute.Manager.Personal.EditPersonal(null),
+    AppRoute.Manager.Personal.InfoPersonal(null),
     AppRoute.Manager.Clients.AddNewClientScreen,
     AppRoute.Manager.Clients.InfoClient,
     AppRoute.Manager.Clients.EditClient

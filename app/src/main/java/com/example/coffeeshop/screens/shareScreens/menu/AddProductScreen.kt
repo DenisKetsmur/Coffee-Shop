@@ -28,19 +28,16 @@ import com.example.coffeeshop.data.filled.goodsCategories
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
 import com.example.coffeeshop.data.productAndGoods.Goods
-import com.example.coffeeshop.data.productAndGoods.GoodsRepository
 import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun AddProductScreen(
-    viewModel: GoodsViewModel = viewModel()
-    ) {
+fun AddProductScreen(viewModel: GoodsViewModel = viewModel()) {
     AddProductContent(
         onProductUpdated = { goods ->
-            viewModel.addGoods(goods)
+            viewModel.add(goods)
         }
     )
 }

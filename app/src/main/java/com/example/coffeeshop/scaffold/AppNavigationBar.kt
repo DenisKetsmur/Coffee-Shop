@@ -14,19 +14,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.user.ManagerUser
-import com.example.coffeeshop.data.user.ManagerUser.users
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
 
 val ManagerTabs = listOf(
-    AppRoute.Menu.Menu,
+    AppRoute.Menu.MenuScreen,
     AppRoute.Manager.Personal.RevisionPersonal,
     AppRoute.Manager.Clients.RevisionClients,
     AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
 )
 
 val AdminTabs = listOf(
-    AppRoute.Menu.Menu,
+    AppRoute.Menu.MenuScreen,
     AppRoute.Administrator.Storage.RevisionStorage,
     AppRoute.Administrator.Purchase.RevisionPurchase,
     AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
@@ -38,7 +37,7 @@ val SupplierTab = listOf(
 )
 
 val ClientTabs = listOf(
-    AppRoute.Menu.Menu,
+    AppRoute.Menu.MenuScreen,
     AppRoute.Client.ShoppingCart,
     AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
 )

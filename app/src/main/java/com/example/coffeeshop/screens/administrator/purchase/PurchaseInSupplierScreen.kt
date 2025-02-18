@@ -17,7 +17,9 @@ import com.example.coffeeshop.screens.cardForScreens.ChipGroup
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import com.example.coffeeshop.data.filled.productsList
+import com.example.coffeeshop.data.productAndGoods.productsList
+
+
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.screens.administrator.components.CardStorageProduct
 import com.example.coffeeshop.screens.cardForScreens.CatPop

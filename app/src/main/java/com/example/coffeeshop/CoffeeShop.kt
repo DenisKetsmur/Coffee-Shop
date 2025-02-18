@@ -32,7 +32,7 @@ fun CoffeeShop(
         },
         floatingActionButton = {
             if(navigationState.currentRoute in listOf(
-                    AppRoute.Menu.Menu,
+                    AppRoute.Menu.MenuScreen,
                     AppRoute.Manager.Personal.RevisionPersonal,
                     AppRoute.Administrator.Purchase.RevisionPurchase) &&
                 ManagerUser.currentUser != null
