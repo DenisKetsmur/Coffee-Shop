@@ -91,10 +91,9 @@ fun MenuContent(viewModel: GoodsViewModel = viewModel()) {
         items(goodsList) { goods ->
             CustomCardGoods(
                 goodsId = goods.id,
-                modifier = Modifier.clickable {
-                    router.launch(AppRoute.Menu.InfoProduct(goods.id.toString()))
-                },
-                enableButtonAddInShoppingCart = ManagerUser.isClient()
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                enableButtonAddInShoppingCart = ManagerUser.isClient(),
+                onRoute = {router.launch(AppRoute.Menu.InfoProduct(goods.id.toString()))}
             )
         }
     }

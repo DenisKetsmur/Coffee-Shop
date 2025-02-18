@@ -1,6 +1,7 @@
 package com.example.coffeeshop.screens.cardForScreens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,7 @@ fun CustomCardGoods(
     viewModel: GoodsViewModel = viewModel(),
     price: String = "100",
     modifier: Modifier = Modifier,
+    onRoute: () -> Unit = {},
     enableButtonAddInShoppingCart:Boolean = true,
 ) {
 
@@ -52,9 +54,9 @@ fun CustomCardGoods(
     var buttonEnabled by remember { mutableStateOf(true) }
     Card(
         modifier = modifier
+            .clickable { onRoute() }
             .fillMaxWidth()
-            .height(150.dp)
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            .height(150.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

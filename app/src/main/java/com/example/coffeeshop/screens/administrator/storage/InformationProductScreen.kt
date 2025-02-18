@@ -17,35 +17,48 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.productAndGoods.ProductViewModel
+import com.example.coffeeshop.data.productAndGoods.productsList
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun InformationRawProductScreen(){
-    InformationRawProductContent(
-        Product(
-            name = "Какао",
-            category = "Молоко",
-            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            unit = "мл",
-            quantity = 234f,
-        )
+fun InformationProductScreen(
+    productId: String,
+    viewModel: ProductViewModel = viewModel()
+){
+    val productList by viewModel.items.collectAsState()
+    val product = productList.find { it.id == productId.toInt() }
+
+    val router = LocalRouter.current
+
+    if(product == null){
+        Text(text = "product null")
+        return
+    }
+
+    InformationProductContent(
+        product = product,
+        onClick = {
+            router.launch(AppRoute.Administrator.Storage.EditProduct(productId))
+        }
     )
 }
 
 @Composable
-fun InformationRawProductContent(
-    product:Product
+fun InformationProductContent(
+    product:Product,
+    onClick: ()-> Unit = {},
 ) {
-    val router = LocalRouter.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -87,15 +100,14 @@ fun InformationRawProductContent(
             ) {
                 FloatingActionButton(
                     onClick = {
-                        router.launch(AppRoute.Administrator.Storage.EditProduct)
+                        onClick()
                     },
                     contentColor = MaterialTheme.colorScheme.primary,
                     containerColor = MaterialTheme.colorScheme.onPrimary,
-                    //modifier = Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(15.dp))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Create,
-                        contentDescription = null
+                        contentDescription = "create "
                     )
                 }
             }
@@ -107,16 +119,8 @@ fun InformationRawProductContent(
 @Composable
 private fun PreviewInformationRawProductScreen(){
     CoffeeAppTheme(darkTheme = false) {
-        InformationRawProductContent(
-            Product(
-                name = "Какао",
-                category = "Молоко",
-                description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                        "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                        "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-                unit = "мл",
-                quantity = 234f,
-            )
+        InformationProductContent(
+            product = productsList[1]
         )
     }
 }

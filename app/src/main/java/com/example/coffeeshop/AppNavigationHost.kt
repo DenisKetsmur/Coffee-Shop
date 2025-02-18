@@ -13,8 +13,7 @@ import com.example.coffeeshop.screens.administrator.purchase.InformationPurchase
 import com.example.coffeeshop.screens.administrator.purchase.PurchaseInSupplierScreen
 import com.example.coffeeshop.screens.administrator.purchase.PurchaseScreen
 import com.example.coffeeshop.screens.shareScreens.ShoppingCartScreen
-import com.example.coffeeshop.screens.administrator.storage.EditRawProductScreen
-import com.example.coffeeshop.screens.administrator.storage.InformationRawProductScreen
+import com.example.coffeeshop.screens.administrator.storage.EditProductScreen
 import com.example.coffeeshop.screens.administrator.storage.StorageScreen
 import com.example.coffeeshop.screens.shareScreens.menu.AddProductScreen
 import com.example.coffeeshop.screens.shareScreens.menu.EditGoodsScreen
@@ -89,8 +88,14 @@ fun AppNavigationHost(
             AppRoute.Administrator.Purchase.EditSupplier -> EditSupplierScreen()
 
             AppRoute.Administrator.Storage.RevisionStorage -> StorageScreen()
-            AppRoute.Administrator.Storage.EditProduct-> EditRawProductScreen()
-            AppRoute.Administrator.Storage.InformationProduct -> InformationRawProductScreen()
+            is AppRoute.Administrator.Storage.EditProduct-> {
+                val productId = (currentRoute as? AppRoute.Administrator.Storage.EditProduct)?.productId ?: ""
+                EditProductScreen(productId)
+            }
+            is AppRoute.Administrator.Storage.InformationProduct -> {
+                val productId = (currentRoute as? AppRoute.Administrator.Storage.InformationProduct)?.productId ?: ""
+                com.example.coffeeshop.screens.administrator.storage.InformationProductScreen(productId)
+            }
         }
     }
 }

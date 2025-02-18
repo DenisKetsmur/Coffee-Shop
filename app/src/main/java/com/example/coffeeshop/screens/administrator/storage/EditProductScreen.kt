@@ -8,17 +8,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,32 +27,46 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
+import com.example.coffeeshop.data.formatting.formatWithoutZero
 import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.productAndGoods.ProductViewModel
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
+import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun EditRawProductScreen() {
-    EditRawProductContent(
-        Product(
-            name = "Какао",
-            category = "Молоко",
-            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            unit = "мл",
-            quantity = 234f,
-        ),
-        onProductUpdated = {}
+fun EditProductScreen(
+    productId: String,
+    viewModel: ProductViewModel = viewModel()
+) {
+    val productList by viewModel.items.collectAsState()
+    val product = productList.find { it.id == productId.toInt() }
+
+    val router = LocalRouter.current
+
+    if(product == null){
+        Text(text = "product null")
+        return
+    }
+
+    EditProductContent(
+        product = product,
+        onProductUpdated = {
+            viewModel.edit(it)
+            router.pop()
+        }
     )
 }
 
 @Composable
-fun EditRawProductContent(
+fun EditProductContent(
     product: Product,
     onProductUpdated: (Product) -> Unit
 ) {
@@ -63,16 +76,10 @@ fun EditRawProductContent(
     var quantity by remember { mutableStateOf(product.quantity.toString()) }
     var description by remember { mutableStateOf(product.description) }
 
-
-    val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
-    val router = LocalRouter.current
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-            //.wrapContentHeight(),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -85,23 +92,14 @@ fun EditRawProductContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
-                OutlinedTextField(
+                CustomOutlinedInputTextField(
                     value = name,
                     onValueChange = { newValueName ->
                         name = newValueName
                     },
                     singleLine = true,
-                    label = { Text(text = "Назва") },
+                    label = { Text(text = "Назва продукту") },
                     modifier = Modifier.fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                        }
-                    ),
                 )
                 CustomExposedDropdownMenuBox(
                     firstValue = product.category,
@@ -111,7 +109,7 @@ fun EditRawProductContent(
                     },
                     label = {
                         Text(
-                            "Виберіть категорію"
+                            "Категорія"
                         )
                     }
                 )
@@ -123,21 +121,22 @@ fun EditRawProductContent(
                     },
                     label = {
                         Text(
-                            "Виберіть одиницю виміру"
+                            "одиниця виміру"
                         )
                     },
                     isSearchable = false
                 )
-                OutlinedTextField(
+                CustomOutlinedInputTextField(
                     value = quantity,
                     onValueChange = { newValueQuantity ->
                         quantity = newValueQuantity
                     },
                     singleLine = true,
                     label = {Text(text = "Кількість")},
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                 )
-                OutlinedTextField(
+                CustomOutlinedInputTextField(
                     value = description,
                     onValueChange = { newValueDescription ->
                         description = newValueDescription
@@ -152,7 +151,6 @@ fun EditRawProductContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
-                        modifier = Modifier.padding(12.dp),
                         onClick = {
                             val updateProduct = product.copy(
                                 name = name,
@@ -162,12 +160,7 @@ fun EditRawProductContent(
                                 description = description
                             )
                             onProductUpdated(updateProduct)
-                            router.pop()
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            contentColor = MaterialTheme.colorScheme.primary,
-                            containerColor = MaterialTheme.colorScheme.onPrimary,
-                        ),
                     ) {
                         Text(
                             text = "Підтвердити зміни"
@@ -182,16 +175,20 @@ fun EditRawProductContent(
 @Preview(showSystemUi = true)
 @Composable
 private fun PreviewEditRawProductScreen(){
-    EditRawProductContent(
-        Product(
-            name = "Какао",
-            category = "Молоко",
-            description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
-                    "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
-                    "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-            unit = "мл",
-            quantity = 234f,
-        ),
-        onProductUpdated = {}
-    )
+    CoffeeAppTheme(darkTheme = true) {
+        Surface {
+            EditProductContent(
+                Product(
+                    name = "Какао",
+                    category = "Молоко",
+                    description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
+                            "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
+                            "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
+                    unit = "мл",
+                    quantity = 234f,
+                ),
+                onProductUpdated = {}
+            )
+        }
+    }
 }

@@ -15,10 +15,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.screens.cardForScreens.ChipGroup
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.snapshotFlow
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.ScrollViewModel
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.productAndGoods.ProductViewModel
 import com.example.coffeeshop.data.productAndGoods.productsList
 import com.example.coffeeshop.screens.administrator.components.CardStorageProduct
 import com.example.coffeeshop.screens.cardForScreens.CatPop
@@ -27,22 +35,37 @@ import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun StorageScreen(){
+fun StorageScreen(viewModel: ProductViewModel = viewModel()){
+    val productList by viewModel.items.collectAsState()
+
+    val router = LocalRouter.current
     StorageContent(
-        products = productsList
+        products = productList,
+        onClick = { product ->
+            router.launch(AppRoute.Administrator.Storage.InformationProduct(product.id.toString()))
+        }
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StorageContent(
     products: List<Product>,
+    onClick: (Product)-> Unit = {},
 ) {
+    val viewModel: ScrollViewModel = viewModel()
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewModel.scrollState.value)
+
+    LaunchedEffect(remember { derivedStateOf { listState.firstVisibleItemIndex } }) {
+        snapshotFlow { listState.firstVisibleItemIndex }
+            .collect { viewModel.scrollState.value = it }
+    }
+
     var selectedCategories by remember { mutableStateOf(setOf<String>()) }
 
-    val router = LocalRouter.current
-    LazyColumn{
+    LazyColumn(
+        state = listState
+    ){
         stickyHeader {
             CustomOutlinedSearchTextField()
         }
@@ -67,10 +90,10 @@ fun StorageContent(
         items(products) { product->
             CardStorageProduct(
                 product = product,
-                onRoute = {router.launch(AppRoute.Administrator.Storage.InformationProduct)},
+                onRoute = { onClick(product) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             )
         }
     }
@@ -81,7 +104,7 @@ fun StorageContent(
 private fun PreviewStorageScreen(){
     CoffeeAppTheme {
         Surface {
-            StorageScreen()
+            StorageContent(productsList)
         }
     }
 }

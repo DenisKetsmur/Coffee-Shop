@@ -30,7 +30,7 @@ import com.example.navigationmodule.LocalRouter
 @Composable
 fun CardStorageProduct(
     product: Product,
-    onRoute: () -> Unit,
+    onRoute: () -> Unit = {},
     modifier: Modifier = Modifier,
     shape:RoundedCornerShape = RoundedCornerShape(16.dp),
     elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
@@ -76,10 +76,8 @@ fun CardStorageProduct(
 private fun PreviewCardStorageProduct(){
     CoffeeAppTheme {
         Surface {
-            val router = LocalRouter.current
             CardStorageProduct(
-                product = productsList[1],
-                onRoute = {router.launch(AppRoute.Administrator.Storage.InformationProduct)}
+                product = productsList[1]
             )
         }
     }

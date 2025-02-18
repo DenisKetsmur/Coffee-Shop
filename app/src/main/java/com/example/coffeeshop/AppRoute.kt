@@ -2,6 +2,7 @@ package com.example.coffeeshop
 
 import androidx.annotation.StringRes
 import com.example.coffeeshop.AppRoute.Manager.Clients
+import com.example.coffeeshop.AppRoute.Manager.Clients.EditClient
 import com.example.navigationmodule.Route
 
 sealed class AppRoute(
@@ -56,8 +57,14 @@ sealed class AppRoute(
             icon: Int? = null,
         ) : Administrator(titleRes, icon) {
             data object RevisionStorage : Storage(R.string.storage, icon = R.drawable.garage_home)
-            data object EditProduct : Storage(R.string.edit_product_screen)
-            data object InformationProduct: Storage(R.string.information_about_product_screen)
+            data class EditProduct(val productId:String?) : Storage(R.string.edit_product_screen){
+                override fun equals(other: Any?): Boolean = other is EditProduct
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
+            data class InformationProduct(val productId:String?): Storage(R.string.information_about_product_screen){
+                override fun equals(other: Any?): Boolean = other is InformationProduct
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
         }
 
         sealed class Purchase(
