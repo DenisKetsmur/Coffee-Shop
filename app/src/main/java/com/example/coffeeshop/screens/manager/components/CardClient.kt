@@ -12,6 +12,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -19,24 +21,31 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.user.ClientViewModel
+import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User
 import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun CardClients(
-    client: User.Client,
-    modifier: Modifier = Modifier
+    clientId: Int,
+    modifier: Modifier = Modifier,
+    viewModel: ClientViewModel = viewModel(),
 ) {
-    val router = LocalRouter.current
+    val clientList by viewModel.items.collectAsState()
+    val client = clientList.find { it.id == clientId }
+
+    if(client == null){
+        Text(text = "client null $clientId")
+        return
+    }
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-            .clickable {
-                router.launch(AppRoute.Manager.Clients.InfoClient)
-            },
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

@@ -43,8 +43,14 @@ fun InformationProductScreen(
 ){
     val goodsList by viewModel.items.collectAsState()
     val goods = goodsList.find { it.id == goodsId.toInt() }
+
+    if (goods == null) {
+        Text(text = "товар не знайдено", modifier = Modifier.padding(16.dp))
+        return
+    }
+
     InformationProductContent(
-        goods = goods!!
+        goods = goods
     )
 }
 

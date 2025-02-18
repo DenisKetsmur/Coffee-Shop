@@ -1,8 +1,7 @@
 package com.example.coffeeshop
 
 import androidx.annotation.StringRes
-import com.example.coffeeshop.AppRoute.Administrator.Purchase
-import com.example.coffeeshop.AppRoute.Menu.InfoProduct
+import com.example.coffeeshop.AppRoute.Manager.Clients
 import com.example.navigationmodule.Route
 
 sealed class AppRoute(
@@ -14,7 +13,6 @@ sealed class AppRoute(
         @StringRes titleRes: Int,
         icon: Int? = null
     ) : AppRoute(titleRes, icon) {
-
 
         sealed class Personal(
             @StringRes titleRes: Int,
@@ -32,16 +30,20 @@ sealed class AppRoute(
             data object AddNewPersonal : Personal(R.string.data_filling)
         }
 
-
-            sealed class Clients(
+        sealed class Clients(
                 @StringRes titleRes: Int,
                 icon: Int? = null,
             ) : Manager(titleRes, icon) {
-                data object RevisionClients : Clients(R.string.clients, icon = R.drawable.person)
-                data object AddNewClientScreen: Clients(R.string.add_new_client)
-                data object EditClient: Clients(R.string.edit)
-                data object InfoClient: Clients(R.string.info)
-            }
+            data object RevisionClients : Clients(R.string.clients, icon = R.drawable.person)
+            data class EditClient(val clientId: String?): Clients(R.string.edit){
+                    override fun equals(other: Any?): Boolean = other is EditClient
+                    override fun hashCode(): Int = javaClass.hashCode()
+                }
+            data class InfoClient(val clientId: String?): Clients(R.string.info){
+                    override fun equals(other: Any?): Boolean = other is InfoClient
+                    override fun hashCode(): Int = javaClass.hashCode()
+                }
+        }
     }
 
     sealed class Administrator(
@@ -101,6 +103,7 @@ sealed class AppRoute(
         icon: Int? = null,
     ) : AppRoute(titleRes, icon) {
         data object Login : StartUI(R.string.login)
+        data object Registration: StartUI(R.string.add_new_client)
         data object GeneralPageScreen : StartUI(R.string.app_name)
         data class MyProfile(val userId: String?): StartUI(R.string.my_profile, icon = R.drawable.account_circle)
     }

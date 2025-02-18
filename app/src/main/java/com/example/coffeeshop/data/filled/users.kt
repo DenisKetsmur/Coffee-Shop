@@ -40,38 +40,7 @@ val client = User.Client(
     email = "oleg.sid@example.com",
     password = "securepassword",
     phoneNumber = "+380987654321",
-    orders = listOf(
-        Order(
-            date = getRandomDate(),
-            items = goods,
-            total = 10000.0
-        ),
-        Order(
-            date = getRandomDate(),
-            items = goods,
-            total = 103453.0
-        ),
-        Order(
-            date = getRandomDate(),
-            items = goods,
-            total = 34535.0
-        ),
-        Order(
-            date = getRandomDate(),
-            items = goods,
-            total = 436.0
-        ),
-        Order(
-            date = getRandomDate(),
-            items = goods,
-            total = 434.0
-        ),
-        Order(
-            date = getRandomDate(),
-            items = goods,
-            total = 10000.0
-        )
-    )
+
 )
 
 

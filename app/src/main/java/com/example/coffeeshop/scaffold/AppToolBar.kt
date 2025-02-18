@@ -34,6 +34,7 @@ import com.example.navigationmodule.Router
 
 val routesWithBackButton = setOf(
     AppRoute.StartUI.Login,
+    AppRoute.StartUI.Registration,
     AppRoute.Menu.InfoProduct(null),
     AppRoute.Menu.EditProduct(null),
     AppRoute.Administrator.Purchase.InformationPurchase,
@@ -45,9 +46,8 @@ val routesWithBackButton = setOf(
     AppRoute.Administrator.Storage.InformationProduct,
     AppRoute.Manager.Personal.EditPersonal(null),
     AppRoute.Manager.Personal.InfoPersonal(null),
-    AppRoute.Manager.Clients.AddNewClientScreen,
-    AppRoute.Manager.Clients.InfoClient,
-    AppRoute.Manager.Clients.EditClient
+    AppRoute.Manager.Clients.InfoClient(null),
+    AppRoute.Manager.Clients.EditClient(null),
 )
 
 @Composable

@@ -11,7 +11,7 @@ object ManagerUser {
         User.Client(id = 3, email = "client@gmail.com", password = "123456789", position = Position.CLIENT)
     )
 
-    var currentUser by mutableStateOf<User?>(users[1])
+    var currentUser by mutableStateOf<User?>(users[0])
     var currentUserId by mutableStateOf(currentUser?.id?: 2)
 
 

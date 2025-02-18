@@ -41,6 +41,7 @@ fun AppNavigationHost(
     ) { currentRoute ->
         when (currentRoute) {
             AppRoute.StartUI.Login -> LoginScreen()
+            AppRoute.StartUI.Registration -> AddNewClientScreen()
             AppRoute.StartUI.GeneralPageScreen -> GeneralPageScreen()
             is AppRoute.StartUI.MyProfile -> {
                 val userId = (currentRoute as? AppRoute.StartUI.MyProfile)?.userId ?: ""
@@ -71,9 +72,14 @@ fun AppNavigationHost(
             AppRoute.Manager.Personal.AddNewPersonal -> AddNewEmployeeScreen()
 
             AppRoute.Manager.Clients.RevisionClients -> ClientsScreen()
-            AppRoute.Manager.Clients.AddNewClientScreen -> AddNewClientScreen()
-            AppRoute.Manager.Clients.InfoClient -> InformationClientScreen()
-            AppRoute.Manager.Clients.EditClient -> EditClientScreen()
+            is AppRoute.Manager.Clients.InfoClient -> {
+                val clientId = (currentRoute as? AppRoute.Manager.Clients.InfoClient)?.clientId ?: ""
+                InformationClientScreen(clientId)
+            }
+            is AppRoute.Manager.Clients.EditClient -> {
+                val clientId = (currentRoute as? AppRoute.Manager.Clients.EditClient)?.clientId ?: ""
+                EditClientScreen(clientId)
+            }
 
             AppRoute.Administrator.Purchase.RevisionPurchase -> PurchaseScreen()
             AppRoute.Administrator.Purchase.InformationPurchase -> InformationPurchaseScreen()
