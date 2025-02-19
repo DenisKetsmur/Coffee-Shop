@@ -3,13 +3,13 @@ package com.example.coffeeshop.data.user
 data class WorkSchedule(
     val shift: Shift,
     val workSchedule: String,
-    val hourlyRate: Double
+    val paymentPerHour: Double
 ) {
     companion object {
         val NONE: WorkSchedule = WorkSchedule(
             shift = Shift.NONE,
             workSchedule = "00",
-            hourlyRate = 0.0
+            paymentPerHour = 0.0
         )
     }
 }

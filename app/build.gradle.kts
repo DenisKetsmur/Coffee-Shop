@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compiler.ksp)
 }
 
 android {
@@ -63,4 +64,11 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation(libs.androidx.room.runtime)
+
+    ksp("androidx.room:room-compiler:2.6.1")
+
+
+    annotationProcessor(libs.androidx.room.compiler)
 }

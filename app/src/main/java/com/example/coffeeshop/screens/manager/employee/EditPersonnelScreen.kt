@@ -199,10 +199,10 @@ fun EditEmployeeContent(
 
                     Spacer(modifier = Modifier.width(8.dp))
                     CustomOutlinedInputTextField(
-                        value = workSchedule.hourlyRate.toString(),
+                        value = workSchedule.paymentPerHour.toString(),
                         onValueChange = {
                             workSchedule = workSchedule.copy(
-                                hourlyRate = it.toDouble()
+                                paymentPerHour = it.toDouble()
                             )
                         },
                         label =  {Text("Оплата")},

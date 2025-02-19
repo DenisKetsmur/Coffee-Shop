@@ -1,5 +1,10 @@
 package com.example.coffeeshop.data.user
 
+import androidx.room.Dao
+import androidx.room.Entity
+import androidx.room.Insert
+import androidx.room.PrimaryKey
+import androidx.room.Query
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.HasId
 import com.example.coffeeshop.data.ItemViewModel
@@ -9,9 +14,8 @@ import com.example.coffeeshop.data.productAndGoods.Goods
 import com.example.coffeeshop.data.productAndGoods.goodsList
 import com.example.coffeeshop.data.supplier.Order
 
-
 sealed class User(
-    override val id:Int,
+    @PrimaryKey(autoGenerate = true) override val id:Int,
     open val name: String,
     open val surname: String,
     open val email: String,
@@ -19,7 +23,7 @@ sealed class User(
     open val position: Position,
     open val phoneNumber: String,
 
-):HasId {
+    ):HasId {
     companion object {
         private var idCounter = 0
         private fun generateId(): Int {
@@ -59,6 +63,7 @@ sealed class User(
         val orders:List<Order<Goods>> = listOf()
     ) : User(id, name, surname, email, password, position, phoneNumber)
 }
+
 
 val employees = listOf(
     User.Employee(name = "Олександр", surname = "Коваль", email = "alex.koval@example.com", phoneNumber = "+380671234567", age = 30, position = Position.MANAGER),

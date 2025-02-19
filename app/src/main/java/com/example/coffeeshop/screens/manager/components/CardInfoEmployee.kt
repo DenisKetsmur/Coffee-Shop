@@ -90,7 +90,7 @@ fun CardInfoEmployee(
                     modifier = Modifier.align(Alignment.TopCenter)
                 )
                 Text(
-                    text = employee.workSchedule.hourlyRate.toString(),
+                    text = employee.workSchedule.paymentPerHour.toString(),
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
             }

@@ -26,7 +26,7 @@ val sampleEmployee = User.Employee(
     workSchedule = WorkSchedule(
         shift = Shift.FIRST,
         workSchedule = "33",
-        hourlyRate = 10.0,
+        paymentPerHour = 10.0,
     ),
     age = 23,
     startJob = getRandomDate(),
