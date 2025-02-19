@@ -28,7 +28,7 @@ import com.example.coffeeshop.data.filled.goodsCategories
 import com.example.coffeeshop.data.filled.unitList
 import com.example.coffeeshop.data.productAndGoods.Goods
 import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
-import com.example.coffeeshop.data.productAndGoods.goods
+import com.example.coffeeshop.data.productAndGoods.goodsList
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
@@ -173,6 +173,6 @@ fun EditProductContent(
 @Composable
 private fun PreviewEditProductScreen(){
     EditProductContent(
-        goods= goods[1],
+        goods= goodsList[1],
     )
 }

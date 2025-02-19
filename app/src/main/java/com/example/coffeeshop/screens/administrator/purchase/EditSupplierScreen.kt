@@ -24,35 +24,60 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.data.filled.sampleSupplier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshop.R
 import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.data.supplier.Supplier
+import com.example.coffeeshop.data.supplier.SupplierViewModel
+import com.example.coffeeshop.data.supplier.suppliers
+import com.example.coffeeshop.screens.administrator.purchase.card.ProductInfoEdit
+import com.example.coffeeshop.screens.administrator.purchase.card.SupplierInfoEdit
 import com.example.navigationmodule.LocalRouter
 
 @Composable
-fun EditSupplierScreen() {
+fun EditSupplierScreen(
+    supplierId: String,
+    viewModel: SupplierViewModel = viewModel()
+) {
+    val supplierList = viewModel.items.collectAsState()
+    val supplier = supplierList.value.find { it.id == supplierId.toInt() }
+
+    val router = LocalRouter.current
+
+    if(supplier == null){
+        Text(text = "supplier null")
+        return
+    }
     EditSupplierContent(
-        supplier = sampleSupplier
+        supplier = supplier,
+        onSaveSuccess = {
+            println("AAA: s${it}")
+            viewModel.edit(it)
+            router.pop()
+        }
     )
 }
 
 @Composable
 fun EditSupplierContent(
     supplier: Supplier,
-    //onSaveSuccess: () -> Unit = {}
+    onSaveSuccess: (Supplier) -> Unit = {}
 ) {
-    val router = LocalRouter.current
-    var rawMaterials by remember { mutableStateOf(supplier.products) }
+    var updateSupplier by remember { mutableStateOf(supplier) }
+    var products by remember { mutableStateOf(supplier.products) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +85,17 @@ fun EditSupplierContent(
         horizontalAlignment = Alignment.End
     ) {
         item {
-            SupplierInfoInout1(supplier)
+            SupplierInfoEdit(
+                supplier = updateSupplier,
+                onSupplierUpdated = {
+                    updateSupplier = updateSupplier.copy(
+                        nameCompany = it.nameCompany,
+                        phoneNumber = it.phoneNumber,
+                        email = it.email
+                    )
+                    println("AAA: u${updateSupplier}")
+                }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
             Card(
@@ -82,24 +117,23 @@ fun EditSupplierContent(
                         fontSize = 32.sp,
                     )
                 }
-                rawMaterials.forEachIndexed { index, rawMaterial ->
-                    //if(index != 0) Divider(thickness = 4.dp)
+                products.forEachIndexed { index, rawMaterial ->
                     Text(
                         text = "Товар ${index+1}",
                         fontSize = 16.sp,
                         modifier = Modifier.padding(start = 16.dp),
                     )
-                    ProductInputItem(
+                    ProductInfoEdit(
                         product = rawMaterial,
                         onProductChange = { updatedProduct ->
-                            rawMaterials = rawMaterials.toMutableList().apply {
+                            products = products.toMutableList().apply {
                                 set(index, updatedProduct)
                             }
                         },
 
                         onRemove = {
-                            rawMaterials = rawMaterials.toMutableList().apply {
-                                if(rawMaterials.size == 1){
+                            products = products.toMutableList().apply {
+                                if(products.size == 1){
                                     set(index, Product())
                                 }else{
                                     removeAt(index)
@@ -113,7 +147,7 @@ fun EditSupplierContent(
 
             FloatingActionButton(
                 onClick = {
-                    rawMaterials = rawMaterials + Product()
+                    products = products + Product()
                 },
                 contentColor = MaterialTheme.colorScheme.primary,
                 containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -124,7 +158,7 @@ fun EditSupplierContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = null
+                    contentDescription = stringResource(R.string.add_product_in_list)
                 )
             }
 
@@ -132,8 +166,10 @@ fun EditSupplierContent(
 
             Button(
                 onClick = {
-                    //onSaveSuccess()
-                    router.pop()
+                    updateSupplier = updateSupplier.copy(
+                        products = products
+                    )
+                    onSaveSuccess(updateSupplier)
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -143,121 +179,10 @@ fun EditSupplierContent(
     }
 }
 
-@Composable
-fun SupplierInfoInout1(
-    supplier:Supplier,
-){
-    var supplierName by remember { mutableStateOf(supplier.nameCompany) }
-    var supplierNumber by remember { mutableStateOf(supplier.phoneNumber) }
-    var supplierEmail by remember { mutableStateOf(supplier.email) }
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        )
-    ){
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Інформація про постачальника",
-                fontSize = 20.sp,
-            )
-            OutlinedTextField(
-                value = supplierName,
-                onValueChange = { supplierName = it },
-                label = { Text("Назва компанії") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = supplierNumber,
-                onValueChange = { supplierNumber = it },
-                label = { Text("Номер телефону") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = supplierEmail,
-                onValueChange = { supplierEmail = it },
-                label = { Text("Пошта") },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    }
-}
-
-@Composable
-fun ProductInputItem1(
-    product: Product,
-    onProductChange: (Product) -> Unit,
-    onRemove: () -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-        ) {
-            OutlinedTextField(
-                value = product.name,
-                onValueChange = { onProductChange(product.copy(name = it)) },
-                label = { Text("Назва товару") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            OutlinedTextField(
-                value = product.category,
-                onValueChange = { onProductChange(product.copy(category = it)) },
-                label = { Text("Категорія") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ){
-                OutlinedTextField(
-                    value = product.price.toString(),
-                    onValueChange = { onProductChange(product.copy(price = it.toDouble())) },
-                    label = { Text("Ціна") },
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                OutlinedTextField(
-                    value = product.unit,
-                    onValueChange = { onProductChange(product.copy(unit = it)) },
-                    label = { Text("Одиниця виміру") },
-                    modifier = Modifier.weight(1f)
-                )
-            }
-
-            OutlinedTextField(
-                value = product.description,
-                onValueChange = { onProductChange(product.copy(description = it)) },
-                label = { Text("Опис") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Button(
-                onClick = onRemove,
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Text("Видалити")
-            }
-        }
-    }
-}
-
 @Preview(showSystemUi = true)
 @Composable
 private fun PreviewEditSupplierScreen(){
-    EditSupplierScreen()
+    EditSupplierContent(
+        supplier = suppliers[1]
+    )
 }

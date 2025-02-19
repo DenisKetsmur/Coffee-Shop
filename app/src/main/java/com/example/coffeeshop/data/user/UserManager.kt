@@ -3,7 +3,6 @@ package com.example.coffeeshop.data.user
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-
 object ManagerUser {
     val users = listOf(
         User.Employee(id = 1,email = "admin@gmail.com", password = "123456789", position = Position.ADMINISTRATOR),
@@ -33,4 +32,17 @@ object ManagerUser {
     fun isAdmin(): Boolean = (currentUser as? User.Employee)?.position == Position.ADMINISTRATOR
     fun isManager(): Boolean = (currentUser as? User.Employee)?.position == Position.MANAGER
     fun isClient(): Boolean = currentUser is User.Client
+}
+
+
+object ManagerSupplier {
+    var currentSupplier: String? by mutableStateOf(null)
+
+    fun launch(supplierId: String) {
+        currentSupplier = supplierId
+    }
+
+    fun exit() {
+        currentSupplier = null
+    }
 }

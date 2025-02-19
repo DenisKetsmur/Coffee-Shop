@@ -3,6 +3,7 @@ package com.example.coffeeshop
 import EditClientScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.window.isPopupLayout
 import com.example.coffeeshop.screens.shareScreens.GeneralPageScreen
 import com.example.coffeeshop.screens.shareScreens.LoginScreen
 import com.example.coffeeshop.screens.shareScreens.menu.MenuScreen
@@ -12,7 +13,7 @@ import com.example.coffeeshop.screens.administrator.purchase.EditSupplierScreen
 import com.example.coffeeshop.screens.administrator.purchase.InformationPurchaseScreen
 import com.example.coffeeshop.screens.administrator.purchase.PurchaseInSupplierScreen
 import com.example.coffeeshop.screens.administrator.purchase.PurchaseScreen
-import com.example.coffeeshop.screens.shareScreens.ShoppingCartScreen
+import com.example.coffeeshop.screens.administrator.purchase.ShoppingCartScreen
 import com.example.coffeeshop.screens.administrator.storage.EditProductScreen
 import com.example.coffeeshop.screens.administrator.storage.StorageScreen
 import com.example.coffeeshop.screens.shareScreens.menu.AddProductScreen
@@ -81,11 +82,20 @@ fun AppNavigationHost(
             }
 
             AppRoute.Administrator.Purchase.RevisionPurchase -> PurchaseScreen()
-            AppRoute.Administrator.Purchase.InformationPurchase -> InformationPurchaseScreen()
+            is AppRoute.Administrator.Purchase.InformationPurchase -> {
+                val supplierId = (currentRoute as? AppRoute.Administrator.Purchase.InformationPurchase)?.supplierId ?: ""
+                InformationPurchaseScreen(supplierId)
+            }
             AppRoute.Administrator.Purchase.AddSupplier -> AddSupplierScreen()
-            AppRoute.Administrator.Purchase.PurchaseInSupplier -> PurchaseInSupplierScreen()
+            is AppRoute.Administrator.Purchase.PurchaseInSupplier -> {
+                val supplierId = (currentRoute as? AppRoute.Administrator.Purchase.PurchaseInSupplier)?.supplierId ?: ""
+                PurchaseInSupplierScreen(supplierId)
+            }
             AppRoute.Administrator.Purchase.ShoppingCart -> ShoppingCartScreen()
-            AppRoute.Administrator.Purchase.EditSupplier -> EditSupplierScreen()
+            is AppRoute.Administrator.Purchase.EditSupplier -> {
+                val supplierId = (currentRoute as? AppRoute.Administrator.Purchase.EditSupplier)?.supplierId ?: ""
+                EditSupplierScreen(supplierId)
+            }
 
             AppRoute.Administrator.Storage.RevisionStorage -> StorageScreen()
             is AppRoute.Administrator.Storage.EditProduct-> {

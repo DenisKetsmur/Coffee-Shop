@@ -1,8 +1,10 @@
 package com.example.coffeeshop
 
 import androidx.annotation.StringRes
+import com.example.coffeeshop.AppRoute.Administrator.Storage.InformationProduct
 import com.example.coffeeshop.AppRoute.Manager.Clients
 import com.example.coffeeshop.AppRoute.Manager.Clients.EditClient
+import com.example.coffeeshop.AppRoute.Menu.EditProduct
 import com.example.navigationmodule.Route
 
 sealed class AppRoute(
@@ -72,11 +74,20 @@ sealed class AppRoute(
             icon: Int? = null,
         ) : Administrator(titleRes, icon) {
             data object RevisionPurchase : Purchase(R.string.Suppliers, icon = R.drawable.groups)
-            data object InformationPurchase : Purchase(R.string.informatiom_about_supplier, icon = R.drawable.person_apron)
+            data class InformationPurchase(val supplierId: String?) : Purchase(R.string.informatiom_about_supplier, icon = R.drawable.person_apron){
+                override fun equals(other: Any?): Boolean = other is InformationPurchase
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
             data object AddSupplier: Purchase(R.string.data_filling )
-            data object PurchaseInSupplier: Purchase(R.string.purchase, icon = R.drawable.shopping_cart)
+            data class PurchaseInSupplier(val supplierId:String?): Purchase(R.string.purchase, icon = R.drawable.shopping_cart){
+                override fun equals(other: Any?): Boolean = other is PurchaseInSupplier
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
             data object ShoppingCart : Purchase(R.string.shopping_cart)
-            data object EditSupplier: Purchase(R.string.edit)
+            data class EditSupplier(val supplierId: String?): Purchase(R.string.edit){
+                override fun equals(other: Any?): Boolean = other is EditSupplier
+                override fun hashCode(): Int = javaClass.hashCode()
+            }
         }
 
     }
@@ -112,6 +123,9 @@ sealed class AppRoute(
         data object Login : StartUI(R.string.login)
         data object Registration: StartUI(R.string.add_new_client)
         data object GeneralPageScreen : StartUI(R.string.app_name)
-        data class MyProfile(val userId: String?): StartUI(R.string.my_profile, icon = R.drawable.account_circle)
+        data class MyProfile(val userId: String?): StartUI(R.string.my_profile, icon = R.drawable.account_circle){
+            override fun equals(other: Any?): Boolean = other is MyProfile
+            override fun hashCode(): Int = javaClass.hashCode()
+        }
     }
 }

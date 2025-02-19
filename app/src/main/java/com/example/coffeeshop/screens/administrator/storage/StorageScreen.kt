@@ -1,6 +1,5 @@
 package com.example.coffeeshop.screens.administrator.storage
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -90,7 +89,7 @@ fun StorageContent(
         items(products) { product->
             CardStorageProduct(
                 product = product,
-                onRoute = { onClick(product) },
+                onClick = { onClick(product) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)

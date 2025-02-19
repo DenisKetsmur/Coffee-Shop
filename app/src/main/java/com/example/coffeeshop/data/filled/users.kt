@@ -1,7 +1,5 @@
 package com.example.coffeeshop.data.filled
 
-import com.example.coffeeshop.data.productAndGoods.goods
-import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.user.Position
 import com.example.coffeeshop.data.user.Shift
 import com.example.coffeeshop.data.user.User

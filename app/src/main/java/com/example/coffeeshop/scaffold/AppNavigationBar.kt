@@ -12,7 +12,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
+import com.example.coffeeshop.data.ItemViewModel
+import com.example.coffeeshop.data.Repository
+import com.example.coffeeshop.data.RepositoryImpl
+import com.example.coffeeshop.data.supplier.SupplierViewModel
+import com.example.coffeeshop.data.user.ManagerSupplier
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
@@ -31,11 +37,6 @@ val AdminTabs = listOf(
     AppRoute.StartUI.MyProfile(userId = ManagerUser.currentUserId.toString())
 )
 
-val SupplierTab = listOf(
-    AppRoute.Administrator.Purchase.InformationPurchase,
-    AppRoute.Administrator.Purchase.PurchaseInSupplier,
-)
-
 val ClientTabs = listOf(
     AppRoute.Menu.MenuScreen,
     AppRoute.Client.ShoppingCart,
@@ -48,10 +49,15 @@ fun AppNavigationBar(
     navigationState: NavigationState,
     router: Router,
 ) {
+    val SupplierTab = listOf(
+        AppRoute.Administrator.Purchase.InformationPurchase(supplierId = ManagerSupplier.currentSupplier),
+        AppRoute.Administrator.Purchase.PurchaseInSupplier(supplierId = ManagerSupplier.currentSupplier),
+    )
+
     NavigationBar {
         val currentTabs = when{
-            navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase -> SupplierTab
-            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier -> SupplierTab
+            navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase(null) -> SupplierTab
+            navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier(null) -> SupplierTab
             ManagerUser.isAdmin() -> AdminTabs
             ManagerUser.isManager() -> ManagerTabs
             else-> ClientTabs

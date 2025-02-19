@@ -7,7 +7,7 @@ import com.example.coffeeshop.data.RepositoryImpl
 import com.example.coffeeshop.data.filled.goodsCategories
 import com.example.coffeeshop.data.filled.unitList
 
-val goods = listOf(
+val goodsList = listOf(
     Goods(
         name = "Еспресо",
         category = goodsCategories[0], // Кава
@@ -94,6 +94,6 @@ data class Goods(
 }
 
 class GoodsViewModel : ItemViewModel<Goods>(
-    RepositoryImpl(goods)
+    RepositoryImpl(goodsList)
 )
 

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.productAndGoods.Goods
 import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
-import com.example.coffeeshop.data.productAndGoods.goods
+import com.example.coffeeshop.data.productAndGoods.goodsList
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
@@ -132,7 +132,7 @@ fun InformationProductContent(
 private fun PreviewInformationProductScreen(){
     CoffeeAppTheme(darkTheme = false) {
         InformationProductContent(
-            goods = goods[1]
+            goods = goodsList[1]
         )
     }
 }

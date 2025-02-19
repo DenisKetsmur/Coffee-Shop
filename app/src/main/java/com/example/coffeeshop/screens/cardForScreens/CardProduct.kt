@@ -30,8 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
-import com.example.coffeeshop.data.productAndGoods.goods
-import com.example.navigationmodule.LocalRouter
+import com.example.coffeeshop.data.productAndGoods.goodsList
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
@@ -128,6 +127,6 @@ fun CustomCardGoods(
 @Composable
 private fun PreviewCustomCardProduct(){
     CustomCardGoods(
-        goodsId = goods[1].id
+        goodsId = goodsList[1].id
     )
 }

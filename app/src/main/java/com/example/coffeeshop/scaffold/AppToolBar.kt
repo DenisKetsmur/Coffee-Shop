@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
+import com.example.coffeeshop.data.user.ManagerSupplier
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.navigationmodule.NavigationState
 import com.example.navigationmodule.Router
@@ -37,11 +39,11 @@ val routesWithBackButton = setOf(
     AppRoute.StartUI.Registration,
     AppRoute.Menu.InfoProduct(null),
     AppRoute.Menu.EditProduct(null),
-    AppRoute.Administrator.Purchase.InformationPurchase,
+    AppRoute.Administrator.Purchase.InformationPurchase(null),
     AppRoute.Administrator.Purchase.AddSupplier,
     AppRoute.Administrator.Purchase.ShoppingCart,
-    AppRoute.Administrator.Purchase.PurchaseInSupplier,
-    AppRoute.Administrator.Purchase.EditSupplier,
+    AppRoute.Administrator.Purchase.PurchaseInSupplier(null),
+    AppRoute.Administrator.Purchase.EditSupplier(null),
     AppRoute.Administrator.Storage.EditProduct(null),
     AppRoute.Administrator.Storage.InformationProduct(null),
     AppRoute.Manager.Personal.EditPersonal(null),
@@ -57,7 +59,6 @@ fun AppToolBar(
     darkTheme: Boolean,
     onThemeUpdate: () -> Unit,
 ) {
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,10 +77,12 @@ fun AppToolBar(
                 if (navigationState.currentRoute in routesWithBackButton) {
                     IconButton(
                         onClick = {
-                            if (navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase ||
-                                navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier
-                            ) router.restart(AppRoute.Administrator.Purchase.RevisionPurchase)
-                            else router.pop()
+                            if (navigationState.currentRoute == AppRoute.Administrator.Purchase.InformationPurchase(null) ||
+                                navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier(null)
+                            ) {
+                                //ManagerSupplier.exit()
+                                router.restart(AppRoute.Administrator.Purchase.RevisionPurchase)
+                            } else router.pop()
                         }
                     ) {
                         Icon(
@@ -132,12 +135,34 @@ fun AppToolBar(
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Icon(
+                            imageVector = Icons.Default.AccountCircle,
+                            contentDescription = stringResource(R.string.my_account),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }else if(navigationState.currentRoute == AppRoute.StartUI.MyProfile(null) &&
+                    ManagerUser.currentUser == null){
+                    Row(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable {
+                                router.launch(AppRoute.StartUI.Login)
+                            },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Увійти",
+                            modifier = Modifier.padding(end = 8.dp),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Icon(
                             imageVector = Icons.Default.Person,
                             contentDescription = stringResource(R.string.my_account),
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                }else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier){
+
+                }else if(navigationState.currentRoute == AppRoute.Administrator.Purchase.PurchaseInSupplier(null)){
                     IconButton(
                         onClick = { router.launch(AppRoute.Administrator.Purchase.ShoppingCart) },
                     ) {

@@ -91,6 +91,8 @@ data class Product(
     }
 }
 
+
+
 class ProductViewModel : ItemViewModel<Product>(
     RepositoryImpl(productsList)
 )

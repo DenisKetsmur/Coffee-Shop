@@ -4,10 +4,9 @@ import com.example.coffeeshop.R
 import com.example.coffeeshop.data.HasId
 import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.RepositoryImpl
-import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.filled.getRandomDate
 import com.example.coffeeshop.data.productAndGoods.Goods
-import com.example.coffeeshop.data.productAndGoods.goods
+import com.example.coffeeshop.data.productAndGoods.goodsList
 import com.example.coffeeshop.data.supplier.Order
 
 
@@ -78,32 +77,32 @@ val clients = listOf(
     User.Client(name = "Артем", surname = "Кузьменко", email = "artem.kuzmenko@example.com", phoneNumber = "+380671234111", orders = listOf(
         Order(
             date = getRandomDate(),
-            items = goods,
+            items = goodsList,
             total = 10000.0
         ),
         Order(
             date = getRandomDate(),
-            items = goods,
+            items = goodsList,
             total = 103453.0
         ),
         Order(
             date = getRandomDate(),
-            items = goods,
+            items = goodsList,
             total = 34535.0
         ),
         Order(
             date = getRandomDate(),
-            items = goods,
+            items = goodsList,
             total = 436.0
         ),
         Order(
             date = getRandomDate(),
-            items = goods,
+            items = goodsList,
             total = 434.0
         ),
         Order(
             date = getRandomDate(),
-            items = goods,
+            items = goodsList,
             total = 10000.0
         )
     )),

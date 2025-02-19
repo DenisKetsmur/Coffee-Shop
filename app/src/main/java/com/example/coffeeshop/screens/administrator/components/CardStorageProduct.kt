@@ -16,29 +16,51 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.AppRoute
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.formatting.formatWithoutZero
 import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.data.productAndGoods.productsList
+import com.example.coffeeshop.data.shoppingCart.CartSupplier
+import com.example.coffeeshop.data.shoppingCart.CartSupplierViewModel
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
-import com.example.navigationmodule.LocalRouter
 
 @Composable
 fun CardStorageProduct(
     product: Product,
-    onRoute: () -> Unit = {},
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     shape:RoundedCornerShape = RoundedCornerShape(16.dp),
-    elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    elevation: CardElevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+    selectedCard:Boolean = false,
+    viewModel: CartSupplierViewModel = viewModel()
 ) {
+
+    val orderList by viewModel.items.collectAsState()
+    val isSelected = if (selectedCard) {
+        orderList.any { it.id == product.id }
+    } else {
+        false
+    }
+
     Card(
-        modifier = modifier.clickable { onRoute.invoke() },
+        modifier = modifier.clickable {
+            onClick()
+        },
         shape = shape,
-        elevation = elevation
+        elevation = elevation,
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+        ),
     ) {
         Column(
             modifier = Modifier
