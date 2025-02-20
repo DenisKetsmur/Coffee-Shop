@@ -23,8 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.HasId
-import com.example.coffeeshop.data.filled.sampleEmployee
 import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.data.user.employees
@@ -94,7 +92,7 @@ private fun PreviewInfoEmployeeScreen(){
     MaterialTheme{
         Surface {
             InfoEmployeeContent(
-                sampleEmployee
+                employee = employees[1]
             )
         }
     }

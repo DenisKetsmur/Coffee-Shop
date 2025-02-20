@@ -18,9 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.formatting.formatWithoutZero
 import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.data.productAndGoods.productsList
-import com.example.coffeeshop.data.shoppingCart.CartSupplier
 import com.example.coffeeshop.data.shoppingCart.CartSupplierViewModel
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 
@@ -76,7 +72,7 @@ fun CardStorageProduct(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "${formatWithoutZero(product.quantity)} ${product.unit}",
+                    text = "${formatWithoutZero(product.quantity)} ${product.unitId}",
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -85,7 +81,7 @@ fun CardStorageProduct(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = product.category,
+                    text = product.categoryId,
                     fontSize = 14.sp
                 )
             }

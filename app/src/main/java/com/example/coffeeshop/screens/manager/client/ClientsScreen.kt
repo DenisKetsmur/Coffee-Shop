@@ -10,7 +10,9 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +20,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.CoffeeShop
 import com.example.coffeeshop.data.ScrollViewModel
-import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.user.ClientViewModel
 import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User
@@ -38,7 +39,7 @@ fun ClientsScreen(viewModel: ClientViewModel = viewModel()) {
     val viewModel: ScrollViewModel = viewModel()
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = viewModel.scrollState.value)
 
-    LaunchedEffect(listState.firstVisibleItemIndex) {
+    LaunchedEffect(remember { derivedStateOf { listState.firstVisibleItemIndex } }) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .collect { viewModel.scrollState.value = it }
     }

@@ -213,7 +213,7 @@ fun QuantityInput(item: Product) {
         value = quantity.toString(),
         onValueChange = { quantity = it.toDouble() },
         label = { Text(text = "Кількість") },
-        trailingIcon = { Text(text = item.unit, modifier = Modifier.padding(end = 4.dp)) },
+        trailingIcon = { Text(text = item.unitId, modifier = Modifier.padding(end = 4.dp)) },
         modifier = Modifier.width(140.dp)
     )
 }

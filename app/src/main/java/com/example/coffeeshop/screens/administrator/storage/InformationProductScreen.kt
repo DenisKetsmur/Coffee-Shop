@@ -78,11 +78,11 @@ fun InformationProductContent(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Категорія: ${product.category}"
+                text = "Категорія: ${product.categoryId}"
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Одиниця виміру: ${product.unit}"
+                text = "Одиниця виміру: ${product.unitId}"
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(

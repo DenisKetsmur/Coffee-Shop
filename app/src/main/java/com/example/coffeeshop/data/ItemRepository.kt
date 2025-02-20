@@ -8,8 +8,7 @@ import kotlinx.coroutines.launch
 
 interface Repository<T : HasId> {
     fun getAll(): StateFlow<List<T>>
-    fun getOne(id: Int): T?
-    fun deleteOne(id:Int)
+    fun deleteOne(id:Long)
     fun edit(item: T)
     fun add(item: T)
 
@@ -23,12 +22,9 @@ class RepositoryImpl<T : HasId>(initialItems: List<T> = emptyList()) : Repositor
 
     override fun getAll(): StateFlow<List<T>> = _items
 
-    override fun getOne(id: Int): T? = _items.value.find { it.id == id }
-
-    override fun deleteOne(id: Int) {
+    override fun deleteOne(id: Long) {
         _items.value = _items.value.filterNot { it.id == id }
     }
-
 
     override fun edit(item: T) {
         _items.value = _items.value.map { if (it.id == item.id) item else it }
@@ -54,7 +50,7 @@ open class ItemViewModel<T : HasId>(private val repository: Repository<T>) : Vie
         }
     }
 
-    fun delete(id: Int) {
+    fun delete(id: Long) {
         viewModelScope.launch {
             repository.deleteOne(id)
         }
@@ -62,5 +58,5 @@ open class ItemViewModel<T : HasId>(private val repository: Repository<T>) : Vie
 }
 
 interface HasId {
-    val id: Int
+    val id: Long
 }

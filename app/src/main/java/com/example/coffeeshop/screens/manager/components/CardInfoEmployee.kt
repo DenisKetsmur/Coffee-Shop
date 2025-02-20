@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.data.filled.sampleEmployee
 import com.example.coffeeshop.data.user.User
+import com.example.coffeeshop.data.user.employees
 
 
 @Composable
@@ -116,7 +116,7 @@ fun RowInfo(name:String, info:String){
 private fun PreviewCardInfoEmployee(){
     MaterialTheme {
         CardInfoEmployee(
-            sampleEmployee
+            employee = employees[1]
         )
     }
 }

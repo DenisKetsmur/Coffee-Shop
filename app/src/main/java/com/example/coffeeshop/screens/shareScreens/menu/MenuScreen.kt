@@ -1,7 +1,6 @@
 package com.example.coffeeshop.screens.shareScreens.menu
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,7 +19,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.user.ManagerUser
@@ -32,9 +29,8 @@ import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextFie
 import com.example.coffeeshop.screens.cardForScreens.ThreeStateButton
 import com.example.navigationmodule.LocalRouter
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.ScrollViewModel
-import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
+import com.example.coffeeshop.data.goods.entities.GoodsViewModel
 
 
 @Composable

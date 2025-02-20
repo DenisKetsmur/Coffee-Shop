@@ -28,9 +28,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.productAndGoods.Goods
-import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
-import com.example.coffeeshop.data.productAndGoods.goodsList
+import com.example.coffeeshop.data.goods.entities.Goods
+import com.example.coffeeshop.data.goods.entities.GoodsViewModel
+import com.example.coffeeshop.data.goods.entities.goodsList
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter

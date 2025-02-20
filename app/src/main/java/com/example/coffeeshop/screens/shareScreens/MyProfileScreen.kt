@@ -12,7 +12,6 @@ import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
-import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.data.user.ManagerUser.users
 import com.example.coffeeshop.screens.manager.client.ClientInfo
@@ -36,7 +35,7 @@ fun MyProfileContent(user: User){
                 is User.Client -> {
                     ClientInfo(client = user, isEdit = false )
                     Spacer(modifier = Modifier.height(16.dp))
-                    OrderHistory(client.orders)
+                    OrderHistory(user.orders)
                 }
                 is User.Employee -> {
                     CardInfoEmployee(employee = user, )

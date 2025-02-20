@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,10 +47,10 @@ fun ProductInfoEdit(
                 modifier = Modifier.fillMaxWidth()
             )
             CustomExposedDropdownMenuBox(
-                firstValue = product.category,
+                firstValue = product.categoryId,
                 options = productCategories,
                 onOptionsUpdated = { newValueCategory ->
-                    onProductChange(product.copy(category = newValueCategory))
+                    onProductChange(product.copy(categoryId = newValueCategory))
                 },
                 label = {
                     Text(
@@ -77,8 +76,8 @@ fun ProductInfoEdit(
 
                 Spacer(modifier = Modifier.width(8.dp))
                 CustomOutlinedInputTextField(
-                    value = product.unit,
-                    onValueChange = { onProductChange(product.copy(unit = it)) },
+                    value = product.unitId,
+                    onValueChange = { onProductChange(product.copy(unitId = it)) },
                     label = { Text("Одиниця виміру") },
                     modifier = Modifier.weight(1f),
                     singleLine = true,

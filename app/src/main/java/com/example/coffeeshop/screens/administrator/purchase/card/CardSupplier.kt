@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.data.supplier.SupplierViewModel
+import com.example.coffeeshop.data.supplier.suppliers
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 
 @Composable
@@ -100,7 +100,7 @@ private fun PreviewCardSupplier(){
             LazyColumn {
                 items(6){
                     CardSupplier(
-                        supplierId = sampleSupplier.id.toString()
+                        supplierId = suppliers[1].id.toString()
                     )
                 }
             }

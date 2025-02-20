@@ -1,97 +1,120 @@
 package com.example.coffeeshop.data.productAndGoods
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.coffeeshop.data.HasId
 import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.RepositoryImpl
-import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 var productsList = listOf(
     Product(
         name = "Кава арабіка",
-        category = productCategories[0], // Кавові зерна
-        unit = unitList[1], // мл
-        quantity = 10f
+        categoryId = 0, // Кавові зерна
+        unitId = 1, // мл
+        quantity = 10.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     ),
     Product(
         name = "Кава робуста",
-        category = productCategories[0], // Кавові зерна
-        unit = unitList[0], // кг
-        quantity = 8f
+        categoryId = 0, // Кавові зерна
+        unitId = 0, // кг
+        quantity = 8.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 3
     ),
     Product(
         name = "Молоко коров’яче",
-        category = productCategories[1], // Молоко
-        unit = unitList[2], // л
-        quantity = 25f
+        categoryId = 1, // Молоко
+        unitId = 0, // л
+        quantity = 25.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 2
     ),
     Product(
         name = "Зелений чай листовий",
-        category = productCategories[2], // Чайне листя
-        unit = unitList[0], // кг
-        quantity = 2f
+        categoryId = 2, // Чайне листя
+        unitId = 0, // кг
+        quantity = 2.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     ),
     Product(
         name = "Чорний чай листовий",
-        category = productCategories[2], // Чайне листя
-        unit = unitList[0], // кг
-        quantity = 3f
+        categoryId = 2, // Чайне листя
+        unitId = 0, // кг
+        quantity = 3.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     ),
     Product(
         name = "Цукор тростниковий",
-        category = productCategories[3], // Цукор та підсолоджувачі
-        unit = unitList[0], // кг
-        quantity = 7f
+        categoryId = 3, // Цукор та підсолоджувачі
+        unitId = 0, // кг
+        quantity = 7.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     ),
     Product(
         name = "Борошно пшеничне",
-        category = productCategories[4], // Борошно
-        unit = unitList[0], // кг
-        quantity = 15f
+        categoryId = 4, // Борошно
+        unitId = 0, // кг
+        quantity = 15.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     ),
     Product(
         name = "Яйця курячі",
-        category = productCategories[5], // Яйця
-        unit = unitList[4], // десятки
-        quantity = 3f
+        categoryId = 5, // Яйця
+        unitId = 0, // десятки
+        quantity = 3.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 2
     ),
     Product(
         name = "Яблука",
-        category = productCategories[6], // Фрукти
-        unit = unitList[0], // кг
-        quantity = 20f
+        categoryId = 6, // Фрукти
+        unitId = 0, // кг
+        quantity = 20.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     ),
     Product(
         name = "Темний шоколад",
-        category = productCategories[7], // Шоколад
-        unit = unitList[0], // кг
-        quantity = 5f
+        categoryId = 1, // Шоколад
+        unitId = 0, // кг
+        quantity = 5.0,
+        description = "sdfsdfs",
+        price = 2312.34,
+        supplierId = 1
     )
 )
 
 data class Product(
-    override val id:Int = generateId(),
-    val name: String ="",
-    val category: String = "",
-    val description: String = "",
-    val quantity: Float = 0f,
-    val price: Double = 0.0,
-    val unit: String = ""
+    override val id:Long = generateId(),
+    val name: String,
+    val categoryId: Int?,
+    val description: String,
+    val quantity: Double,
+    val supplierId: Int?,
+    val price: Double,
+    val unitId: Int?,
 ):HasId{
     companion object{
-        private var idCounter = 0
-        private fun generateId(): Int {
+        private var idCounter = 0L
+        private fun generateId(): Long {
             return ++idCounter
         }
     }
 }
-
-
 
 class ProductViewModel : ItemViewModel<Product>(
     RepositoryImpl(productsList)

@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.user.EmployeeViewModel
-import com.example.coffeeshop.data.user.Position
+import com.example.coffeeshop.data.roomDone.position.entities.Position
 import com.example.coffeeshop.data.user.Shift
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.data.user.employees

@@ -17,23 +17,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
-import com.example.coffeeshop.data.formatting.formatWithoutZero
 import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.data.productAndGoods.ProductViewModel
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
@@ -71,8 +65,8 @@ fun EditProductContent(
     onProductUpdated: (Product) -> Unit
 ) {
     var name by remember { mutableStateOf(product.name) }
-    var category by remember { mutableStateOf(product.category) }
-    var unit by remember { mutableStateOf(product.unit) }
+    var category by remember { mutableStateOf(product.categoryId) }
+    var unit by remember { mutableStateOf(product.unitId) }
     var quantity by remember { mutableStateOf(product.quantity.toString()) }
     var description by remember { mutableStateOf(product.description) }
 
@@ -102,7 +96,7 @@ fun EditProductContent(
                     modifier = Modifier.fillMaxWidth()
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = product.category,
+                    firstValue = product.categoryId,
                     options = productCategories,
                     onOptionsUpdated = { newValueCategory ->
                         category = newValueCategory
@@ -114,7 +108,7 @@ fun EditProductContent(
                     }
                 )
                 CustomExposedDropdownMenuBox(
-                    firstValue = product.unit,
+                    firstValue = product.unitId,
                     options = unitList,
                     onOptionsUpdated = { newValueUnit ->
                         unit = newValueUnit
@@ -154,8 +148,8 @@ fun EditProductContent(
                         onClick = {
                             val updateProduct = product.copy(
                                 name = name,
-                                category = category,
-                                unit = unit,
+                                categoryId = category,
+                                unitId = unit,
                                 quantity = quantity.toFloatOrNull() ?: 0f,
                                 description = description
                             )
@@ -180,11 +174,11 @@ private fun PreviewEditRawProductScreen(){
             EditProductContent(
                 Product(
                     name = "Какао",
-                    category = "Молоко",
+                    categoryId = "Молоко",
                     description = "влаоптвол апвл опж пжовиапжолви пваоп жвлоап вапв" +
                             "в длаптвєдал птвдєлатп євлдатпєдлв тап єваптєвлдатплдєв атп" +
                             "в лдптєдлатпє втапдєлвт аєплдт ваєплвтаєплд тваєдпл твап ",
-                    unit = "мл",
+                    unitId = "мл",
                     quantity = 234f,
                 ),
                 onProductUpdated = {}

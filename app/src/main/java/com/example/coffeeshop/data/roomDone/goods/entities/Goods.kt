@@ -1,4 +1,4 @@
-package com.example.coffeeshop.data.productAndGoods
+package com.example.coffeeshop.data.roomDone.goods.entities
 
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.HasId
@@ -6,7 +6,9 @@ import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.RepositoryImpl
 import com.example.coffeeshop.data.filled.goodsCategories
 import com.example.coffeeshop.data.filled.unitList
+import com.example.coffeeshop.data.roomDone.goods.room.entities.GoodBdEntity
 
+/*
 val goodsList = listOf(
     Goods(
         name = "Еспресо",
@@ -69,31 +71,17 @@ val goodsList = listOf(
         quantity = 300f
     ),
 )
+*/
 
 
-
-
-data class Goods(
-    override val id:Int = generateId(),
-    val name: String = "",
-    val category: String = "",
-    val description: String = "aleugpauiregh ;ih;g iah" +
-            " skjgh;kjdfhg;kjdsfhg;kjsdfh;ksldfg s" +
-            "s ldghlskdfhg'klhf;gilshflkghsdflkg",
-    val quantity: Float? = 0f,
+data class Good(
+    val id: Long,
+    val name: String,
+    val categoryId: Int?,
+    val description: String = "",
+    val quantity: Double = 0.0,
     val price: Double = 0.0,
-    val unit:String = "",
+    val unitId:Int?,
     val image: Int = R.mipmap.face_photo,
-) : HasId {
-    companion object{
-        private var idCounter = 0
-        private fun generateId(): Int {
-            return ++idCounter
-        }
-    }
-}
-
-class GoodsViewModel : ItemViewModel<Goods>(
-    RepositoryImpl(goodsList)
 )
 

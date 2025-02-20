@@ -24,8 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.R
-import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.user.ClientViewModel
 import com.example.coffeeshop.data.user.ManagerUser
 import com.example.coffeeshop.data.user.User

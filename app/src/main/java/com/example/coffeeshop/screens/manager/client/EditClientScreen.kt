@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.coffeeshop.data.filled.client
 import com.example.coffeeshop.data.user.ClientViewModel
 import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User

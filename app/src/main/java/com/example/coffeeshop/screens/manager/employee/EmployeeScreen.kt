@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.ScrollViewModel
-import com.example.coffeeshop.data.filled.sampleEmployee
-import com.example.coffeeshop.data.productAndGoods.GoodsViewModel
 import com.example.coffeeshop.data.user.EmployeeViewModel
 import com.example.coffeeshop.data.user.User
 import com.example.coffeeshop.screens.manager.components.CardEmployee

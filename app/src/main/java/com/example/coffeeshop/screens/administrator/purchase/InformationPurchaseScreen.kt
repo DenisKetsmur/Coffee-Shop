@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
-import com.example.coffeeshop.data.filled.sampleSupplier
 import com.example.coffeeshop.data.formatting.formatWithoutZero
 import com.example.coffeeshop.data.productAndGoods.Product
 import com.example.coffeeshop.data.supplier.Order

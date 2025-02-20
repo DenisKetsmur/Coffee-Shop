@@ -1,17 +1,14 @@
 package com.example.coffeeshop.data.user
 
-import androidx.room.Dao
-import androidx.room.Entity
-import androidx.room.Insert
 import androidx.room.PrimaryKey
-import androidx.room.Query
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.HasId
 import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.RepositoryImpl
 import com.example.coffeeshop.data.filled.getRandomDate
-import com.example.coffeeshop.data.productAndGoods.Goods
-import com.example.coffeeshop.data.productAndGoods.goodsList
+import com.example.coffeeshop.data.goods.entities.Goods
+import com.example.coffeeshop.data.goods.entities.goodsList
+import com.example.coffeeshop.data.roomDone.position.entities.Position
 import com.example.coffeeshop.data.supplier.Order
 
 sealed class User(

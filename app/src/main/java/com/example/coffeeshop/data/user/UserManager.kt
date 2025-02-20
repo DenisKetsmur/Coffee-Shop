@@ -3,6 +3,8 @@ package com.example.coffeeshop.data.user
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.example.coffeeshop.data.roomDone.position.entities.Position
+
 object ManagerUser {
     val users = listOf(
         User.Employee(id = 1,email = "admin@gmail.com", password = "123456789", position = Position.ADMINISTRATOR),
