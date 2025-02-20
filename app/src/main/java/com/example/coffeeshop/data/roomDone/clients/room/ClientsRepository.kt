@@ -2,6 +2,7 @@ package com.example.coffeeshop.data.roomDone.clients.room
 
 import com.example.coffeeshop.data.roomDone.clients.entities.Client
 import com.example.coffeeshop.data.roomDone.clients.entities.SignUpData
+import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientDbEntity
 import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientUpdateTuple
 import kotlinx.coroutines.flow.Flow
 
@@ -18,5 +19,7 @@ interface ClientsRepository {
     suspend fun getClient(): Flow<Client?>
 
     suspend fun clientUpdate(newFirstName: String, newLastName: String, newPhone: String)
+
+    fun getAllClients(): Flow<List<Client>>
 
 }

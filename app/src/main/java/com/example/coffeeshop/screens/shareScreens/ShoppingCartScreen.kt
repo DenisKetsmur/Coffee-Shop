@@ -47,8 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.data.productAndGoods.Product
-import com.example.coffeeshop.data.productAndGoods.productsList
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.productsList
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.navigationmodule.LocalRouter
 import kotlinx.coroutines.launch

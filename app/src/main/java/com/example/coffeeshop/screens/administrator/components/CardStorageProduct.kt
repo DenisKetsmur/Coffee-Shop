@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.formatting.formatWithoutZero
-import com.example.coffeeshop.data.productAndGoods.Product
-import com.example.coffeeshop.data.productAndGoods.productsList
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.productsList
 import com.example.coffeeshop.data.shoppingCart.CartSupplierViewModel
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 

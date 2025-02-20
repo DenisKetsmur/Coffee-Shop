@@ -9,6 +9,7 @@ import com.example.coffeeshop.data.roomDone.employee.entities.SignUpData
 import com.example.coffeeshop.data.roomDone.employee.entities.Employee
 import com.example.coffeeshop.data.roomDone.employee.room.EmployeeDao
 import com.example.coffeeshop.data.roomDone.employee.room.EmployeesRepository
+import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeDbEntity
 import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeDbEntity.Companion.fromSignUpData
 import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeUpdateTuple
 import com.example.coffeeshop.data.settings.AppSettings
@@ -90,6 +91,12 @@ class RoomEmployeeRepository(
                     getEmployeeById(employeeId.value)
                 }
             }
+            .flowOn(ioDispatcher)
+    }
+
+    override fun getAllEmployee(): Flow<List<Employee>> {
+        return employeeDao.getAllEmployee()
+            .map { list -> list.map { it.toEmployee() } }
             .flowOn(ioDispatcher)
     }
 

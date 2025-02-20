@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientDbEntity
+import com.example.coffeeshop.data.roomDone.employee.entities.Employee
 import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeDbEntity
 import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeSignInTuple
 import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeUpdateHimTuple
@@ -13,6 +14,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EmployeeDao {
+
+    @Query("SELECT * FROM employees")
+    fun getAllEmployee(): Flow<List<EmployeeDbEntity>>
 
     @Query("SELECT id, password FROM employees WHERE email = :email ")
     suspend fun findByEmail(email: String): EmployeeSignInTuple?

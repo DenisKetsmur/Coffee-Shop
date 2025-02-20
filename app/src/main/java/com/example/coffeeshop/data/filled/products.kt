@@ -1,7 +1,5 @@
 package com.example.coffeeshop.data.filled
 
-import com.example.coffeeshop.data.productAndGoods.Product
-
 val productCategories = listOf(
     "Кавові зерна",
     "Молоко",

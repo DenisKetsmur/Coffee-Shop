@@ -25,9 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.productAndGoods.Product
-import com.example.coffeeshop.data.productAndGoods.ProductViewModel
-import com.example.coffeeshop.data.productAndGoods.productsList
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.ProductViewModel
+import com.example.coffeeshop.data.roomDone.products.room.entities.productsList
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
 
@@ -56,7 +56,7 @@ fun InformationProductScreen(
 
 @Composable
 fun InformationProductContent(
-    product:Product,
+    product: Product,
     onClick: ()-> Unit = {},
 ) {
     Card(

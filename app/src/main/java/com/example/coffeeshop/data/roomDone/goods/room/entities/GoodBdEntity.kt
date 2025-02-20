@@ -6,8 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.coffeeshop.data.roomDone.goods.entities.Good
-import com.example.coffeeshop.data.room.productAndGoods.Category
-import com.example.coffeeshop.data.room.productAndGoods.Unit
+import com.example.coffeeshop.data.roomDone.category.Category
 
 @Entity(
     tableName = "goods",

@@ -9,6 +9,7 @@ import com.example.coffeeshop.data.roomDone.clients.entities.Client
 import com.example.coffeeshop.data.roomDone.clients.entities.SignUpData
 import com.example.coffeeshop.data.roomDone.clients.room.ClientDao
 import com.example.coffeeshop.data.roomDone.clients.room.ClientsRepository
+import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientDbEntity
 import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientDbEntity.Companion.fromSignUpData
 import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientUpdateTuple
 import com.example.coffeeshop.data.settings.AppSettings
@@ -89,6 +90,12 @@ class RoomClientsRepository(
 
         currentClientIdFlow.get().value = ClientId(clientId)
         return@wrapSQLiteException
+    }
+
+    override fun getAllClients(): Flow<List<Client>> {
+        return clientDao.getAllClients()
+            .map { list -> list.map { it.toClient() } }
+            .flowOn(ioDispatcher)
     }
 
     private suspend fun findClientIdByEmailAndPassword(email: String, password: String): Long {

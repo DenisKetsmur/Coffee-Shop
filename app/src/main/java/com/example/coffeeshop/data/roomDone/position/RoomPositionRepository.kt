@@ -3,7 +3,7 @@ package com.example.coffeeshop.data.roomDone.position
 import com.example.coffeeshop.data.roomDone.position.entities.Position
 import com.example.coffeeshop.data.roomDone.position.room.PositionDao
 import com.example.coffeeshop.data.roomDone.position.room.PositionRepository
-import com.example.coffeeshop.data.roomDone.position.room.entities.PositionEntity
+import com.example.coffeeshop.data.roomDone.position.room.entities.PositionDbEntity
 import com.example.coffeeshop.wrapSQLiteException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -21,14 +21,14 @@ class RoomPositionRepository(
     }
 
     override suspend fun addPosition(position: Position) = wrapSQLiteException(ioDispatcher) {
-        positionDao.insert(PositionEntity.fromEnum(position))
+        positionDao.insert(PositionDbEntity.fromEnum(position))
     }
 
     override suspend fun updatePosition(position: Position) = wrapSQLiteException(ioDispatcher) {
-        positionDao.updatePosition(PositionEntity.fromEnum(position))
+        positionDao.updatePosition(PositionDbEntity.fromEnum(position))
     }
 
     override suspend fun deletePosition(position: Position) = wrapSQLiteException(ioDispatcher) {
-        positionDao.deletePosition(PositionEntity.fromEnum(position))
+        positionDao.deletePosition(PositionDbEntity.fromEnum(position))
     }
 }

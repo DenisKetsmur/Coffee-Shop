@@ -1,5 +1,7 @@
 package com.example.coffeeshop.data.roomDone.employee.entities
 
+import com.example.coffeeshop.data.roomDone.position.entities.Position
+
 data class Employee(
     val id: Int = 0,
     val firstName: String,

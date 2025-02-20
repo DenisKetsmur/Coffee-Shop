@@ -3,6 +3,7 @@ package com.example.coffeeshop.data.roomDone.employee.entities
 import com.example.coffeeshop.data.EmptyFieldException
 import com.example.coffeeshop.data.Field
 import com.example.coffeeshop.data.PasswordMismatchException
+import com.example.coffeeshop.data.roomDone.position.entities.Position
 
 class InvalidDateException(message: String) : Exception(message)
 
@@ -25,7 +26,6 @@ data class SignUpData(
         if (password.isBlank()) throw EmptyFieldException(Field.Password)
         if (phone.isBlank()) throw  EmptyFieldException(Field.Phone)
         if (password != repeatPassword) throw PasswordMismatchException()
-        if (positionId == null) throw EmptyFieldException(Field.Position)
         if (workScheduleId == null) throw EmptyFieldException(Field.WorkSchedule)
 
         if (birthDate <= 0) throw InvalidDateException("Некоректна дата народження")

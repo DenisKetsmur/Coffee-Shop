@@ -2,6 +2,7 @@ package com.example.coffeeshop.data.roomDone.employee
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.coffeeshop.data.roomDone.clients.entities.Client
 import com.example.coffeeshop.data.roomDone.employee.entities.SignUpData
 import com.example.coffeeshop.data.roomDone.employee.entities.Employee
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,10 @@ class EmployeeViewModel(
     private val _isSignedIn = MutableStateFlow(false)
     val isSignedIn: StateFlow<Boolean> = _isSignedIn.asStateFlow()
 
+    // Список усіх клієнтів
+    private val _allEmployee = MutableStateFlow<List<Employee>>(emptyList())
+    val allEmployee: StateFlow<List<Employee>> = _allEmployee.asStateFlow()
+
     init {
         // Стартове завантаження
         viewModelScope.launch {
@@ -35,6 +40,23 @@ class EmployeeViewModel(
             // Збираємо (collect) профіль клієнта
             repository.getEmployee().collect { employee ->
                 _employeeProfile.value = employee
+            }
+        }
+    }
+    // Завантажити всіх клієнтів (наприклад, якщо ти менеджер/адмін)
+    fun loadAllEmployee() {
+        viewModelScope.launch {
+            _loadingState.value = true
+            _errorState.value = null
+            try {
+                repository.getAllEmployee()
+                    .collect { employeeList ->
+                        _allEmployee.value = employeeList
+                    }
+            } catch (e: Exception) {
+                _errorState.value = e.message
+            } finally {
+                _loadingState.value = false
             }
         }
     }

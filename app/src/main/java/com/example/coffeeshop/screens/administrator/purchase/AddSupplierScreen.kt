@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.supplier.SupplierViewModel
 import com.example.coffeeshop.screens.administrator.purchase.card.ProductInfoEdit

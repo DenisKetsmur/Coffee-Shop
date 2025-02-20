@@ -1,5 +1,6 @@
 package com.example.coffeeshop.data.roomDone.employee.room.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -31,15 +32,15 @@ import com.example.coffeeshop.data.roomDone.position.entities.Position
 )
 data class EmployeeDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val firstName: String,
-    val lastName: String,
+    @ColumnInfo(name = "first_name") val firstName: String,
+    @ColumnInfo(name = "last_name") val lastName: String,
     val email: String,
     val password:String,
-    val positionId: Int?,
+    @ColumnInfo(name = "position_id")val positionId: Int?,
     val phone: String,
-    val birthDate: Long,
-    val hireDate: Long,
-    val workScheduleId: Int?,
+    @ColumnInfo(name = "birth_date") val birthDate: Long,
+    @ColumnInfo(name = "hire_date") val hireDate: Long,
+    @ColumnInfo(name = "work_schedule_id") val workScheduleId: Int?,
     val status: Int
 ){
     fun toEmployee(): Employee = Employee(

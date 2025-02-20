@@ -24,9 +24,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.data.ScrollViewModel
 import com.example.coffeeshop.data.filled.productCategories
-import com.example.coffeeshop.data.productAndGoods.Product
-import com.example.coffeeshop.data.productAndGoods.ProductViewModel
-import com.example.coffeeshop.data.productAndGoods.productsList
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.ProductViewModel
+import com.example.coffeeshop.data.roomDone.products.room.entities.productsList
 import com.example.coffeeshop.screens.administrator.components.CardStorageProduct
 import com.example.coffeeshop.screens.cardForScreens.CatPop
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedSearchTextField

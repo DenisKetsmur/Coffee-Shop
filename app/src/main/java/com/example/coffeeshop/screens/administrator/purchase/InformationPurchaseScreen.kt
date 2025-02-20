@@ -1,6 +1,5 @@
 package com.example.coffeeshop.screens.administrator.purchase
 
-import android.hardware.camera2.CameraExtensionSession.StillCaptureLatency
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,9 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,12 +34,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
 import com.example.coffeeshop.R
 import com.example.coffeeshop.data.formatting.formatWithoutZero
-import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
 import com.example.coffeeshop.data.supplier.Order
 import com.example.coffeeshop.data.supplier.Supplier
 import com.example.coffeeshop.data.supplier.SupplierViewModel
 import com.example.coffeeshop.data.supplier.suppliers
-import com.example.coffeeshop.data.user.ManagerSupplier
 import com.example.coffeeshop.screens.manager.components.convertMillisToDate
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter

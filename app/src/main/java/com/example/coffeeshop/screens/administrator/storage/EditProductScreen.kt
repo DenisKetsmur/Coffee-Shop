@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.data.filled.productCategories
 import com.example.coffeeshop.data.filled.unitList
-import com.example.coffeeshop.data.productAndGoods.Product
-import com.example.coffeeshop.data.productAndGoods.ProductViewModel
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.ProductViewModel
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 import com.example.coffeeshop.ui.theme.CoffeeAppTheme

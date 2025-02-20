@@ -53,12 +53,7 @@ CREATE TABLE "suppliers" (
     "phone"   			            TEXT NOT NULL CHECK (LENGTH(phone) >= 10)
 );
 
-CREATE TABLE "purchases" (
-    "id"            		        INTEGER PRIMARY KEY,
-    "supplier_id"   		        INTEGER NOT NULL,
-    "purchase_date" 		        INTEGER NOT NULL,
-    FOREIGN KEY("supplier_id") 	    REFERENCES "suppliers"("id") ON DELETE CASCADE
-);
+
 
 CREATE TABLE "categories" (
     "id" 			                INTEGER PRIMARY KEY,
@@ -70,6 +65,17 @@ CREATE TABLE "units" (
     "id"   			                INTEGER PRIMARY KEY,
     "name" 			                TEXT NOT NULL UNIQUE
 );
+
+
+INSERT INTO "units" ("name") VALUES
+    ('кілограм'),
+    ('грам'),
+    ('літр'),
+    ('мілілітр'),
+    ('штука'),
+    ('порція'),
+    ('чашка'),
+    ('шматок');
 
 CREATE TABLE "products" (
     "id"			                INTEGER PRIMARY KEY,
@@ -83,6 +89,13 @@ CREATE TABLE "products" (
     FOREIGN KEY("category_id") 	    REFERENCES "categories"("id") ON DELETE SET NULL,
     FOREIGN KEY("supplier_id") 	    REFERENCES "suppliers"("id") ON DELETE CASCADE,
     FOREIGN KEY("unit_id") 	        REFERENCES "units"("id") ON DELETE SET NULL
+);
+
+CREATE TABLE "purchases" (
+    "id"            		        INTEGER PRIMARY KEY,
+    "supplier_id"   		        INTEGER NOT NULL,
+    "purchase_date" 		        INTEGER NOT NULL,
+    FOREIGN KEY("supplier_id") 	    REFERENCES "suppliers"("id") ON DELETE CASCADE
 );
 
 CREATE TABLE "purchase_items" (

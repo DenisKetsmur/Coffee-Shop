@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ClientDao {
 
+    @Query("SELECT * FROM clients")
+    fun getAllClients(): Flow<List<ClientDbEntity>>
+
     @Query("SELECT id, password FROM clients WHERE email = :email ")
     suspend fun findByEmail(email: String): ClientSignInTuple?
 

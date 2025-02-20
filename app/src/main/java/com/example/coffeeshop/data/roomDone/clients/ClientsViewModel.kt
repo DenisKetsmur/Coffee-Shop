@@ -14,28 +14,53 @@ class ClientsViewModel(
     private val repository: ClientsRepository
 ) : ViewModel() {
 
+    // Стан завантаження
     private val _loadingState = MutableStateFlow(false)
     val loadingState: StateFlow<Boolean> = _loadingState.asStateFlow()
 
+    // Стан помилки
     private val _errorState = MutableStateFlow<String?>(null)
     val errorState: StateFlow<String?> = _errorState.asStateFlow()
 
-    // Профіль клієнта зберігаємо тут
+    // Профіль поточного клієнта
     private val _clientProfile = MutableStateFlow<Client?>(null)
     val clientProfile: StateFlow<Client?> = _clientProfile.asStateFlow()
 
-    // Перевірка, чи користувач увійшов
+    // Стан авторизації
     private val _isSignedIn = MutableStateFlow(false)
     val isSignedIn: StateFlow<Boolean> = _isSignedIn.asStateFlow()
 
+    // Список усіх клієнтів
+    private val _allClients = MutableStateFlow<List<Client>>(emptyList())
+    val allClients: StateFlow<List<Client>> = _allClients.asStateFlow()
+
     init {
-        // Стартове завантаження
+        // При створенні ViewModel
         viewModelScope.launch {
+            // Перевіряємо, чи користувач авторизований
             _isSignedIn.value = repository.isSignedIn()
 
-            // Збираємо (collect) профіль клієнта
+            // Отримуємо профіль поточного клієнта (якщо є)
             repository.getClient().collect { client ->
                 _clientProfile.value = client
+            }
+        }
+    }
+
+    // Завантажити всіх клієнтів (наприклад, якщо ти менеджер/адмін)
+    fun loadAllClients() {
+        viewModelScope.launch {
+            _loadingState.value = true
+            _errorState.value = null
+            try {
+                repository.getAllClients()
+                    .collect { clientsList ->
+                        _allClients.value = clientsList
+                    }
+            } catch (e: Exception) {
+                _errorState.value = e.message
+            } finally {
+                _loadingState.value = false
             }
         }
     }

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.coffeeshop.data.filled.productCategories
-import com.example.coffeeshop.data.productAndGoods.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
 import com.example.coffeeshop.screens.cardForScreens.CustomExposedDropdownMenuBox
 import com.example.coffeeshop.screens.cardForScreens.CustomOutlinedInputTextField
 

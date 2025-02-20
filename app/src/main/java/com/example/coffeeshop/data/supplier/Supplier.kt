@@ -5,8 +5,8 @@ import com.example.coffeeshop.data.HasId
 import com.example.coffeeshop.data.ItemViewModel
 import com.example.coffeeshop.data.RepositoryImpl
 import com.example.coffeeshop.data.filled.getRandomDate
-import com.example.coffeeshop.data.productAndGoods.Product
-import com.example.coffeeshop.data.productAndGoods.productsList
+import com.example.coffeeshop.data.roomDone.products.room.entities.Product
+import com.example.coffeeshop.data.roomDone.products.room.entities.productsList
 
 val ordersList = listOf(
     Order(

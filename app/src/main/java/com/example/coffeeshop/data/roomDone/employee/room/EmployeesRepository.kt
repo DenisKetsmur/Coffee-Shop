@@ -2,6 +2,7 @@ package com.example.coffeeshop.data.roomDone.employee.room
 
 import com.example.coffeeshop.data.roomDone.employee.entities.SignUpData
 import com.example.coffeeshop.data.roomDone.employee.entities.Employee
+import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeDbEntity
 import kotlinx.coroutines.flow.Flow
 
 interface EmployeesRepository {
@@ -15,6 +16,8 @@ interface EmployeesRepository {
     suspend fun logout()
 
     suspend fun getEmployee(): Flow<Employee?>
+
+    fun getAllEmployee(): Flow<List<Employee>>
 
     suspend fun employeeUpdate(
         newFirstName:String,
