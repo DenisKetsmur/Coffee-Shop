@@ -22,6 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -111,6 +112,30 @@ fun GeneralPageScreen() {
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
+                    text = "Рекомендовані Напої",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Light,
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row {
+                    Column {
+                        PointBeforeText("Еспресо ")
+                        PointBeforeText("Американо ")
+                        PointBeforeText("Капучино ")
+                        PointBeforeText("Лате ")
+                        PointBeforeText("Флет вайт")
+                    }
+                    Spacer(modifier = Modifier.width(52.dp))
+                    Column {
+                        PointBeforeText("Мокачино ")
+                        PointBeforeText("Раф-кава")
+                        PointBeforeText("Холодна кава")
+                        PointBeforeText("Матча-лате")
+                        PointBeforeText("Чай латте")
+                    }
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
                     text = "ПРО НАС",
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,
@@ -127,30 +152,6 @@ fun GeneralPageScreen() {
                     letterSpacing = 1.sp,
                     style = TextStyle(lineHeight = 24.sp)
                 )
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(
-                    text = "Рекомендовані Напої",
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Light,
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                Row {
-                    Column {
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                    }
-                    Spacer(modifier = Modifier.width(52.dp))
-                    Column {
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                        PointBeforeText("Американо")
-                    }
-                }
             }
             Box(
                 modifier = Modifier
@@ -203,6 +204,8 @@ fun PointBeforeText(
 @Composable
 private fun PreviewGeneralPageScreen() {
     CoffeeAppTheme {
-        GeneralPageScreen()
+        Surface {
+            GeneralPageScreen()
+        }
     }
 }

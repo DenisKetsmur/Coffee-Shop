@@ -2,12 +2,11 @@ package com.example.coffeeshop.data.roomDone.supplier
 
 import com.example.coffeeshop.data.roomDone.supplier.entities.SupplierDao
 import com.example.coffeeshop.data.roomDone.supplier.entities.SupplierDbEntity
-import com.example.coffeeshop.wrapSQLiteException
+import com.example.coffeeshop.data.exception.wrapSQLiteException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 
 interface SupplierRepository {
     fun getAllSuppliers(): Flow<List<SupplierDbEntity>>

@@ -5,7 +5,7 @@ import com.example.coffeeshop.data.roomDone.products.room.ProductDao
 import com.example.coffeeshop.data.roomDone.products.room.ProductRepository
 import com.example.coffeeshop.data.roomDone.products.room.entities.ProductDbEntity
 import com.example.coffeeshop.data.roomDone.products.room.entities.ProductUpdateTuple
-import com.example.coffeeshop.wrapSQLiteException
+import com.example.coffeeshop.data.exception.wrapSQLiteException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

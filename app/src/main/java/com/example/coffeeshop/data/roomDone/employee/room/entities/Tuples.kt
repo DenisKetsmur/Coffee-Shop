@@ -1,6 +1,7 @@
 package com.example.coffeeshop.data.roomDone.employee.room.entities
 
 import androidx.room.ColumnInfo
+import com.example.coffeeshop.data.roomDone.clients.room.entities.Position
 
 data class EmployeeSignInTuple(
     val id:Long,
@@ -14,7 +15,7 @@ data class EmployeeUpdateTuple(
     val phone: String,
     val password:String,
     val birthDate: Long,
-    val positionId: Int?,
+    val position: Position,
     val workScheduleId: Int?,
     val status: Int
 )

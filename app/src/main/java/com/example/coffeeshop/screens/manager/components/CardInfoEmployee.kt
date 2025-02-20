@@ -23,14 +23,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.coffeeshop.data.user.User
-import com.example.coffeeshop.data.user.employees
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshop.R
+import com.example.coffeeshop.data.roomDone.employee.entities.Employee
+import com.example.coffeeshop.data.roomDone.workScheduleEntity.WorkScheduleViewModel
 
 
 @Composable
 fun CardInfoEmployee(
-    employee: User.Employee
+    employee: Employee,
+    viewModel: WorkScheduleViewModel = viewModel()
 ) {
+
+    val workSchedule = viewModel.employeeSchedule
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -39,14 +44,14 @@ fun CardInfoEmployee(
                 modifier = Modifier.padding(16.dp).weight(2f)
             ) {
                 Text(
-                    text = "${employee.surname} ${employee.name}",
+                    text = "${employee.lastName} ${employee.firstName}",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = employee.position.displayName, fontSize = 16.sp)
+                Text(text = employee.position.nameView, fontSize = 16.sp)
             }
             Image(
-                painter = painterResource(id = employee.photo),
+                painter = painterResource(R.mipmap.face_photo),
                 contentDescription = "Profile Picture",
                 modifier = Modifier.heightIn(min = 192.dp, max = 192.dp),
                 contentScale = ContentScale.Crop,
@@ -59,10 +64,11 @@ fun CardInfoEmployee(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            RowInfo("Телефон: ", employee.phoneNumber)
+            RowInfo("Телефон: ", employee.phone)
             RowInfo("Email:", employee.email)
-            RowInfo("Вік: ", "${employee.age}")
-            RowInfo("Активний: ", if (employee.isActive) "Так" else "Ні")
+            RowInfo("Дата народження: ", convertMillisToDate(employee.birthDate))
+            RowInfo("Дата початку роботи: ", convertMillisToDate(employee.hireDate))
+            RowInfo("Активний: ", if (employee.status == 1) "Так" else "Ні")
             Spacer(modifier = Modifier.height(8.dp))
         }
         Column(
@@ -82,7 +88,7 @@ fun CardInfoEmployee(
             Spacer(modifier = Modifier.height(4.dp))
             Box(Modifier.fillMaxWidth()) {
                 Text(
-                    text = employee.workSchedule.shift.time,
+                    text = employee.workScheduleId,
                     modifier = Modifier.align(Alignment.TopStart)
                 )
                 Text(

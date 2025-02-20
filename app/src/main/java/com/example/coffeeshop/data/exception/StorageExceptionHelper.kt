@@ -1,7 +1,6 @@
-package com.example.coffeeshop
+package com.example.coffeeshop.data.exception
 
 import android.database.sqlite.SQLiteException
-import com.example.coffeeshop.data.StorageException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext

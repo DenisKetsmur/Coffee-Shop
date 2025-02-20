@@ -2,150 +2,74 @@ package com.example.coffeeshop.data.roomDone.employee
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.coffeeshop.data.exception.EmptyFieldException
+import com.example.coffeeshop.data.exception.PasswordMismatchException
 import com.example.coffeeshop.data.roomDone.clients.entities.Client
 import com.example.coffeeshop.data.roomDone.employee.entities.SignUpData
 import com.example.coffeeshop.data.roomDone.employee.entities.Employee
+import com.example.coffeeshop.data.roomDone.employee.entities.InvalidDateException
+import com.example.coffeeshop.data.roomDone.employee.room.EmployeeDao
+import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeDbEntity
+import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeUpdateTuple
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class EmployeeViewModel(
-    private val repository: RoomEmployeeRepository
-) : ViewModel() {
+class EmployeeViewModel(private val employeeDao: EmployeeDao) : ViewModel() {
 
-    private val _loadingState = MutableStateFlow(false)
-    val loadingState: StateFlow<Boolean> = _loadingState.asStateFlow()
+    val employees: StateFlow<List<EmployeeDbEntity>> = employeeDao.getAllEmployees()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    private val _errorState = MutableStateFlow<String?>(null)
-    val errorState: StateFlow<String?> = _errorState.asStateFlow()
+    private val _currentEmployee = MutableStateFlow<EmployeeDbEntity?>(null)
+    val currentEmployee: StateFlow<EmployeeDbEntity?> = _currentEmployee.asStateFlow()
 
-    // Профіль клієнта зберігаємо тут
-    private val _employeeProfile = MutableStateFlow<Employee?>(null)
-    val employeeProfile: StateFlow<Employee?> = _employeeProfile.asStateFlow()
 
-    // Перевірка, чи користувач увійшов
-    private val _isSignedIn = MutableStateFlow(false)
-    val isSignedIn: StateFlow<Boolean> = _isSignedIn.asStateFlow()
-
-    // Список усіх клієнтів
-    private val _allEmployee = MutableStateFlow<List<Employee>>(emptyList())
-    val allEmployee: StateFlow<List<Employee>> = _allEmployee.asStateFlow()
-
-    init {
-        // Стартове завантаження
+    fun addEmployee(employee: EmployeeDbEntity) {
+        employee.toEmployee()
         viewModelScope.launch {
-            _isSignedIn.value = repository.isSignedIn()
-
-            // Збираємо (collect) профіль клієнта
-            repository.getEmployee().collect { employee ->
-                _employeeProfile.value = employee
-            }
-        }
-    }
-    // Завантажити всіх клієнтів (наприклад, якщо ти менеджер/адмін)
-    fun loadAllEmployee() {
-        viewModelScope.launch {
-            _loadingState.value = true
-            _errorState.value = null
-            try {
-                repository.getAllEmployee()
-                    .collect { employeeList ->
-                        _allEmployee.value = employeeList
-                    }
-            } catch (e: Exception) {
-                _errorState.value = e.message
-            } finally {
-                _loadingState.value = false
-            }
+            employeeDao.insertEmployee(employee)
         }
     }
 
-    // Вхід
-    fun signIn(email: String, password: String) {
+    fun updateEmployee(employee: EmployeeUpdateTuple) {
         viewModelScope.launch {
-            _loadingState.value = true
-            _errorState.value = null
-            try {
-                repository.signIn(email, password)
-                _isSignedIn.value = true
-            } catch (e: Exception) {
-                _errorState.value = e.message
-            } finally {
-                _loadingState.value = false
-            }
+            employeeDao.updateEmployee(employee)
         }
     }
 
-    // Реєстрація
+    fun deleteEmployee(employee: EmployeeDbEntity) {
+        viewModelScope.launch {
+            employeeDao.deleteEmployee(employee)
+        }
+    }
+
     fun signUp(signUpData: SignUpData) {
         viewModelScope.launch {
-            _loadingState.value = true
-            _errorState.value = null
             try {
-                repository.signUp(signUpData)
-                _isSignedIn.value = true
-            } catch (e: Exception) {
-                _errorState.value = e.message
-            } finally {
-                _loadingState.value = false
+                signUpData.validate()
+                val employeeEntity = EmployeeDbEntity.fromSignUpData(signUpData)
+                employeeDao.insertEmployee(employeeEntity)
+                // ... інші кроки (напр. зберегти статус, показати екран)
+            } catch (e: EmptyFieldException) {
+                // Обробити помилку пустого поля
+            } catch (e: PasswordMismatchException) {
+                // Обробити невідповідність паролів
+            } catch (e: InvalidDateException) {
+                // Обробити некоректну дату
             }
         }
     }
 
-    // Вихід
-    fun logout() {
-        viewModelScope.launch {
-            _loadingState.value = true
-            _errorState.value = null
-            try {
-                repository.logout()
-                _isSignedIn.value = false
-                _employeeProfile.value = null
-            } catch (e: Exception) {
-                _errorState.value = e.message
-            } finally {
-                _loadingState.value = false
-            }
-        }
+    // Оновлення поточного клієнта
+    fun setCurrentEmployee(employee: EmployeeDbEntity) {
+        _currentEmployee.value = employee
     }
 
-    // Оновлення даних профілю
-    fun updateEmployee(
-        newFirstName: String,
-        newLastName: String,
-        newPhone: String,
-        password: String,
-        birthDate: Long,
-        positionId: Int,
-        workScheduleId: Int,
-        status:Int,
-    ) {
-        viewModelScope.launch {
-            _loadingState.value = true
-            _errorState.value = null
-            try {
-                repository.employeeUpdate(
-                    newFirstName,
-                    newLastName,
-                    newPhone,
-                    password,
-                    birthDate,
-                    positionId,
-                    workScheduleId,
-                    status
-                )
-            } catch (e: Exception) {
-                _errorState.value = e.message
-            } finally {
-                _loadingState.value = false
-            }
-        }
-    }
-
-    // Очищення помилки
-    fun clearError() {
-        _errorState.value = null
+    suspend fun findEmployeeByEmail(email: String): EmployeeDbEntity? {
+        return employeeDao.findByEmail(email)
     }
 }
 

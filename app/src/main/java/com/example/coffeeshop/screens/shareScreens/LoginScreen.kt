@@ -2,18 +2,24 @@ package com.example.coffeeshop.screens.shareScreens
 
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,37 +32,61 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.coffeeshop.AppRoute
-import com.example.coffeeshop.data.user.ManagerUser
+import com.example.coffeeshop.data.roomDone.clients.ClientViewModel
+import com.example.coffeeshop.data.roomDone.clients.room.entities.Position
+import com.example.coffeeshop.data.roomDone.employee.EmployeeViewModel
+import com.example.coffeeshop.ui.theme.CoffeeAppTheme
 import com.example.navigationmodule.LocalRouter
+import kotlinx.coroutines.launch
+import okhttp3.internal.userAgent
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(
+    viewModelClient: ClientViewModel,
+    viewModelEmployee: EmployeeViewModel
+){
     val router = LocalRouter.current
     val context = LocalContext.current
+
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     LoginContent(
         onLogin = { email, password ->
-            if (ManagerUser.login(email, password)) {
-                if (ManagerUser.isAdmin()) {
-                    router.launch(AppRoute.Menu.MenuScreen)
-                } else if (ManagerUser.isManager()) {
-                    router.launch(AppRoute.Menu.MenuScreen)
-                } else if (ManagerUser.isClient()){
-                    router.launch(AppRoute.Menu.MenuScreen)
+            viewModelClient.viewModelScope.launch {
+                val client = viewModelClient.findClientByEmail(email)
+                if (client != null) {
+                    if (client.password == password) {
+                        viewModelClient.setCurrentClient(client)
+                        router.launch(AppRoute.Menu.MenuScreen)
+                    } else {
+                        errorMessage = "Невірний пароль"
+                    }
+                } else {
+                    val employee = viewModelEmployee.findEmployeeByEmail(email)
+                    if (employee != null) {
+                        if (employee.password == password) {
+                            viewModelEmployee.setCurrentEmployee(employee)
+                            router.launch(AppRoute.Menu.MenuScreen)
+                        } else {
+                            errorMessage = "Невірний пароль"
+                        }
+                    } else {
+                        errorMessage = "Користувача з таким email не знайдено"
+                    }
                 }
-            }else {
-                Toast.makeText(
-                    context,
-                    "Неправильний пароль",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
+        },
+        toRegister = {
+            router.launch(AppRoute.StartUI.Registration)
         }
     )
 }
 
 @Composable
 fun LoginContent(
+    toRegister: ()-> Unit,
     onLogin: (String, String) -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
@@ -135,24 +165,39 @@ fun LoginContent(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                onLogin(email, password)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = (password.length >= 6) and
-                    email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")) and
-                    password.isNotEmpty() and
-                    email.isNotEmpty(),
-        ) {
-            Text("Увійти")
+        Row {
+            Box(
+                modifier = Modifier.weight(1f)
+                    .clickable {
+                        toRegister()
+                    },
+            ) {
+                Text("Зареєеструватися")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = {
+                    onLogin(email, password)
+                },
+                modifier = Modifier.weight(1f),
+                enabled = (password.length >= 6) and
+                        email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")) and
+                        password.isNotEmpty() and
+                        email.isNotEmpty(),
+            ) {
+                Text("Увійти")
+            }
         }
+
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun PreviewLoginScreen() {
-    LoginScreen()
+    CoffeeAppTheme {
+        Surface {
+            LoginContent({},{it,it2->})
+        }
+    }
 }

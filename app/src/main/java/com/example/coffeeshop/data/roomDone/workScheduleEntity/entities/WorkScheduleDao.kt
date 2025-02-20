@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WorkScheduleDao {
-    @Query("SELECT * FROM work_schedule WHERE employees_id = :employeeId")
-    fun getWorkSchedulesForEmployee(employeeId: Long): Flow<List<WorkScheduleDbEntity>>
+    @Query("SELECT * FROM work_schedule WHERE employees_id = :employeeId LIMIT 1")
+    fun getWorkSchedulesForEmployee(employeeId: Long): Flow<WorkScheduleDbEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWorkSchedule(schedule: WorkScheduleDbEntity)

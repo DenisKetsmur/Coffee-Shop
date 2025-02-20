@@ -21,7 +21,7 @@ interface OrderDao {
     // Для реляційної моделі
     @Transaction
     @Query("SELECT * FROM orders WHERE client_id = :clientId")
-    fun getOrdersWithItemsByClient(clientId: Int): Flow<List<OrderWithItems>>
+    fun getOrdersWithItemsByClient(clientId: Long): Flow<List<OrderWithItems>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrderReturnId(order: OrderDbEntity): Long

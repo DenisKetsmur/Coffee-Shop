@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.example.coffeeshop.data.roomDone.clients.entities.Client
 import com.example.coffeeshop.data.roomDone.clients.entities.SignUpData
 
@@ -20,6 +21,7 @@ data class ClientDbEntity(
     val email: String,
     val phone: String,
     val password:String,
+    val position: Position = Position.CLIENT,
     @ColumnInfo(name = "created_at") val createdAt:Long,
 ){
     fun toClient(): Client = Client(
@@ -28,6 +30,7 @@ data class ClientDbEntity(
         lastName = lastName,
         email = email,
         phone = phone,
+        password = password,
         createdAt = createdAt,
     )
 
@@ -42,4 +45,19 @@ data class ClientDbEntity(
             createdAt = System.currentTimeMillis()
         )
     }
+}
+
+class UserPositionConverter {
+    @TypeConverter
+    fun fromUserPosition(position: Position): String = position.name
+
+    @TypeConverter
+    fun toUserPosition(value: String): Position = Position.valueOf(value)
+}
+
+
+enum class Position(val nameView:String) {
+    ADMIN("Адміністратор"),
+    MANAGER("Менеджер"),
+    CLIENT("Клієнт")
 }

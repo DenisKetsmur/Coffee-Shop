@@ -1,7 +1,9 @@
 package com.example.coffeeshop.data.roomDone.employee.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientDbEntity
@@ -15,24 +17,23 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface EmployeeDao {
 
+    @Query("SELECT * FROM employees WHERE id = :id LIMIT 1")
+    suspend fun findById(id: Long): EmployeeDbEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertEmployee(employee: EmployeeDbEntity)
+
+    @Update
+    suspend fun updateEmployee(employee: EmployeeUpdateTuple)
+
+    @Delete
+    suspend fun deleteEmployee(employee: EmployeeDbEntity)
+
+    @Query("SELECT * FROM employees WHERE email = :email LIMIT 1")
+    suspend fun findByEmail(email: String): EmployeeDbEntity?
+
     @Query("SELECT * FROM employees")
-    fun getAllEmployee(): Flow<List<EmployeeDbEntity>>
-
-    @Query("SELECT id, password FROM employees WHERE email = :email ")
-    suspend fun findByEmail(email: String): EmployeeSignInTuple?
-
-    @Update(entity = EmployeeDbEntity::class)
-    suspend fun employeeUpdate(employeeUpdateTuple: EmployeeUpdateTuple)
-
-    @Update(entity = EmployeeDbEntity::class)
-    suspend fun employeeUpdateHim(employeeUpdateHimTuple: EmployeeUpdateHimTuple)
-
-    @Insert
-    suspend fun createEmployee(employeeDbEntity: EmployeeDbEntity)
-
-    @Query("SELECT * FROM employees WHERE id = :employeeId ")
-    fun getById(employeeId: Long):Flow<EmployeeDbEntity?>
-
+    fun getAllEmployees(): Flow<List<EmployeeDbEntity>>
 }
 
 

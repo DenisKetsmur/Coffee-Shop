@@ -1,4 +1,4 @@
-package com.example.coffeeshop.data
+package com.example.coffeeshop.data.exception
 
 enum class Field {
     Email,

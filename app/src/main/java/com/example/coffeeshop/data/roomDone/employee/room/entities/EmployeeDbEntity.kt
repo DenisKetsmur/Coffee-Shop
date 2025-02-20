@@ -5,10 +5,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.coffeeshop.data.room.users.work_schedule.Shift
+import com.example.coffeeshop.data.roomDone.clients.room.entities.Position
 import com.example.coffeeshop.data.roomDone.employee.entities.SignUpData
 import com.example.coffeeshop.data.roomDone.employee.entities.Employee
-import com.example.coffeeshop.data.roomDone.position.entities.Position
+import com.example.coffeeshop.data.roomDone.workScheduleEntity.entities.WorkScheduleDbEntity
 
 @Entity(
     tableName = "employees",
@@ -17,13 +17,7 @@ import com.example.coffeeshop.data.roomDone.position.entities.Position
     ],
     foreignKeys = [
         ForeignKey(
-            entity = Position::class,
-            parentColumns = ["id"],
-            childColumns = ["position_id"],
-            onDelete = ForeignKey.SET_NULL
-        ),
-        ForeignKey(
-            entity = Shift::class,
+            entity = WorkScheduleDbEntity::class,
             parentColumns = ["id"],
             childColumns = ["work_schedule_id"],
             onDelete = ForeignKey.SET_NULL
@@ -36,7 +30,7 @@ data class EmployeeDbEntity(
     @ColumnInfo(name = "last_name") val lastName: String,
     val email: String,
     val password:String,
-    @ColumnInfo(name = "position_id")val positionId: Int?,
+    val position: Position,
     val phone: String,
     @ColumnInfo(name = "birth_date") val birthDate: Long,
     @ColumnInfo(name = "hire_date") val hireDate: Long,
@@ -50,7 +44,7 @@ data class EmployeeDbEntity(
         email = email,
         phone = phone,
         password = password,
-        positionId = positionId,
+        position = position,
         birthDate = birthDate,
         hireDate = hireDate,
         workScheduleId = workScheduleId,
@@ -65,7 +59,7 @@ data class EmployeeDbEntity(
             email = signUpData.email,
             phone = signUpData.phone,
             password = signUpData.password,
-            positionId = signUpData.positionId,
+            position = signUpData.position,
             birthDate = signUpData.birthDate,
             hireDate = signUpData.hireDate,
             workScheduleId = signUpData.workScheduleId,

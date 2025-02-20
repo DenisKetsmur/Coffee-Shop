@@ -11,6 +11,7 @@ import com.example.coffeeshop.data.roomDone.category.CategoryDbEntity
 import com.example.coffeeshop.data.roomDone.category.CategoryTypeConverter
 import com.example.coffeeshop.data.roomDone.clients.room.ClientDao
 import com.example.coffeeshop.data.roomDone.clients.room.entities.ClientDbEntity
+import com.example.coffeeshop.data.roomDone.clients.room.entities.UserPositionConverter
 import com.example.coffeeshop.data.roomDone.employee.room.EmployeeDao
 import com.example.coffeeshop.data.roomDone.employee.room.entities.EmployeeDbEntity
 import com.example.coffeeshop.data.roomDone.goods.room.GoodDao
@@ -19,7 +20,6 @@ import com.example.coffeeshop.data.roomDone.order.room.OrderDao
 import com.example.coffeeshop.data.roomDone.order.room.OrderItemDao
 import com.example.coffeeshop.data.roomDone.order.room.entities.OrderDbEntity
 import com.example.coffeeshop.data.roomDone.order.room.entities.OrderItemDbEntity
-import com.example.coffeeshop.data.roomDone.order.room.entities.OrderItemEntity
 import com.example.coffeeshop.data.roomDone.position.room.entities.PositionDbEntity
 import com.example.coffeeshop.data.roomDone.position.room.PositionDao
 import com.example.coffeeshop.data.roomDone.products.room.ProductDao
@@ -38,7 +38,6 @@ import com.example.coffeeshop.data.roomDone.workScheduleEntity.entities.WorkSche
         GoodBdEntity::class,
         ProductDbEntity::class,
         EmployeeDbEntity::class,
-        PositionDbEntity::class,
         UnitDbEntity::class,
         CategoryDbEntity::class,
         SupplierDbEntity::class,
@@ -47,14 +46,17 @@ import com.example.coffeeshop.data.roomDone.workScheduleEntity.entities.WorkSche
         OrderItemDbEntity::class,
     ]
 )
-@TypeConverters(CategoryTypeConverter::class)
+
+@TypeConverters(
+    UserPositionConverter::class,
+    CategoryTypeConverter::class
+)
 abstract class CoffeeShopDatabase : RoomDatabase() {
 
     abstract fun getClientDao(): ClientDao
     abstract fun getGoodsDao(): GoodDao
     abstract fun getProductDao(): ProductDao
     abstract fun getEmployeesDao(): EmployeeDao
-    abstract fun getPosition(): PositionDao
     abstract fun getUnitDao(): UnitDao
     abstract fun categoryDao(): CategoryDao
     abstract fun supplierDao(): SupplierDao

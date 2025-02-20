@@ -28,8 +28,8 @@ import com.example.coffeeshop.data.roomDone.products.room.entities.ProductDbEnti
 )
 data class OrderItemDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "goods_id") val goodsId: Int,
-    val quantity: Int,
+    @ColumnInfo(name = "goods_id") val goodsId: Long,
+    val quantity: Double,
     @ColumnInfo(name = "unit_price") val unitPrice: Double,
-    @ColumnInfo(name = "order_id") val orderId: Int
+    @ColumnInfo(name = "order_id") val orderId: Long
 )

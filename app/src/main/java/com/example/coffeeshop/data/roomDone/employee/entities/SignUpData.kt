@@ -1,16 +1,16 @@
 package com.example.coffeeshop.data.roomDone.employee.entities
 
-import com.example.coffeeshop.data.EmptyFieldException
-import com.example.coffeeshop.data.Field
-import com.example.coffeeshop.data.PasswordMismatchException
-import com.example.coffeeshop.data.roomDone.position.entities.Position
+import com.example.coffeeshop.data.exception.EmptyFieldException
+import com.example.coffeeshop.data.exception.Field
+import com.example.coffeeshop.data.exception.PasswordMismatchException
+import com.example.coffeeshop.data.roomDone.clients.room.entities.Position
 
 class InvalidDateException(message: String) : Exception(message)
 
 data class SignUpData(
     val firstName:String,
     val lastName:String,
-    val positionId: Int?,
+    val position: Position,
     val birthDate: Long,
     val email: String,
     val phone:String,

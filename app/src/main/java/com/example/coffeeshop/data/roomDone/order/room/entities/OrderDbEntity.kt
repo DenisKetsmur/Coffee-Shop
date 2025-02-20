@@ -22,6 +22,6 @@ import com.example.coffeeshop.data.roomDone.supplier.entities.SupplierDbEntity
 )
 data class OrderDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    @ColumnInfo(name = "client_id") val clientId: Int,
+    @ColumnInfo(name = "client_id") val clientId: Long,
     @ColumnInfo(name = "order_date") val orderDate: Long
 )

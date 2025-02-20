@@ -1,8 +1,8 @@
 package com.example.coffeeshop.data.roomDone.clients.entities
 
-import com.example.coffeeshop.data.EmptyFieldException
-import com.example.coffeeshop.data.Field
-import com.example.coffeeshop.data.PasswordMismatchException
+import com.example.coffeeshop.data.exception.EmptyFieldException
+import com.example.coffeeshop.data.exception.Field
+import com.example.coffeeshop.data.exception.PasswordMismatchException
 
 data class SignUpData(
     val firstName:String,

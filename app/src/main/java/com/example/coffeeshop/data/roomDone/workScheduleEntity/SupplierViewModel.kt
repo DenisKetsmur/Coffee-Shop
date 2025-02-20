@@ -83,13 +83,13 @@ class WorkScheduleViewModel(private val dao: WorkScheduleDao) : ViewModel() {
 
     // 4. Отримання розкладів для конкретного працівника (опційно)
     //    Можна зробити окрему StateFlow
-    private val _employeeSchedules = MutableStateFlow<List<WorkScheduleDbEntity>>(emptyList())
-    val employeeSchedules: StateFlow<List<WorkScheduleDbEntity>> = _employeeSchedules.asStateFlow()
+    private val _employeeSchedule = MutableStateFlow<WorkScheduleDbEntity?>(null)
+    val employeeSchedule: StateFlow<WorkScheduleDbEntity?> = _employeeSchedule.asStateFlow()
 
-    fun loadSchedulesForEmployee(employeeId: Long) {
+    fun loadScheduleForEmployee(employeeId: Long) {
         viewModelScope.launch {
-            dao.getWorkSchedulesForEmployee(employeeId).collect { list ->
-                _employeeSchedules.value = list
+            dao.getWorkSchedulesForEmployee(employeeId).collect { schedule ->
+                _employeeSchedule.value = schedule
             }
         }
     }
